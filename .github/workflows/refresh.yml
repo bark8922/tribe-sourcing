@@ -1,0 +1,44 @@
+name: Sourcing Dashboard Refresh
+
+# Pulls latest sourcing_dashboard_per_sourcer table from Keboola Storage API,
+# aggregates to quarterly, writes public/data.json, and commits. Cloudflare Pages
+# auto-deploys on the resulting commit to main.
+
+on:
+  schedule:
+    - cron: "30 6 * * 1-5"   # 06:30 UTC weekdays (after Keboola WBR/MBR refresh)
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tribe-sourcing-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install requests
+      - env:
+          KEBOOLA_STORAGE_API_TOKEN: ${{ secrets.KEBOOLA_STORAGE_API_TOKEN }}
+        run: python pipeline/refresh.py
+      - name: Commit + push
+        run: |
+          set -euo pipefail
+          git config user.name "tribe-sourcing-refresh-bot"
+          git config user.email "blake+sourcing-refresh@tribe.xyz"
+          git add public/data.json
+          if git diff --cached --quiet; then
+            echo "No data change; skipping commit."
+            exit 0
+          fi
+          git commit -m "data refresh: $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push origin HEAD:main

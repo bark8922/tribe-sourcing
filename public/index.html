@@ -12,31 +12,28 @@
 </head>
 <body class="min-h-screen p-6">
 
-<!-- ACCESS GATE — shown if email not in allowlist -->
 <div id="gate" class="flex items-center justify-center min-h-screen">
   <div class="bg-gray-800 border border-gray-700 rounded-lg p-8 max-w-md text-center">
     <h1 class="text-xl font-bold mb-2">Sourcing Dashboard</h1>
     <p class="text-sm text-gray-400 mb-4">This dashboard is restricted to Tribe sourcing leadership.</p>
-    <p class="text-xs text-gray-500">Please access it from inside the Tribe Tool: <a href="https://overview.tribe.xyz" class="text-blue-400 underline">overview.tribe.xyz</a></p>
+    <p class="text-xs text-gray-500">Please access it from inside the Tribe Tool at <a href="https://overview.tribe.xyz" class="text-blue-400 underline">overview.tribe.xyz</a></p>
   </div>
 </div>
 
-<!-- MAIN APP -->
 <div id="app">
   <div class="mb-6 border-b border-gray-700 pb-4">
-    <div class="flex items-baseline justify-between">
+    <div class="flex items-baseline justify-between flex-wrap gap-2">
       <div>
         <h1 class="text-3xl font-bold">Sourcing Dashboard</h1>
         <p class="text-sm text-gray-400 mt-1">Phase 1 — TS-Summary (quarterly)</p>
       </div>
-      <div class="text-right text-xs text-gray-500" id="dataMeta">Loading data…</div>
+      <div class="text-right text-xs text-gray-500" id="dataMeta">Loading…</div>
     </div>
   </div>
 
-  <!-- METHODOLOGY BOX -->
   <div class="bg-gray-800 border border-gray-700 rounded-lg p-4 mb-6">
     <div class="flex items-start gap-2 mb-2">
-      <span class="tag bg-blue-700 text-blue-100">METHODOLOGY</span>
+      <span class="tag bg-blue-700 text-blue-100 flex-shrink-0">METHODOLOGY</span>
       <p class="text-sm text-gray-300">
         Numbers reflect <strong>internal sourcing work only</strong>. A sourcer's contact/screen/hire counts toward the team if either:
         (a) they were on <em>Bench/Internal</em> in BambooHR at the event date, OR
@@ -53,7 +50,6 @@
     </div>
   </div>
 
-  <!-- TOGGLE STUBS -->
   <div class="bg-gray-800 border border-gray-700 rounded-lg p-3 mb-6 flex items-center gap-4 flex-wrap">
     <span class="text-xs text-gray-400 font-semibold">VIEW</span>
     <label class="flex items-center gap-2 text-sm">
@@ -71,11 +67,10 @@
     <span class="text-xs text-yellow-400 ml-auto">stubs — wiring in Phase 1.1</span>
   </div>
 
-  <!-- MAIN TABLE -->
   <div class="bg-gray-800 border border-gray-700 rounded-lg overflow-hidden mb-6">
     <div class="p-4 border-b border-gray-700">
       <h2 class="text-lg font-semibold">Hires &amp; Talent Sourcing Team Size — Quarterly</h2>
-      <p class="text-xs text-gray-400 mt-1">Source: Keboola <code>sourcing_dashboard_per_sourcer</code> · Option C filter applied</p>
+      <p class="text-xs text-gray-400 mt-1" id="sourceLine">Loading…</p>
     </div>
     <div class="overflow-x-auto">
       <table class="w-full text-sm" id="quarterlyTable">
@@ -99,12 +94,11 @@
   </div>
 
   <div class="text-xs text-gray-500 text-right">
-    Sourcing Dashboard v0.1 · <span id="repoCommit">unreleased</span> · bark8922/tribe-sourcing
+    Sourcing Dashboard v0.2 · bark8922/tribe-sourcing
   </div>
 </div>
 
 <script>
-// --- Access gate (Option C: app-side allowlist) ---
 const ALLOWLIST = [
   'jacopo@tribe.xyz', 'andrea@tribe.xyz', 'sanja@tribe.xyz',
   'gustavo@tribe.xyz', 'martin@tribe.xyz', 'kristjana@tribe.xyz',
@@ -114,45 +108,47 @@ const params = new URLSearchParams(window.location.search);
 const member = (params.get('member') || '').trim().toLowerCase();
 if (ALLOWLIST.includes(member)) {
   document.getElementById('app').style.display = 'block';
-  initApp();
+  loadData();
 } else {
   document.getElementById('gate').style.display = 'flex';
 }
 
-// --- Static seed data (Phase 1 v0.1; will be replaced by data.json fetched at deploy) ---
-// Numbers from Keboola Option C query on 2026-05-29.
-const QUARTERLY = [
-  { q: '2026 Q2', inProgress: true, contacted: 8976, posResp: 1272, rs: 1003, actScr: 672, ats: 382, offered: 8, hired: 7, team: 10 },
-  { q: '2026 Q1', contacted: 8109, posResp: 1356, rs: 1035, actScr: 625, ats: 302, offered: 10, hired: 8, team: 14 },
-  { q: '2025 Q4', contacted: 12849, posResp: 1494, rs: 1067, actScr: 589, ats: 293, offered: 15, hired: 11, team: 13 },
-  { q: '2025 Q3', contacted: 16584, posResp: 2600, rs: 1635, actScr: 931, ats: 445, offered: 16, hired: 11, team: 16 },
-  { q: '2025 Q2', contacted: 20866, posResp: 2765, rs: 2001, actScr: 972, ats: 520, offered: 21, hired: 15, team: 15 },
-  { q: '2025 Q1', contacted: 16782, posResp: null, rs: 1573, actScr: 681, ats: 368, offered: 16, hired: 12, team: 13 },
-];
-
 function fmt(n) { return n == null ? '<span class="text-gray-500">No data</span>' : n.toLocaleString(); }
 
-function initApp() {
-  document.getElementById('dataMeta').textContent = 'Static seed · data refresh wiring is next';
+async function loadData() {
+  try {
+    const res = await fetch('data.json', { cache: 'no-store' });
+    const data = await res.json();
+    document.getElementById('dataMeta').textContent =
+      `Updated ${data.generated_at} · methodology v${data.methodology_version}`;
+    document.getElementById('sourceLine').textContent = data.source;
+    render(data.quarterly);
+  } catch (err) {
+    document.getElementById('dataMeta').innerHTML =
+      `<span class="text-red-400">data.json failed to load</span>`;
+    console.error(err);
+  }
+}
+
+function render(rows) {
   const tbody = document.getElementById('quarterlyTbody');
-  tbody.innerHTML = QUARTERLY.map(r => {
-    const hps = r.team > 0 ? (r.hired / r.team).toFixed(2) : '–';
-    const tag = r.inProgress ? ' <span class="tag bg-yellow-700 text-yellow-100 ml-1">in progress</span>' : '';
+  tbody.innerHTML = rows.map(r => {
+    const hps = r.team_size > 0 ? (r.hired / r.team_size).toFixed(2) : '–';
+    const tag = r.in_progress ? ' <span class="tag bg-yellow-700 text-yellow-100 ml-1">in progress</span>' : '';
     return `<tr class="border-t border-gray-700 hover:bg-gray-900/50">
       <td class="p-3 font-medium">${r.q}${tag}</td>
       <td class="text-right p-3">${fmt(r.contacted)}</td>
-      <td class="text-right p-3">${fmt(r.posResp)}</td>
+      <td class="text-right p-3">${fmt(r.pos_resp)}</td>
       <td class="text-right p-3">${fmt(r.rs)}</td>
-      <td class="text-right p-3">${fmt(r.actScr)}</td>
+      <td class="text-right p-3">${fmt(r.act_scr)}</td>
       <td class="text-right p-3">${fmt(r.ats)}</td>
       <td class="text-right p-3">${fmt(r.offered)}</td>
       <td class="text-right p-3">${fmt(r.hired)}</td>
-      <td class="text-right p-3">${fmt(r.team)}</td>
+      <td class="text-right p-3">${fmt(r.team_size)}</td>
       <td class="text-right p-3 bg-gray-900/40">${hps}</td>
     </tr>`;
   }).join('');
 }
 </script>
-
 </body>
 </html>

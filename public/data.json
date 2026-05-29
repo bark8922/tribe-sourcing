@@ -1,0 +1,13 @@
+{
+  "generated_at": "2026-05-29T13:15:00Z",
+  "source": "Keboola out.c-WBRMBR-weekly-aggregations.sourcing_dashboard_per_sourcer (Option C cross-client filter)",
+  "methodology_version": "1.0",
+  "quarterly": [
+    {"q": "2026 Q2", "in_progress": true,  "contacted":  8976, "pos_resp": 1272, "rs": 1003, "act_scr": 672, "ats": 382, "offered":  8, "hired":  7, "team_size": 10},
+    {"q": "2026 Q1", "in_progress": false, "contacted":  8046, "pos_resp": 1356, "rs": 1035, "act_scr": 625, "ats": 302, "offered": 10, "hired":  8, "team_size": 13},
+    {"q": "2025 Q4", "in_progress": false, "contacted": 12849, "pos_resp": 1494, "rs": 1067, "act_scr": 589, "ats": 293, "offered": 15, "hired": 11, "team_size": 13},
+    {"q": "2025 Q3", "in_progress": false, "contacted": 16584, "pos_resp": 2600, "rs": 1635, "act_scr": 931, "ats": 445, "offered": 16, "hired": 11, "team_size": 16},
+    {"q": "2025 Q2", "in_progress": false, "contacted": 20866, "pos_resp": 2765, "rs": 2001, "act_scr": 972, "ats": 520, "offered": 21, "hired": 15, "team_size": 15},
+    {"q": "2025 Q1", "in_progress": false, "contacted": 16782, "pos_resp": null, "rs": 1573, "act_scr": 681, "ats": 368, "offered": 16, "hired": 12, "team_size": 13}
+  ]
+}
