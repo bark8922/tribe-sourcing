@@ -1,8 +1,0 @@
-name = "tribe-sourcing"
-compatibility_date = "2026-05-29"
-main = "worker/index.js"
-
-# Static assets served from /public
-[assets]
-directory = "./public"
-binding = "ASSETS"
