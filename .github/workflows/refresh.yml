@@ -1,7 +1,7 @@
 name: Sourcing Dashboard Refresh
 
 # Pulls latest sourcing_dashboard_per_sourcer table from Keboola Storage API,
-# aggregates to quarterly, writes public/data.json, and commits. Cloudflare Pages
+# aggregates to quarterly, writes data.json, and commits. Cloudflare Pages
 # auto-deploys on the resulting commit to main.
 
 on:
@@ -35,7 +35,7 @@ jobs:
           set -euo pipefail
           git config user.name "tribe-sourcing-refresh-bot"
           git config user.email "blake+sourcing-refresh@tribe.xyz"
-          git add public/data.json
+          git add data.json
           if git diff --cached --quiet; then
             echo "No data change; skipping commit."
             exit 0

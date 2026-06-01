@@ -3,7 +3,7 @@ refresh.py — Pull the latest sourcing dashboard data from Keboola Storage API.
 
 Reads out.c-WBRMBR-weekly-aggregations.sourcing_dashboard_per_sourcer (Option C
 SQL block, populated by the WBR/MBR transformation), aggregates to quarterly
-granularity, and writes public/data.json. Committed to the repo by the GitHub
+granularity, and writes data.json. Committed to the repo by the GitHub
 Actions workflow; Cloudflare Pages auto-deploys the change.
 
 Requires KEBOOLA_STORAGE_API_TOKEN env var (a read-only Storage API token).
@@ -16,7 +16,7 @@ from collections import defaultdict
 
 KEBOOLA_BASE = "https://connection.eu-central-1.keboola.com/v2/storage"
 TABLE_ID = "out.c-WBRMBR-weekly-aggregations.sourcing_dashboard_per_sourcer"
-OUTPUT = "public/data.json"
+OUTPUT = "data.json"
 
 
 def iso_week_to_quarter(year: int, week: int) -> tuple[int, int]:
@@ -101,7 +101,7 @@ def main() -> int:
         "methodology_version": "1.0",
         "quarterly": quarterly,
     }
-    os.makedirs(os.path.dirname(OUTPUT), exist_ok=True)
+    os.makedirs(os.path.dirname(OUTPUT) or ".", exist_ok=True)
     with open(OUTPUT, "w") as f:
         json.dump(payload, f, indent=2)
         f.write("\n")
