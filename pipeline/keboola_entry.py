@@ -25,7 +25,8 @@ from keboola.component import CommonInterface
 REPO = "bark8922/tribe-sourcing"
 TARGET_FILE = "data.json"
 INPUT_CSV_NAME = "snowflake_sourcing_dashboard.csv"
-METHODOLOGY_VERSION = "1.0"
+METHODOLOGY_VERSION = "1.2"
+QUARTERLY_MIN_CONTACTED = 5  # Drop sourcers contributing < this many kept contacts in a quarter (noise filter)
 
 
 def iso_week_to_calendar_quarter(year, week):
@@ -35,24 +36,36 @@ def iso_week_to_calendar_quarter(year, week):
 
 
 def aggregate_quarterly(rows):
-    bucket = defaultdict(lambda: {
+    # Step 1: per (sourcer, quarter) totals, so we can drop sourcer-quarters under the noise threshold.
+    per_sq = defaultdict(lambda: {
         "contacted": 0, "pos_resp": 0, "rs": 0, "act_scr": 0,
-        "ats": 0, "offered": 0, "hired": 0, "sourcers": set(),
+        "ats": 0, "offered": 0, "hired": 0,
     })
     for r in rows:
         y, w = int(r["ISO_YEAR"]), int(r["ISO_WEEK"])
         cy, cq = iso_week_to_calendar_quarter(y, w)
-        key = (cy, cq)
-        b = bucket[key]
-        b["contacted"] += int(r["CONTACTED"])
-        b["pos_resp"]  += int(r["POSITIVE_RESPONSE"])
-        b["rs"]        += int(r["RECRUITER_SCREENS"])
-        b["act_scr"]   += int(r["ACTUAL_SCREENS"])
-        b["ats"]       += int(r["MOVED_TO_ATS"])
-        b["offered"]   += int(r["OFFERED"])
-        b["hired"]     += int(r["HIRED"])
-        if int(r["CONTACTED"]) > 0:
-            b["sourcers"].add(r["TS"])
+        key = (cy, cq, r["TS"])
+        v = per_sq[key]
+        v["contacted"] += int(r["CONTACTED"])
+        v["pos_resp"]  += int(r["POSITIVE_RESPONSE"])
+        v["rs"]        += int(r["RECRUITER_SCREENS"])
+        v["act_scr"]   += int(r["ACTUAL_SCREENS"])
+        v["ats"]       += int(r["MOVED_TO_ATS"])
+        v["offered"]   += int(r["OFFERED"])
+        v["hired"]     += int(r["HIRED"])
+
+    # Step 2: roll up to (quarter) totals, applying the QUARTERLY_MIN_CONTACTED noise filter
+    bucket = defaultdict(lambda: {
+        "contacted": 0, "pos_resp": 0, "rs": 0, "act_scr": 0,
+        "ats": 0, "offered": 0, "hired": 0, "sourcers": set(),
+    })
+    for (cy, cq, ts), v in per_sq.items():
+        if v["contacted"] < QUARTERLY_MIN_CONTACTED:
+            continue
+        b = bucket[(cy, cq)]
+        for k in ("contacted", "pos_resp", "rs", "act_scr", "ats", "offered", "hired"):
+            b[k] += v[k]
+        b["sourcers"].add(ts)
 
     today = date.today()
     cur_y, cur_q = today.year, (today.month - 1) // 3 + 1
@@ -129,22 +142,4 @@ def main():
     print("[main] read " + str(len(rows)) + " weekly rows from input", flush=True)
 
     quarterly = aggregate_quarterly(rows)
-    print("[main] aggregated to " + str(len(quarterly)) + " quarters", flush=True)
-
-    payload = {
-        "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "source": "Keboola out.c-WBRMBR-weekly-aggregations.sourcing_dashboard_per_sourcer (Option C cross-client filter)",
-        "methodology_version": METHODOLOGY_VERSION,
-        "quarterly": quarterly,
-    }
-    content = json.dumps(payload, indent=2) + "\n"
-
-    sha = push_to_github(github_token, content)
-    print("=== done: commit=" + sha[:10] + " size=" + str(len(content) // 1024) + "KB ===", flush=True)
-    return 0
-
-
-print("=== about to call main() ===", flush=True)
-_rc = main()
-print("=== main() returned " + str(_rc) + " ===", flush=True)
-sys.exit(_rc)
+    print("[main] aggregated to " + str(len(quarterly)) + " quarters", flu

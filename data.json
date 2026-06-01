@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-06-01T14:15:00Z",
-  "source": "Keboola sourcing_dashboard_per_sourcer (refined Option C: on-client sourcers' Tribe-IR work also excluded)",
-  "methodology_version": "1.1",
+  "generated_at": "2026-06-01T14:30:00Z",
+  "source": "Keboola sourcing_dashboard_per_sourcer (refined Option C v1.2: + <5 quarterly noise filter)",
+  "methodology_version": "1.2",
   "quarterly": [
-    {"q": "2026 Q2", "in_progress": true,  "contacted":  8882, "pos_resp": 1282, "rs": 1018, "act_scr": 691, "ats": 395, "offered":  9, "hired":  7, "team_size": 11},
-    {"q": "2026 Q1", "in_progress": false, "contacted":  7739, "pos_resp": 1298, "rs":  989, "act_scr": 624, "ats": 302, "offered": 10, "hired":  8, "team_size": 11},
+    {"q": "2026 Q2", "in_progress": true,  "contacted":  8880, "pos_resp": 1280, "rs": 1016, "act_scr": 690, "ats": 394, "offered":  9, "hired":  7, "team_size":  9},
+    {"q": "2026 Q1", "in_progress": false, "contacted":  7737, "pos_resp": 1296, "rs":  987, "act_scr": 622, "ats": 300, "offered":  9, "hired":  7, "team_size":  9},
     {"q": "2025 Q4", "in_progress": false, "contacted": 12662, "pos_resp": 1472, "rs": 1050, "act_scr": 584, "ats": 293, "offered": 15, "hired": 11, "team_size": 11},
     {"q": "2025 Q3", "in_progress": false, "contacted": 16287, "pos_resp": 2544, "rs": 1603, "act_scr": 915, "ats": 437, "offered": 15, "hired": 10, "team_size": 15},
     {"q": "2025 Q2", "in_progress": false, "contacted": 20398, "pos_resp": 2749, "rs": 1984, "act_scr": 970, "ats": 518, "offered": 21, "hired": 15, "team_size": 14},
