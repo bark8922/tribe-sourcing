@@ -1,0 +1,36 @@
+name: Deploy to Cloudflare Pages
+
+# Triggered when Keboola pushes a new data.json (or any time index.html /
+# data.json changes on main). Wrangler does a direct-upload deploy since
+# this Pages project isn't wired to Git auto-deploy.
+#
+# Required repo secret:
+#   - CLOUDFLARE_API_TOKEN  (Workers/Pages edit scope; account-scoped)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "data.json"
+      - "index.html"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tribe-sourcing-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: "5d0766568bdf8eac7e6c06486fe7884c"
+          command: pages deploy . --project-name=tribe-sourcing --branch=main --commit-dirty=true
