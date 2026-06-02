@@ -32,39 +32,27 @@
   </div>
 
   <div class="bg-gray-800 border border-gray-700 rounded-lg p-4 mb-6">
-    <div class="flex items-start gap-2 mb-2">
+    <div class="flex items-start gap-2 mb-3">
       <span class="tag bg-blue-700 text-blue-100 flex-shrink-0">METHODOLOGY</span>
-      <p class="text-sm text-gray-300">
-        Numbers reflect <strong>internal sourcing work only</strong>. A sourcer's contact/screen/hire counts toward the team if either:
-        (a) they were on <em>Bench/Internal</em> in BambooHR at the event date, OR
-        (b) they were billed to a client but sourced for a <em>different</em> client (cross-client sourcing).
-        Client work (sourcer billed to client X and sourced for client X) is excluded.
+      <p class="text-sm text-gray-300 leading-relaxed">
+        Numbers reflect <strong>internal sourcing work only</strong> — what sourcers produced while on the Bench/Internal allocation in BambooHR.
       </p>
     </div>
-    <div class="flex gap-3 text-xs text-gray-400 mt-3 pt-3 border-t border-gray-700 flex-wrap">
-      <span><strong class="text-gray-200">Roster:</strong> Sourcer L1–L3, Sourcing Leads, Sourcing Mgr (active + terminated 2025+)</span>
-      <span>·</span>
-      <span><strong class="text-gray-200">Archived jobs:</strong> included</span>
-      <span>·</span>
-      <span><strong class="text-gray-200">Tribe internal:</strong> included</span>
+    <div class="text-xs text-gray-400 space-y-2 ml-1">
+      <p><strong class="text-gray-200">Counted:</strong> all sourcing work (any client, including Tribe internal) done during a sourcer's Bench/Internal periods.</p>
+      <p><strong class="text-gray-200">Excluded:</strong></p>
+      <ul class="list-disc list-inside space-y-1 ml-3">
+        <li>Work done while a sourcer was allocated to a client (that's client/TA work, not internal sourcing)</li>
+        <li>Onboarding work — if a sourcer's Bench window is ≤30 days and they sourced for the client they're about to join</li>
+        <li>People in fully-IR roles (e.g. Sanja Pavlovikj) — they're internal recruiting, not the sourcing team</li>
+        <li>Sourcer-quarters with fewer than 5 contacts kept (noise filter)</li>
+      </ul>
     </div>
-  </div>
-
-  <div class="bg-gray-800 border border-gray-700 rounded-lg p-3 mb-6 flex items-center gap-4 flex-wrap">
-    <span class="text-xs text-gray-400 font-semibold">VIEW</span>
-    <label class="flex items-center gap-2 text-sm">
-      <input type="checkbox" checked disabled class="rounded"/>
-      <span>Default (internal + cross-client)</span>
-    </label>
-    <label class="flex items-center gap-2 text-sm opacity-50">
-      <input type="checkbox" disabled class="rounded"/>
-      <span>Include client work</span>
-    </label>
-    <label class="flex items-center gap-2 text-sm opacity-50">
-      <input type="checkbox" disabled class="rounded"/>
-      <span>Show archived-only roles</span>
-    </label>
-    <span class="text-xs text-yellow-400 ml-auto">stubs — wiring in Phase 1.1</span>
+    <div class="flex gap-3 text-xs text-gray-500 mt-3 pt-3 border-t border-gray-700 flex-wrap">
+      <span>Archived jobs: included</span>
+      <span>·</span>
+      <span>Roster: Sourcer L1–L3, Sourcing Lead, Sourcing Mgr (active + terminated 2025+)</span>
+    </div>
   </div>
 
   <div class="bg-gray-800 border border-gray-700 rounded-lg overflow-hidden mb-6">
@@ -94,7 +82,7 @@
   </div>
 
   <div class="text-xs text-gray-500 text-right">
-    Sourcing Dashboard v0.2 · bark8922/tribe-sourcing
+    Sourcing Dashboard · bark8922/tribe-sourcing
   </div>
 </div>
 

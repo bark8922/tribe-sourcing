@@ -25,8 +25,9 @@ from keboola.component import CommonInterface
 REPO = "bark8922/tribe-sourcing"
 TARGET_FILE = "data.json"
 INPUT_CSV_NAME = "snowflake_sourcing_dashboard.csv"
-METHODOLOGY_VERSION = "1.2"
+METHODOLOGY_VERSION = "1.5"
 QUARTERLY_MIN_CONTACTED = 5  # Drop sourcers contributing < this many kept contacts in a quarter (noise filter)
+EXCLUDED_SOURCERS = {"Sanja Pavlovikj"}  # Fully-IR roles excluded from sourcing metrics (per Blake 2026-06-01)
 
 
 def iso_week_to_calendar_quarter(year, week):
@@ -42,6 +43,8 @@ def aggregate_quarterly(rows):
         "ats": 0, "offered": 0, "hired": 0,
     })
     for r in rows:
+        if r["TS"] in EXCLUDED_SOURCERS:
+            continue
         y, w = int(r["ISO_YEAR"]), int(r["ISO_WEEK"])
         cy, cq = iso_week_to_calendar_quarter(y, w)
         key = (cy, cq, r["TS"])
@@ -139,7 +142,4 @@ def main():
     print("=== github_token loaded (len=" + str(len(github_token)) + ") ===", flush=True)
 
     rows = read_input_csv(ci)
-    print("[main] read " + str(len(rows)) + " weekly rows from input", flush=True)
-
-    quarterly = aggregate_quarterly(rows)
-    print("[main] aggregated to " + str(len(quarterly)) + " quarters", flu
+    print("[main] read " +
