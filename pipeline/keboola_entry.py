@@ -60,7 +60,7 @@ def aggregate_quarterly(rows):
     # Step 2: roll up to (quarter) totals, applying the QUARTERLY_MIN_CONTACTED noise filter
     bucket = defaultdict(lambda: {
         "contacted": 0, "pos_resp": 0, "rs": 0, "act_scr": 0,
-        "ats": 0, "offered": 0, "hired": 0, "sourcers": set(),
+        "ats": 0, "offered": 0, "hired": 0, "sourcer_contacts": {},
     })
     for (cy, cq, ts), v in per_sq.items():
         if v["contacted"] < QUARTERLY_MIN_CONTACTED:
@@ -68,7 +68,7 @@ def aggregate_quarterly(rows):
         b = bucket[(cy, cq)]
         for k in ("contacted", "pos_resp", "rs", "act_scr", "ats", "offered", "hired"):
             b[k] += v[k]
-        b["sourcers"].add(ts)
+        b["sourcer_contacts"][ts] = v["contacted"]
 
     today = date.today()
     cur_y, cur_q = today.year, (today.month - 1) // 3 + 1
@@ -76,6 +76,8 @@ def aggregate_quarterly(rows):
     for (y, q), v in sorted(bucket.items(), reverse=True):
         if y < 2025:
             continue
+        # Sort sourcers by their contact volume desc for tooltip readability.
+        sourcers_sorted = sorted(v["sourcer_contacts"].items(), key=lambda kv: -kv[1])
         out.append({
             "q":          f"{y} Q{q}",
             "in_progress": (y == cur_y and q == cur_q),
@@ -86,7 +88,8 @@ def aggregate_quarterly(rows):
             "ats":        v["ats"],
             "offered":    v["offered"],
             "hired":      v["hired"],
-            "team_size":  len(v["sourcers"]),
+            "team_size":  len(sourcers_sorted),
+            "sourcers":   [name for name, _ in sourcers_sorted],
         })
     return out
 
@@ -136,10 +139,4 @@ def main():
     params = ci.configuration.parameters
     print("=== CommonInterface ready, params keys: " + str(list(params.keys())) + " ===", flush=True)
 
-    github_token = params.get("#github_token") or params.get("user_properties", {}).get("#github_token")
-    if not github_token:
-        raise RuntimeError("Missing #github_token in configuration parameters.")
-    print("=== github_token loaded (len=" + str(len(github_token)) + ") ===", flush=True)
-
-    rows = read_input_csv(ci)
-    print("[main] read " +
+    github_token = params.get("#github_token") or params.get("user_properties", {}).get("#github_tok

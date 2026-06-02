@@ -132,11 +132,6 @@ function render(rows) {
       <td class="text-right p-3">${fmt(r.ats)}</td>
       <td class="text-right p-3">${fmt(r.offered)}</td>
       <td class="text-right p-3">${fmt(r.hired)}</td>
-      <td class="text-right p-3">${fmt(r.team_size)}</td>
+      <td class="text-right p-3 cursor-help" title="${(r.sourcers || []).join('\n')}">${fmt(r.team_size)}</td>
       <td class="text-right p-3 bg-gray-900/40">${hps}</td>
-    </tr>`;
-  }).join('');
-}
-</script>
-</body>
-</html>
+  
