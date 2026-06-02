@@ -108,30 +108,36 @@ async function loadData() {
     const res = await fetch('data.json', { cache: 'no-store' });
     const data = await res.json();
     document.getElementById('dataMeta').textContent =
-      `Updated ${data.generated_at} · methodology v${data.methodology_version}`;
+      'Updated ' + data.generated_at + ' · methodology v' + data.methodology_version;
     document.getElementById('sourceLine').textContent = data.source;
     render(data.quarterly);
   } catch (err) {
     document.getElementById('dataMeta').innerHTML =
-      `<span class="text-red-400">data.json failed to load</span>`;
+      '<span class="text-red-400">data.json failed to load</span>';
     console.error(err);
   }
 }
 
 function render(rows) {
   const tbody = document.getElementById('quarterlyTbody');
-  tbody.innerHTML = rows.map(r => {
-    const hps = r.team_size > 0 ? (r.hired / r.team_size).toFixed(2) : '–';
-    const tag = r.in_progress ? ' <span class="tag bg-yellow-700 text-yellow-100 ml-1">in progress</span>' : '';
-    return `<tr class="border-t border-gray-700 hover:bg-gray-900/50">
-      <td class="p-3 font-medium">${r.q}${tag}</td>
-      <td class="text-right p-3">${fmt(r.contacted)}</td>
-      <td class="text-right p-3">${fmt(r.pos_resp)}</td>
-      <td class="text-right p-3">${fmt(r.rs)}</td>
-      <td class="text-right p-3">${fmt(r.act_scr)}</td>
-      <td class="text-right p-3">${fmt(r.ats)}</td>
-      <td class="text-right p-3">${fmt(r.offered)}</td>
-      <td class="text-right p-3">${fmt(r.hired)}</td>
-      <td class="text-right p-3 cursor-help" title="${(r.sourcers || []).join('\n')}">${fmt(r.team_size)}</td>
-      <td class="text-right p-3 bg-gray-900/40">${hps}</td>
-  
+  tbody.innerHTML = rows.map(function(r) {
+    var hps = r.team_size > 0 ? (r.hired / r.team_size).toFixed(2) : '–';
+    var tag = r.in_progress ? ' <span class="tag bg-yellow-700 text-yellow-100 ml-1">in progress</span>' : '';
+    var sourcersAttr = (r.sourcers || []).join('&#10;');
+    return '<tr class="border-t border-gray-700 hover:bg-gray-900/50">' +
+      '<td class="p-3 font-medium">' + r.q + tag + '</td>' +
+      '<td class="text-right p-3">' + fmt(r.contacted) + '</td>' +
+      '<td class="text-right p-3">' + fmt(r.pos_resp) + '</td>' +
+      '<td class="text-right p-3">' + fmt(r.rs) + '</td>' +
+      '<td class="text-right p-3">' + fmt(r.act_scr) + '</td>' +
+      '<td class="text-right p-3">' + fmt(r.ats) + '</td>' +
+      '<td class="text-right p-3">' + fmt(r.offered) + '</td>' +
+      '<td class="text-right p-3">' + fmt(r.hired) + '</td>' +
+      '<td class="text-right p-3 cursor-help" title="' + sourcersAttr + '">' + fmt(r.team_size) + '</td>' +
+      '<td class="text-right p-3 bg-gray-900/40">' + hps + '</td>' +
+    '</tr>';
+  }).join('');
+}
+</script>
+</body>
+</html>
