@@ -1,13 +1,216 @@
 {
   "generated_at": "2026-06-02T07:35:00Z",
-  "source": "Keboola sourcing_dashboard_per_sourcer (v1.5: Bench/Internal only + transition-onboarding drop + Sanja excluded + <5 noise filter)",
+  "source": "Keboola sourcing_dashboard_per_sourcer (v1.5: Bench/Internal only + transition-onboarding drop + Sanja excluded + <5 noise filter) · Cost mock v0.1 (Finance dashboard actuals)",
   "methodology_version": "1.5",
   "quarterly": [
-    {"q": "2026 Q2", "in_progress": true,  "contacted":  8932, "pos_resp": 1299, "rs": 1029, "act_scr": 701, "ats": 402, "offered":  9, "hired":  8, "team_size":  9, "sourcers": ["Nare Avetisyan", "Andrea Akovic", "Valeriia Yurykova", "Rodrigo Gomes", "Marina Lazarevic", "Dolores Palotas", "Naledi Ngwenya", "Zelimir Stajcic", "Chantal Bozkurt"]},
-    {"q": "2026 Q1", "in_progress": false, "contacted":  7102, "pos_resp": 1195, "rs":  902, "act_scr": 571, "ats": 283, "offered":  8, "hired":  6, "team_size":  7, "sourcers": ["Nare Avetisyan", "Marina Lazarevic", "Valeriia Yurykova", "Aleksandra Markovic", "Andrea Akovic", "Naledi Ngwenya", "Rodrigo Gomes"]},
-    {"q": "2025 Q4", "in_progress": false, "contacted": 12465, "pos_resp": 1372, "rs":  953, "act_scr": 552, "ats": 273, "offered": 12, "hired":  9, "team_size": 10, "sourcers": ["Aleksandra Markovic", "Elena Petrovska", "Ejla Suljcic", "Valeriia Yurykova", "Marina Lazarevic", "Nare Avetisyan", "Rodrigo Gomes", "Mia Gjorgievska", "Andrea Akovic", "Aleksandra Karatanovska"]},
-    {"q": "2025 Q3", "in_progress": false, "contacted": 16197, "pos_resp": 2459, "rs": 1520, "act_scr": 848, "ats": 405, "offered": 12, "hired":  7, "team_size": 14, "sourcers": ["Elena Lage", "Valeriia Yurykova", "Elena Petrovska", "Nare Avetisyan", "Aleksandra Markovic", "Rodrigo Gomes", "Chantal Bozkurt", "Zelimir Stajcic", "Aleksandra Karatanovska", "Alberto Barroca", "Dolores Palotas", "Andrea Akovic", "Ejla Suljcic", "Mia Gjorgievska"]},
-    {"q": "2025 Q2", "in_progress": false, "contacted": 19270, "pos_resp": 2624, "rs": 1880, "act_scr": 911, "ats": 480, "offered": 19, "hired": 14, "team_size": 12, "sourcers": ["Chantal Bozkurt", "Elena Lage", "Valeriia Yurykova", "Ejla Suljcic", "Zelimir Stajcic", "Aleksandra Karatanovska", "Elena Petrovska", "Dolores Palotas", "Aleksandra Markovic", "Luis Bravo", "Nare Avetisyan", "Alberto Barroca"]},
-    {"q": "2025 Q1", "in_progress": false, "contacted": 13506, "pos_resp": null, "rs": 1323, "act_scr": 562, "ats": 305, "offered": 15, "hired": 12, "team_size": 11, "sourcers": ["Ejla Suljcic", "Alberto Barroca", "Dolores Palotas", "Aleksandra Karatanovska", "Valeriia Yurykova", "Nare Avetisyan", "Mia Gjorgievska", "Andrea Akovic", "Luis Bravo", "Elena Petrovska", "Zelimir Stajcic"]}
+    {
+      "q": "2026 Q2",
+      "in_progress": true,
+      "contacted": 8932,
+      "pos_resp": 1299,
+      "rs": 1029,
+      "act_scr": 701,
+      "ats": 402,
+      "offered": 9,
+      "hired": 8,
+      "team_size": 9,
+      "sourcers": [
+        "Nare Avetisyan",
+        "Andrea Akovic",
+        "Valeriia Yurykova",
+        "Rodrigo Gomes",
+        "Marina Lazarevic",
+        "Dolores Palotas",
+        "Naledi Ngwenya",
+        "Zelimir Stajcic",
+        "Chantal Bozkurt"
+      ]
+    },
+    {
+      "q": "2026 Q1",
+      "in_progress": false,
+      "contacted": 7102,
+      "pos_resp": 1195,
+      "rs": 902,
+      "act_scr": 571,
+      "ats": 283,
+      "offered": 8,
+      "hired": 6,
+      "team_size": 7,
+      "sourcers": [
+        "Nare Avetisyan",
+        "Marina Lazarevic",
+        "Valeriia Yurykova",
+        "Aleksandra Markovic",
+        "Andrea Akovic",
+        "Naledi Ngwenya",
+        "Rodrigo Gomes"
+      ]
+    },
+    {
+      "q": "2025 Q4",
+      "in_progress": false,
+      "contacted": 12465,
+      "pos_resp": 1372,
+      "rs": 953,
+      "act_scr": 552,
+      "ats": 273,
+      "offered": 12,
+      "hired": 9,
+      "team_size": 10,
+      "sourcers": [
+        "Aleksandra Markovic",
+        "Elena Petrovska",
+        "Ejla Suljcic",
+        "Valeriia Yurykova",
+        "Marina Lazarevic",
+        "Nare Avetisyan",
+        "Rodrigo Gomes",
+        "Mia Gjorgievska",
+        "Andrea Akovic",
+        "Aleksandra Karatanovska"
+      ]
+    },
+    {
+      "q": "2025 Q3",
+      "in_progress": false,
+      "contacted": 16197,
+      "pos_resp": 2459,
+      "rs": 1520,
+      "act_scr": 848,
+      "ats": 405,
+      "offered": 12,
+      "hired": 7,
+      "team_size": 14,
+      "sourcers": [
+        "Elena Lage",
+        "Valeriia Yurykova",
+        "Elena Petrovska",
+        "Nare Avetisyan",
+        "Aleksandra Markovic",
+        "Rodrigo Gomes",
+        "Chantal Bozkurt",
+        "Zelimir Stajcic",
+        "Aleksandra Karatanovska",
+        "Alberto Barroca",
+        "Dolores Palotas",
+        "Andrea Akovic",
+        "Ejla Suljcic",
+        "Mia Gjorgievska"
+      ]
+    },
+    {
+      "q": "2025 Q2",
+      "in_progress": false,
+      "contacted": 19270,
+      "pos_resp": 2624,
+      "rs": 1880,
+      "act_scr": 911,
+      "ats": 480,
+      "offered": 19,
+      "hired": 14,
+      "team_size": 12,
+      "sourcers": [
+        "Chantal Bozkurt",
+        "Elena Lage",
+        "Valeriia Yurykova",
+        "Ejla Suljcic",
+        "Zelimir Stajcic",
+        "Aleksandra Karatanovska",
+        "Elena Petrovska",
+        "Dolores Palotas",
+        "Aleksandra Markovic",
+        "Luis Bravo",
+        "Nare Avetisyan",
+        "Alberto Barroca"
+      ]
+    },
+    {
+      "q": "2025 Q1",
+      "in_progress": false,
+      "contacted": 13506,
+      "pos_resp": null,
+      "rs": 1323,
+      "act_scr": 562,
+      "ats": 305,
+      "offered": 15,
+      "hired": 12,
+      "team_size": 11,
+      "sourcers": [
+        "Ejla Suljcic",
+        "Alberto Barroca",
+        "Dolores Palotas",
+        "Aleksandra Karatanovska",
+        "Valeriia Yurykova",
+        "Nare Avetisyan",
+        "Mia Gjorgievska",
+        "Andrea Akovic",
+        "Luis Bravo",
+        "Elena Petrovska",
+        "Zelimir Stajcic"
+      ]
+    }
+  ],
+  "cost": [
+    {
+      "q": "2026 Q2",
+      "int_cost": 37125,
+      "ext_rev": 62085,
+      "ext_cost": 51404,
+      "ext_margin": 10681,
+      "score": 0.29,
+      "hires": 8,
+      "cost_per_hire": 4641
+    },
+    {
+      "q": "2026 Q1",
+      "int_cost": 16890,
+      "ext_rev": 135680,
+      "ext_cost": 78595,
+      "ext_margin": 57085,
+      "score": 3.38,
+      "hires": 6,
+      "cost_per_hire": 2815
+    },
+    {
+      "q": "2025 Q4",
+      "int_cost": 31384,
+      "ext_rev": 107495,
+      "ext_cost": 69243,
+      "ext_margin": 38252,
+      "score": 1.22,
+      "hires": 9,
+      "cost_per_hire": 3487
+    },
+    {
+      "q": "2025 Q3",
+      "int_cost": 35115,
+      "ext_rev": 84664,
+      "ext_cost": 73795,
+      "ext_margin": 10869,
+      "score": 0.31,
+      "hires": 7,
+      "cost_per_hire": 5016
+    },
+    {
+      "q": "2025 Q2",
+      "int_cost": 32663,
+      "ext_rev": 74185,
+      "ext_cost": 81601,
+      "ext_margin": -7416,
+      "score": -0.23,
+      "hires": 14,
+      "cost_per_hire": 2333
+    },
+    {
+      "q": "2025 Q1",
+      "int_cost": 31838,
+      "ext_rev": 61760,
+      "ext_cost": 54539,
+      "ext_margin": 7221,
+      "score": 0.23,
+      "hires": 12,
+      "cost_per_hire": 2653
+    }
   ]
 }
