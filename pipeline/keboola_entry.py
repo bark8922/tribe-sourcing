@@ -1,16 +1,8 @@
-"""keboola_entry.py — Sourcing Dashboard Phase 1 refresh.
+"""keboola_entry.py - Sourcing Dashboard Phase 1 refresh.
 
 Custom Python component entrypoint. Same pattern as the recruiting dashboard's
 keboola_entry.py: read staged input CSV(s), build the dashboard data.json,
-PUT it to the GitHub repo via the Contents API. A GitHub Actions deploy
-workflow on the repo then deploys to Cloudflare Pages.
-
-Inputs (Keboola input mapping):
-  out.c-WBRMBR-weekly-aggregations.sourcing_dashboard_per_sourcer
-    → snowflake_sourcing_dashboard.csv
-
-Output (PUT to repo via GitHub Contents API):
-  bark8922/tribe-sourcing : data.json
+PUT it to the GitHub repo via the Contents API.
 """
 import sys
 print("=== sourcing keboola_entry.py loaded ===", flush=True)
@@ -26,18 +18,16 @@ REPO = "bark8922/tribe-sourcing"
 TARGET_FILE = "data.json"
 INPUT_CSV_NAME = "snowflake_sourcing_dashboard.csv"
 METHODOLOGY_VERSION = "1.5"
-QUARTERLY_MIN_CONTACTED = 5  # Drop sourcers contributing < this many kept contacts in a quarter (noise filter)
-EXCLUDED_SOURCERS = {"Sanja Pavlovikj"}  # Fully-IR roles excluded from sourcing metrics (per Blake 2026-06-01)
+QUARTERLY_MIN_CONTACTED = 5
+EXCLUDED_SOURCERS = {"Sanja Pavlovikj"}
 
 
 def iso_week_to_calendar_quarter(year, week):
-    """Map ISO (year, week) to calendar (year, quarter)."""
     monday = date.fromisocalendar(year, week, 1)
     return monday.year, (monday.month - 1) // 3 + 1
 
 
 def aggregate_quarterly(rows):
-    # Step 1: per (sourcer, quarter) totals, so we can drop sourcer-quarters under the noise threshold.
     per_sq = defaultdict(lambda: {
         "contacted": 0, "pos_resp": 0, "rs": 0, "act_scr": 0,
         "ats": 0, "offered": 0, "hired": 0,
@@ -57,7 +47,6 @@ def aggregate_quarterly(rows):
         v["offered"]   += int(r["OFFERED"])
         v["hired"]     += int(r["HIRED"])
 
-    # Step 2: roll up to (quarter) totals, applying the QUARTERLY_MIN_CONTACTED noise filter
     bucket = defaultdict(lambda: {
         "contacted": 0, "pos_resp": 0, "rs": 0, "act_scr": 0,
         "ats": 0, "offered": 0, "hired": 0, "sourcer_contacts": {},
@@ -76,7 +65,6 @@ def aggregate_quarterly(rows):
     for (y, q), v in sorted(bucket.items(), reverse=True):
         if y < 2025:
             continue
-        # Sort sourcers by their contact volume desc for tooltip readability.
         sourcers_sorted = sorted(v["sourcer_contacts"].items(), key=lambda kv: -kv[1])
         out.append({
             "q":          f"{y} Q{q}",
@@ -99,7 +87,7 @@ def read_input_csv(ci):
         if Path(tbl.full_path).name == INPUT_CSV_NAME:
             with open(tbl.full_path, newline="") as f:
                 return list(csv.DictReader(f))
-    raise RuntimeError(f"Input table {INPUT_CSV_NAME} not in input mapping")
+    raise RuntimeError("Input table " + INPUT_CSV_NAME + " not in input mapping")
 
 
 def push_to_github(token, content):
@@ -116,6 +104,17 @@ def push_to_github(token, content):
     print("[push_to_github] current sha: " + sha[:10], flush=True)
 
     now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    # Merge: keep cost array if it exists in current data.json (Phase 2 mock baked manually)
+    try:
+        cur_decoded = base64.b64decode(current["content"]).decode("utf-8")
+        cur_obj = json.loads(cur_decoded)
+        new_obj = json.loads(content)
+        if "cost" in cur_obj and "cost" not in new_obj:
+            new_obj["cost"] = cur_obj["cost"]
+        content = json.dumps(new_obj, indent=2, ensure_ascii=False) + "\n"
+    except Exception as e:
+        print("[push_to_github] cost-merge skipped: " + str(e), flush=True)
+
     body = json.dumps({
         "message": "refresh: Keboola-driven rebuild (" + now + ")",
         "content": base64.b64encode(content.encode("utf-8")).decode("ascii"),
@@ -139,4 +138,33 @@ def main():
     params = ci.configuration.parameters
     print("=== CommonInterface ready, params keys: " + str(list(params.keys())) + " ===", flush=True)
 
-    github_token = params.get("#github_token") or params.get("user_properties", {}).get("#github_tok
+    github_token = params.get("#github_token")
+    if not github_token:
+        github_token = params.get("user_properties", {}).get("#github_token")
+    if not github_token:
+        raise RuntimeError("Missing #github_token in configuration parameters.")
+    print("=== github_token loaded (len=" + str(len(github_token)) + ") ===", flush=True)
+
+    rows = read_input_csv(ci)
+    print("[main] read " + str(len(rows)) + " weekly rows from input", flush=True)
+
+    quarterly = aggregate_quarterly(rows)
+    print("[main] aggregated to " + str(len(quarterly)) + " quarters", flush=True)
+
+    payload = {
+        "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "source": "Keboola out.c-WBRMBR-weekly-aggregations.sourcing_dashboard_per_sourcer (v1.5: Bench/Internal only + onboarding drop + Sanja excluded + <5 noise filter)",
+        "methodology_version": METHODOLOGY_VERSION,
+        "quarterly": quarterly,
+    }
+    content = json.dumps(payload, indent=2, ensure_ascii=False) + "\n"
+
+    sha = push_to_github(github_token, content)
+    print("=== done: commit=" + sha[:10] + " size=" + str(len(content) // 1024) + "KB ===", flush=True)
+    return 0
+
+
+print("=== about to call main() ===", flush=True)
+_rc = main()
+print("=== main() returned " + str(_rc) + " ===", flush=True)
+sys.exit(_rc)
