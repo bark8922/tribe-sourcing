@@ -157,61 +157,61 @@
   "cost": [
     {
       "q": "2026 Q2",
-      "int_cost": 37125,
-      "ext_rev": 62085,
-      "ext_cost": 51404,
-      "ext_margin": 10681,
-      "score": 0.29,
-      "hires": 8,
-      "cost_per_hire": 4641
+      "int_cost": 34499,
+      "ext_rev": 91585,
+      "ext_cost": 46530,
+      "ext_margin": 45055,
+      "score": 1.31,
+      "hires": 11,
+      "cost_per_hire": 3136
     },
     {
       "q": "2026 Q1",
       "int_cost": 16890,
       "ext_rev": 135680,
-      "ext_cost": 78595,
-      "ext_margin": 57085,
-      "score": 3.38,
-      "hires": 6,
-      "cost_per_hire": 2815
+      "ext_cost": 70854,
+      "ext_margin": 64826,
+      "score": 3.84,
+      "hires": 13,
+      "cost_per_hire": 1299
     },
     {
       "q": "2025 Q4",
-      "int_cost": 31384,
+      "int_cost": 31803,
       "ext_rev": 107495,
-      "ext_cost": 69243,
-      "ext_margin": 38252,
-      "score": 1.22,
+      "ext_cost": 59007,
+      "ext_margin": 48488,
+      "score": 1.52,
       "hires": 9,
-      "cost_per_hire": 3487
+      "cost_per_hire": 3534
     },
     {
       "q": "2025 Q3",
-      "int_cost": 35115,
+      "int_cost": 38041,
       "ext_rev": 84664,
-      "ext_cost": 73795,
-      "ext_margin": 10869,
-      "score": 0.31,
+      "ext_cost": 56048,
+      "ext_margin": 28616,
+      "score": 0.75,
       "hires": 7,
-      "cost_per_hire": 5016
+      "cost_per_hire": 5434
     },
     {
       "q": "2025 Q2",
-      "int_cost": 32663,
+      "int_cost": 35209,
       "ext_rev": 74185,
-      "ext_cost": 81601,
-      "ext_margin": -7416,
-      "score": -0.23,
+      "ext_cost": 71555,
+      "ext_margin": 2630,
+      "score": 0.07,
       "hires": 14,
-      "cost_per_hire": 2333
+      "cost_per_hire": 2515
     },
     {
       "q": "2025 Q1",
       "int_cost": 31838,
       "ext_rev": 61760,
-      "ext_cost": 54539,
-      "ext_margin": 7221,
-      "score": 0.23,
+      "ext_cost": 48340,
+      "ext_margin": 13420,
+      "score": 0.42,
       "hires": 12,
       "cost_per_hire": 2653
     }
