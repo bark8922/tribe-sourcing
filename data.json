@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-06-03T06:45:22Z",
-  "source": "Keboola out.c-WBRMBR-weekly-aggregations.sourcing_dashboard_per_sourcer (v1.5: Bench/Internal only + onboarding drop + Sanja excluded + <5 noise filter)",
+  "generated_at": "2026-06-03T07:27:23Z",
+  "source": "Keboola sourcing_dashboard_per_sourcer (v1.5) + Finance dashboard ea (ct-based cost classification)",
   "methodology_version": "1.5",
   "quarterly": [
     {
@@ -182,8 +182,8 @@
       "ext_cost": 59007,
       "ext_margin": 48488,
       "score": 1.52,
-      "hires": 9,
-      "cost_per_hire": 3534
+      "hires": 17,
+      "cost_per_hire": 1871
     },
     {
       "q": "2025 Q3",
@@ -192,8 +192,8 @@
       "ext_cost": 56048,
       "ext_margin": 28616,
       "score": 0.75,
-      "hires": 7,
-      "cost_per_hire": 5434
+      "hires": 14,
+      "cost_per_hire": 2717
     },
     {
       "q": "2025 Q2",
@@ -202,8 +202,8 @@
       "ext_cost": 71555,
       "ext_margin": 2630,
       "score": 0.07,
-      "hires": 14,
-      "cost_per_hire": 2515
+      "hires": 22,
+      "cost_per_hire": 1600
     },
     {
       "q": "2025 Q1",
@@ -212,8 +212,8 @@
       "ext_cost": 48340,
       "ext_margin": 13420,
       "score": 0.42,
-      "hires": 12,
-      "cost_per_hire": 2653
+      "hires": 22,
+      "cost_per_hire": 1447
     }
   ]
 }
