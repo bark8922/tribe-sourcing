@@ -8,6 +8,11 @@
   body { background:#111827; color:#fff; font-family:'Inter',system-ui,sans-serif; }
   .tag { display:inline-block; padding:2px 8px; border-radius:4px; font-size:11px; font-weight:600; }
   #gate, #app { display:none; }
+  .tab-btn { padding:.5rem 1rem; font-size:.875rem; color:#9ca3af; border-bottom:2px solid transparent; cursor:pointer; background:none; border-top:0; border-left:0; border-right:0; }
+  .tab-btn:hover { color:#fff; }
+  .tab-btn.active { color:#fff; font-weight:600; border-bottom-color:#3b82f6; }
+  .tab-panel { display:none; }
+  .tab-panel.active { display:block; }
 </style>
 </head>
 <body class="min-h-screen p-6">
@@ -21,141 +26,239 @@
 </div>
 
 <div id="app">
-  <div class="mb-6 border-b border-gray-700 pb-4">
-    <div class="flex items-baseline justify-between flex-wrap gap-2">
-      <div>
-        <h1 class="text-3xl font-bold">Sourcing Dashboard</h1>
-        <p class="text-sm text-gray-400 mt-1">Phase 1 = TS-Summary . Phase 2 = Cost (mock v0.1)</p>
+  <div class="mb-4 flex items-baseline justify-between flex-wrap gap-2">
+    <h1 class="text-3xl font-bold">Sourcing Dashboard</h1>
+    <div class="text-right text-xs text-gray-500" id="dataMeta">Loading...</div>
+  </div>
+
+  <div class="border-b border-gray-700 mb-6 flex gap-1">
+    <button class="tab-btn active" data-tab="ts">TS-Summary</button>
+    <button class="tab-btn" data-tab="cost">Cost &amp; Sustainability</button>
+    <button class="tab-btn" data-tab="wbr">WBR Comments</button>
+  </div>
+
+  <div class="tab-panel active" id="panel-ts">
+    <div class="bg-gray-800 border border-gray-700 rounded-lg p-4 mb-6">
+      <div class="flex items-start gap-2 mb-3">
+        <span class="tag bg-blue-700 text-blue-100 flex-shrink-0">METHODOLOGY</span>
+        <p class="text-sm text-gray-300 leading-relaxed">
+          Numbers reflect <strong>internal sourcing work only</strong>, what sourcers produced while on the Bench/Internal allocation in BambooHR.
+        </p>
       </div>
-      <div class="text-right text-xs text-gray-500" id="dataMeta">Loading...</div>
+      <div class="text-xs text-gray-400 space-y-2 ml-1">
+        <p><strong class="text-gray-200">Counted:</strong> all sourcing work (any client, including Tribe internal) done during a sourcer's Bench/Internal periods.</p>
+        <p><strong class="text-gray-200">Excluded:</strong></p>
+        <ul class="list-disc list-inside space-y-1 ml-3">
+          <li>Work done while a sourcer was allocated to a client</li>
+          <li>Onboarding work if a sourcer's Bench window is short and they sourced for the client they're about to join</li>
+          <li>People in fully-IR roles (Sanja Pavlovikj)</li>
+          <li>Sourcer-quarters with fewer than 5 contacts (noise filter)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="bg-gray-800 border border-gray-700 rounded-lg overflow-hidden mb-6">
+      <div class="p-4 border-b border-gray-700">
+        <h2 class="text-lg font-semibold">Hires &amp; Talent Sourcing Team Size, quarterly</h2>
+        <p class="text-xs text-gray-400 mt-1" id="sourceLine">Loading...</p>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm" id="quarterlyTable">
+          <thead class="bg-gray-900 text-gray-300 uppercase text-xs">
+            <tr>
+              <th class="text-left p-3">Quarter</th>
+              <th class="text-right p-3">Contacted</th>
+              <th class="text-right p-3">Pos Resp</th>
+              <th class="text-right p-3">Recruiter Screens</th>
+              <th class="text-right p-3">Actual Screens</th>
+              <th class="text-right p-3">Moved to ATS</th>
+              <th class="text-right p-3">Offered</th>
+              <th class="text-right p-3">Hired</th>
+              <th class="text-right p-3">Team Size</th>
+              <th class="text-right p-3 bg-gray-800">Hires / Sourcer</th>
+            </tr>
+          </thead>
+          <tbody id="quarterlyTbody"></tbody>
+        </table>
+      </div>
     </div>
   </div>
 
-  <!-- Phase 1: TS-Summary -->
-  <div class="bg-gray-800 border border-gray-700 rounded-lg p-4 mb-6">
-    <div class="flex items-start gap-2 mb-3">
-      <span class="tag bg-blue-700 text-blue-100 flex-shrink-0">METHODOLOGY</span>
-      <p class="text-sm text-gray-300 leading-relaxed">
-        Numbers reflect <strong>internal sourcing work only</strong>, what sourcers produced while on the Bench/Internal allocation in BambooHR.
-      </p>
+  <div class="tab-panel" id="panel-cost">
+    <div class="bg-gray-800 border border-gray-700 rounded-lg p-4 mb-6">
+      <div class="flex items-start gap-2 mb-3">
+        <span class="tag bg-purple-700 text-purple-100 flex-shrink-0">METHODOLOGY</span>
+        <p class="text-sm text-gray-300 leading-relaxed">
+          Sustainability Score = External Margin / Internal Cost. Higher = more value created per dollar spent on internal sourcing.
+        </p>
+      </div>
+      <div class="text-xs text-gray-400 ml-1">
+        Cost split by allocation type: <strong class="text-gray-200">Bench</strong> = full internal cost. <strong class="text-gray-200">Client</strong> = split by bench-days fraction. Internal/Core Tribe/On Leave excluded.
+      </div>
     </div>
-    <div class="text-xs text-gray-400 space-y-2 ml-1">
-      <p><strong class="text-gray-200">Counted:</strong> all sourcing work (any client, including Tribe internal) done during a sourcer's Bench/Internal periods.</p>
-      <p><strong class="text-gray-200">Excluded:</strong></p>
-      <ul class="list-disc list-inside space-y-1 ml-3">
-        <li>Work done while a sourcer was allocated to a client (that's client/TA work, not internal sourcing)</li>
-        <li>Onboarding work, if a sourcer's Bench window is short and they sourced for the client they're about to join</li>
-        <li>People in fully-IR roles (Sanja Pavlovikj), they're internal recruiting, not the sourcing team</li>
-        <li>Sourcer-quarters with fewer than 5 contacts kept (noise filter)</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="bg-gray-800 border border-gray-700 rounded-lg overflow-hidden mb-6">
-    <div class="p-4 border-b border-gray-700">
-      <h2 class="text-lg font-semibold">Hires &amp; Talent Sourcing Team Size, Quarterly</h2>
-      <p class="text-xs text-gray-400 mt-1" id="sourceLine">Loading...</p>
-    </div>
-    <div class="overflow-x-auto">
-      <table class="w-full text-sm" id="quarterlyTable">
-        <thead class="bg-gray-900 text-gray-300 uppercase text-xs">
-          <tr>
-            <th class="text-left p-3">Quarter</th>
-            <th class="text-right p-3">Contacted</th>
-            <th class="text-right p-3">Pos Response</th>
-            <th class="text-right p-3">Recruiter Screens</th>
-            <th class="text-right p-3">Actual Screens</th>
-            <th class="text-right p-3">Moved to ATS</th>
-            <th class="text-right p-3">Offered</th>
-            <th class="text-right p-3">Hired</th>
-            <th class="text-right p-3">Team Size</th>
-            <th class="text-right p-3 bg-gray-800">Hires / Sourcer</th>
-          </tr>
-        </thead>
-        <tbody id="quarterlyTbody"></tbody>
-      </table>
+    <div class="bg-gray-800 border border-gray-700 rounded-lg overflow-hidden mb-6">
+      <div class="p-4 border-b border-gray-700">
+        <h2 class="text-lg font-semibold">Cost &amp; Sustainability, quarterly</h2>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm" id="costTable">
+          <thead class="bg-gray-900 text-gray-300 uppercase text-xs">
+            <tr>
+              <th class="text-left p-3">Quarter</th>
+              <th class="text-right p-3">Internal Cost</th>
+              <th class="text-right p-3">External Revenue</th>
+              <th class="text-right p-3">External Cost</th>
+              <th class="text-right p-3">External Margin</th>
+              <th class="text-right p-3">Sustainability Score</th>
+              <th class="text-right p-3">Hires</th>
+              <th class="text-right p-3">Cost / Hire</th>
+            </tr>
+          </thead>
+          <tbody id="costTbody"></tbody>
+        </table>
+      </div>
     </div>
   </div>
 
-  <!-- Phase 2: Cost & Sustainability (MOCK) -->
-  <div class="bg-gray-800 border border-yellow-700/40 rounded-lg p-4 mb-3">
-    <div class="flex items-start gap-2">
-      <span class="tag bg-yellow-700 text-yellow-100 flex-shrink-0">MOCK v0.1</span>
-      <p class="text-sm text-gray-300 leading-relaxed">
-        <strong>Cost &amp; Sustainability</strong>. Based on Gustavo's sustainability score framework, using actuals from the Finance dashboard. Internal cost = sourcer salary prorated by Bench/Internal days that month. External revenue and cost = same sourcers when on a client (actual invoiced amounts). Score = External Margin / Internal Cost.
-      </p>
+  <div class="tab-panel" id="panel-wbr">
+    <div class="bg-gray-800 border border-gray-700 rounded-lg p-4 mb-6">
+      <div class="flex items-center gap-4 flex-wrap">
+        <div>
+          <label class="text-xs text-gray-400 block mb-1">Sourcer</label>
+          <select id="wbrSourcer" class="bg-gray-900 border border-gray-700 rounded px-3 py-2 text-sm"></select>
+        </div>
+        <div>
+          <label class="text-xs text-gray-400 block mb-1">Year</label>
+          <select id="wbrYear" class="bg-gray-900 border border-gray-700 rounded px-3 py-2 text-sm"></select>
+        </div>
+        <div>
+          <label class="text-xs text-gray-400 block mb-1">Period</label>
+          <select id="wbrPeriod" class="bg-gray-900 border border-gray-700 rounded px-3 py-2 text-sm">
+            <option value="full">Full year</option>
+            <option value="H1">H1 (Q1+Q2)</option>
+            <option value="H2">H2 (Q3+Q4)</option>
+            <option value="Q1">Q1</option>
+            <option value="Q2">Q2</option>
+            <option value="Q3">Q3</option>
+            <option value="Q4">Q4</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="grid grid-cols-5 gap-4 mb-6">
+      <div class="bg-gray-800 border border-gray-700 rounded-lg p-4">
+        <div class="text-xs text-gray-400 mb-1">Weeks tracked</div>
+        <div class="text-2xl font-bold" id="kpiWeeks">--</div>
+      </div>
+      <div class="bg-gray-800 border border-gray-700 rounded-lg p-4">
+        <div class="text-xs text-gray-400 mb-1">Avg % of target</div>
+        <div class="text-2xl font-bold" id="kpiAvg">--</div>
+      </div>
+      <div class="bg-gray-800 border border-red-900/60 rounded-lg p-4">
+        <div class="text-xs text-red-400 mb-1">Weeks below target</div>
+        <div class="text-2xl font-bold text-red-300" id="kpiBelow">--</div>
+        <div class="text-xs text-gray-500 mt-1" id="kpiBelowDetail"></div>
+      </div>
+      <div class="bg-gray-800 border border-gray-700 rounded-lg p-4">
+        <div class="text-xs text-gray-400 mb-1">Unexplained misses</div>
+        <div class="text-2xl font-bold" id="kpiUnexplained">--</div>
+        <div class="text-xs text-gray-500 mt-1" id="kpiUnexplainedDetail"></div>
+      </div>
+      <div class="bg-gray-800 border border-gray-700 rounded-lg p-4">
+        <div class="text-xs text-gray-400 mb-1">Total hires</div>
+        <div class="text-2xl font-bold" id="kpiHires">--</div>
+      </div>
+    </div>
+    <div class="bg-gray-800 border border-gray-700 rounded-lg overflow-hidden">
+      <div class="p-4 border-b border-gray-700 flex items-center justify-between">
+        <h2 class="text-lg font-semibold">Weekly funnel + lead commentary</h2>
+        <span class="text-xs text-gray-500">Comments authored by sourcing lead during WBR</span>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="bg-gray-900 text-gray-300 uppercase text-xs">
+            <tr>
+              <th class="text-left p-3 w-32">Week</th>
+              <th class="text-right p-3">Target</th>
+              <th class="text-right p-3">Cont</th>
+              <th class="text-right p-3">%</th>
+              <th class="text-right p-3">RS</th>
+              <th class="text-right p-3">Act Scr</th>
+              <th class="text-right p-3">ATS</th>
+              <th class="text-right p-3">Off</th>
+              <th class="text-right p-3">Hired</th>
+              <th class="text-left p-3">Reasoning</th>
+              <th class="text-left p-3" style="min-width:300px">Comment</th>
+            </tr>
+          </thead>
+          <tbody id="wbrTbody"></tbody>
+        </table>
+      </div>
     </div>
   </div>
 
-  <div class="bg-gray-800 border border-gray-700 rounded-lg overflow-hidden mb-6">
-    <div class="overflow-x-auto">
-      <table class="w-full text-sm" id="costTable">
-        <thead class="bg-gray-900 text-gray-300 uppercase text-xs">
-          <tr>
-            <th class="text-left p-3">Quarter</th>
-            <th class="text-right p-3">Internal cost</th>
-            <th class="text-right p-3">External rev</th>
-            <th class="text-right p-3">External cost</th>
-            <th class="text-right p-3">External margin</th>
-            <th class="text-right p-3">Sustainability score</th>
-            <th class="text-right p-3">Hires</th>
-            <th class="text-right p-3 bg-gray-800">Cost / hire</th>
-          </tr>
-        </thead>
-        <tbody id="costTbody"></tbody>
-      </table>
-    </div>
-    <div class="p-3 border-t border-gray-700 text-xs text-gray-500">
-      Score zones (Gustavo's framework): &gt;1.3 green, 1.0-1.3 yellow, 0.7-1.0 orange, &lt;0.7 red.
-    </div>
-  </div>
-
-  <div class="text-xs text-gray-500 text-right">
+  <div class="text-xs text-gray-500 text-right mt-6">
     Sourcing Dashboard . bark8922/tribe-sourcing
   </div>
 </div>
 
 <script>
-var ALLOWLIST = ['jacopo@tribe.xyz','andrea@tribe.xyz','sanja@tribe.xyz','gustavo@tribe.xyz','martin@tribe.xyz','kristjana@tribe.xyz','salem@tribe.xyz','blake@tribe.xyz'];
-var params = new URLSearchParams(window.location.search);
-var member = (params.get('member') || '').trim().toLowerCase();
-if (ALLOWLIST.indexOf(member) >= 0) {
+const ALLOWLIST = [
+  'jacopo@tribe.xyz', 'andrea@tribe.xyz', 'sanja@tribe.xyz',
+  'gustavo@tribe.xyz', 'martin@tribe.xyz', 'kristjana@tribe.xyz',
+  'salem@tribe.xyz', 'blake@tribe.xyz'
+];
+const params = new URLSearchParams(window.location.search);
+const member = (params.get('member') || '').trim().toLowerCase();
+if (ALLOWLIST.includes(member)) {
   document.getElementById('app').style.display = 'block';
   loadData();
 } else {
   document.getElementById('gate').style.display = 'flex';
 }
 
+// Tab nav
+document.querySelectorAll('.tab-btn').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(x => x.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    document.getElementById('panel-' + b.dataset.tab).classList.add('active');
+  });
+});
+
+let DATA = null;
+
 function fmt(n) { return n == null ? '<span class="text-gray-500">No data</span>' : n.toLocaleString(); }
-function eur(n) { return n == null ? '<span class="text-gray-500">-</span>' : '€' + Math.round(n).toLocaleString(); }
-function scoreColor(s) {
-  if (s == null) return 'text-gray-500';
-  if (s >= 1.3) return 'text-green-400 font-semibold';
-  if (s >= 1.0) return 'text-yellow-300 font-semibold';
-  if (s >= 0.7) return 'text-orange-400 font-semibold';
-  return 'text-red-400 font-semibold';
+function eur(n) { return n == null ? '--' : '&euro;' + Math.round(n).toLocaleString(); }
+function scoreBadge(s) {
+  if (s == null) return '--';
+  let dot = s >= 1.5 ? '&#x1F7E2;' : s >= 1.0 ? '&#x1F7E1;' : s >= 0.5 ? '&#x1F7E0;' : '&#x1F534;';
+  return s.toFixed(2) + ' ' + dot;
 }
 
 async function loadData() {
   try {
-    var res = await fetch('data.json', { cache: 'no-store' });
-    var data = await res.json();
-    document.getElementById('dataMeta').textContent = 'Updated ' + data.generated_at + ' . methodology v' + data.methodology_version;
-    document.getElementById('sourceLine').textContent = data.source;
-    renderQuarterly(data.quarterly);
-    renderCost(data.cost || []);
+    const res = await fetch('data.json', { cache: 'no-store' });
+    DATA = await res.json();
+    document.getElementById('dataMeta').textContent =
+      'Updated ' + DATA.generated_at + ' . methodology v' + DATA.methodology_version;
+    document.getElementById('sourceLine').textContent = DATA.source;
+    renderQuarterly(DATA.quarterly || []);
+    renderCost(DATA.cost || []);
+    initWBR(DATA.wbr_comments || []);
   } catch (err) {
-    document.getElementById('dataMeta').innerHTML = '<span class="text-red-400">data.json failed to load</span>';
+    document.getElementById('dataMeta').innerHTML =
+      '<span class="text-red-400">data.json failed to load</span>';
     console.error(err);
   }
 }
 
 function renderQuarterly(rows) {
-  var tbody = document.getElementById('quarterlyTbody');
-  tbody.innerHTML = rows.map(function(r) {
-    var hps = r.team_size > 0 ? (r.hired / r.team_size).toFixed(2) : '-';
-    var tag = r.in_progress ? ' <span class="tag bg-yellow-700 text-yellow-100 ml-1">in progress</span>' : '';
-    var sourcersAttr = (r.sourcers || []).join('&#10;');
+  const tbody = document.getElementById('quarterlyTbody');
+  tbody.innerHTML = rows.map(r => {
+    const hps = r.team_size > 0 ? (r.hired / r.team_size).toFixed(2) : '--';
+    const tag = r.in_progress ? ' <span class="tag bg-yellow-700 text-yellow-100 ml-1">in progress</span>' : '';
+    const sourcers = (r.sourcers || []).join('&#10;');
     return '<tr class="border-t border-gray-700 hover:bg-gray-900/50">' +
       '<td class="p-3 font-medium">' + r.q + tag + '</td>' +
       '<td class="text-right p-3">' + fmt(r.contacted) + '</td>' +
@@ -165,24 +268,106 @@ function renderQuarterly(rows) {
       '<td class="text-right p-3">' + fmt(r.ats) + '</td>' +
       '<td class="text-right p-3">' + fmt(r.offered) + '</td>' +
       '<td class="text-right p-3">' + fmt(r.hired) + '</td>' +
-      '<td class="text-right p-3" title="' + sourcersAttr + '">' + fmt(r.team_size) + '</td>' +
+      '<td class="text-right p-3 cursor-help" title="' + sourcers + '">' + fmt(r.team_size) + '</td>' +
       '<td class="text-right p-3 bg-gray-900/40">' + hps + '</td>' +
     '</tr>';
   }).join('');
 }
 
 function renderCost(rows) {
-  var tbody = document.getElementById('costTbody');
-  tbody.innerHTML = rows.map(function(r) {
-    return '<tr class="border-t border-gray-700 hover:bg-gray-900/50">' +
-      '<td class="p-3 font-medium">' + r.q + '</td>' +
-      '<td class="text-right p-3">' + eur(r.int_cost) + '</td>' +
-      '<td class="text-right p-3">' + eur(r.ext_rev) + '</td>' +
-      '<td class="text-right p-3">' + eur(r.ext_cost) + '</td>' +
-      '<td class="text-right p-3">' + eur(r.ext_margin) + '</td>' +
-      '<td class="text-right p-3 ' + scoreColor(r.score) + '">' + (r.score != null ? r.score.toFixed(2) : '-') + '</td>' +
-      '<td class="text-right p-3">' + fmt(r.hires) + '</td>' +
-      '<td class="text-right p-3 bg-gray-900/40">' + eur(r.cost_per_hire) + '</td>' +
+  const tbody = document.getElementById('costTbody');
+  tbody.innerHTML = rows.map(r =>
+    '<tr class="border-t border-gray-700 hover:bg-gray-900/50">' +
+    '<td class="p-3 font-medium">' + r.q + '</td>' +
+    '<td class="text-right p-3">' + eur(r.int_cost) + '</td>' +
+    '<td class="text-right p-3">' + eur(r.ext_rev) + '</td>' +
+    '<td class="text-right p-3">' + eur(r.ext_cost) + '</td>' +
+    '<td class="text-right p-3">' + eur(r.ext_margin) + '</td>' +
+    '<td class="text-right p-3">' + scoreBadge(r.score) + '</td>' +
+    '<td class="text-right p-3">' + (r.hires == null ? '--' : r.hires) + '</td>' +
+    '<td class="text-right p-3">' + eur(r.cost_per_hire) + '</td>' +
+    '</tr>'
+  ).join('');
+}
+
+let WBR_ROWS = [];
+function initWBR(rows) {
+  WBR_ROWS = rows;
+  const sourcers = [...new Set(rows.map(r => r.ts))].sort();
+  const years = [...new Set(rows.map(r => r.year))].sort((a,b)=>b-a);
+  const sSel = document.getElementById('wbrSourcer');
+  const ySel = document.getElementById('wbrYear');
+  sSel.innerHTML = sourcers.map(s => '<option>' + s + '</option>').join('');
+  ySel.innerHTML = years.map(y => '<option>' + y + '</option>').join('');
+  ['wbrSourcer','wbrYear','wbrPeriod'].forEach(id =>
+    document.getElementById(id).addEventListener('change', renderWBR)
+  );
+  renderWBR();
+}
+
+function pctColor(pct) {
+  if (pct === null) return '';
+  if (pct >= 100) return 'bg-green-900 text-green-200';
+  if (pct >= 80)  return 'bg-yellow-900 text-yellow-200';
+  return 'bg-red-900 text-red-200';
+}
+function quarterOf(wk) { return Math.ceil(wk / 13); }
+
+function renderWBR() {
+  const sourcer = document.getElementById('wbrSourcer').value;
+  const year = parseInt(document.getElementById('wbrYear').value);
+  const period = document.getElementById('wbrPeriod').value;
+  const rows = WBR_ROWS.filter(r => r.ts === sourcer && r.year === year).filter(r => {
+    if (period === 'full') return true;
+    if (period === 'H1') return r.week <= 26;
+    if (period === 'H2') return r.week > 26;
+    if (period.startsWith('Q')) return quarterOf(r.week) === parseInt(period[1]);
+    return true;
+  });
+
+  document.getElementById('kpiWeeks').textContent = rows.length;
+  const withT = rows.filter(r => r.target);
+  const pcts = withT.map(r => Math.round(100 * r.contacted / r.target));
+  const avg = pcts.length ? Math.round(pcts.reduce((a,b)=>a+b,0)/pcts.length) : 0;
+  document.getElementById('kpiAvg').textContent = avg + '%';
+  const belowWeeks = withT.filter(r => (100 * r.contacted / r.target) < 100);
+  const redWeeks = withT.filter(r => (100 * r.contacted / r.target) < 80);
+  const belowPct = withT.length ? Math.round(100*belowWeeks.length/withT.length) : 0;
+  document.getElementById('kpiBelow').textContent = belowWeeks.length;
+  document.getElementById('kpiBelowDetail').textContent = belowPct + '% of weeks (' + redWeeks.length + ' red, ' + (belowWeeks.length - redWeeks.length) + ' yellow)';
+  const unexplained = redWeeks.filter(r => !r.comment).length;
+  document.getElementById('kpiUnexplained').textContent = unexplained;
+  document.getElementById('kpiUnexplainedDetail').textContent = unexplained === 0 ? 'All misses commented' : 'red weeks without a comment';
+  document.getElementById('kpiHires').textContent = rows.reduce((a,r)=>a+r.hired,0);
+
+  const tbody = document.getElementById('wbrTbody');
+  tbody.innerHTML = rows.map(r => {
+    const pct = r.target ? Math.round(100 * r.contacted / r.target) : null;
+    const isRed = pct !== null && pct < 80;
+    const missingExplanation = isRed && !r.comment;
+    const pctCell = pct === null
+      ? '<td class="text-right p-3 text-gray-600">--</td>'
+      : '<td class="text-right p-3"><span class="tag ' + pctColor(pct) + '">' + pct + '%</span></td>';
+    const rowCls = missingExplanation
+      ? 'border-t border-red-800 bg-red-950/30 hover:bg-red-950/50 align-top'
+      : 'border-t border-gray-700 hover:bg-gray-900/50 align-top';
+    const commentCell = r.comment
+      ? '<td class="p-3 text-xs text-gray-300">' + r.comment + '</td>'
+      : (isRed
+          ? '<td class="p-3 text-xs text-red-400 font-semibold">&#9888; Missed target - no explanation</td>'
+          : '<td class="p-3 text-xs text-gray-700">--</td>');
+    return '<tr class="' + rowCls + '">' +
+      '<td class="p-3 font-medium whitespace-nowrap">' + r.week_label + '</td>' +
+      '<td class="text-right p-3">' + (r.target || '--') + '</td>' +
+      '<td class="text-right p-3">' + r.contacted + '</td>' +
+      pctCell +
+      '<td class="text-right p-3">' + r.rs + '</td>' +
+      '<td class="text-right p-3">' + r.act_scr + '</td>' +
+      '<td class="text-right p-3">' + r.ats + '</td>' +
+      '<td class="text-right p-3">' + r.offered + '</td>' +
+      '<td class="text-right p-3 font-semibold">' + r.hired + '</td>' +
+      '<td class="p-3 text-xs text-gray-400">' + (r.reasoning || '<span class="text-gray-700">--</span>') + '</td>' +
+      commentCell +
     '</tr>';
   }).join('');
 }
