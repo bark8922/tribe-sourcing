@@ -25,6 +25,7 @@ from keboola.component import CommonInterface
 REPO = "bark8922/tribe-sourcing"
 TARGET_FILE = "data.json"
 INPUT_CSV_NAME = "snowflake_sourcing_dashboard.csv"
+WBR_INPUT_CSV_NAME = "snowflake_wbr_comments.csv"
 METHODOLOGY_VERSION = "1.5"
 QUARTERLY_MIN_CONTACTED = 5
 EXCLUDED_SOURCERS = {"Sanja Pavlovikj"}
@@ -231,6 +232,52 @@ def push_to_github(token, content):
     return commit["sha"]
 
 
+
+def read_wbr_comments(ci):
+    """Read sourcing_wbr_comments CSV. Returns [] if the input mapping
+    isn't wired yet (graceful — lets Phase 1/2 ship without Phase 3)."""
+    for tbl in ci.get_input_tables_definitions():
+        if Path(tbl.full_path).name == WBR_INPUT_CSV_NAME:
+            with open(tbl.full_path, newline="") as f:
+                return list(csv.DictReader(f))
+    return []
+
+
+def build_wbr_comments_array(rows):
+    """Transform CSV rows into the wbr_comments JSON array. One entry per
+    sourcer-week. Front-end filters client-side by sourcer + year + period."""
+    out = []
+    for r in rows:
+        try:
+            year = int(r["ISO_YEAR"])
+            week = int(r["ISO_WEEK"])
+        except (KeyError, ValueError, TypeError):
+            continue
+        target_raw = r.get("TARGET")
+        try:
+            target = int(target_raw) if target_raw not in (None, "", "NULL") else None
+        except (ValueError, TypeError):
+            target = None
+        out.append({
+            "ts":         r.get("TS", ""),
+            "year":       year,
+            "week":       week,
+            "week_label": r.get("WEEK_LABEL", ""),
+            "target":     target,
+            "reasoning":  (r.get("REASONING") or "").strip(),
+            "comment":    (r.get("COMMENT") or "").strip(),
+            "contacted":  int(r.get("CONTACTED") or 0),
+            "rs":         int(r.get("RECRUITER_SCREENS") or 0),
+            "act_scr":    int(r.get("ACTUAL_SCREENS") or 0),
+            "ats":        int(r.get("ATS") or 0),
+            "offered":    int(r.get("OFFERS") or 0),
+            "hired":      int(r.get("HIRES") or 0),
+        })
+    # Sort by year DESC, week DESC, sourcer ASC for stable output
+    out.sort(key=lambda e: (-e["year"], -e["week"], e["ts"]))
+    return out
+
+
 def main():
     print("=== main() called ===", flush=True)
     ci = CommonInterface()
@@ -261,12 +308,25 @@ def main():
         # If finance pull fails, ship phase 1 alone — better than failing the whole refresh.
         print("[phase2] WARNING: cost computation failed: " + str(e), flush=True)
 
+    # Phase 3: WBR comments (graceful — skip if not wired)
+    wbr_comments = []
+    try:
+        wbr_rows = read_wbr_comments(ci)
+        if wbr_rows:
+            wbr_comments = build_wbr_comments_array(wbr_rows)
+            print("[phase3] built " + str(len(wbr_comments)) + " wbr_comments entries", flush=True)
+        else:
+            print("[phase3] no WBR input mapping yet — skipping", flush=True)
+    except Exception as e:
+        print("[phase3] WARNING: wbr_comments build failed: " + str(e), flush=True)
+
     payload = {
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "source": "Keboola sourcing_dashboard_per_sourcer (v1.5) + Finance dashboard ea (ct-based cost classification)",
         "methodology_version": METHODOLOGY_VERSION,
         "quarterly": quarterly,
         "cost": cost,
+        "wbr_comments": wbr_comments,
     }
     content = json.dumps(payload, indent=2, ensure_ascii=False) + "\n"
 
