@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-06-02T16:25:29Z",
+  "generated_at": "2026-06-03T06:45:22Z",
   "source": "Keboola out.c-WBRMBR-weekly-aggregations.sourcing_dashboard_per_sourcer (v1.5: Bench/Internal only + onboarding drop + Sanja excluded + <5 noise filter)",
   "methodology_version": "1.5",
   "quarterly": [
     {
       "q": "2026 Q2",
       "in_progress": true,
-      "contacted": 8679,
-      "pos_resp": 1343,
-      "rs": 1057,
-      "act_scr": 769,
-      "ats": 444,
+      "contacted": 8778,
+      "pos_resp": 1345,
+      "rs": 1058,
+      "act_scr": 774,
+      "ats": 446,
       "offered": 13,
       "hired": 11,
       "team_size": 9,
