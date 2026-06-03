@@ -255,7 +255,7 @@ def build_wbr_comments_array(rows):
             continue
         target_raw = r.get("TARGET")
         try:
-            target = int(target_raw) if target_raw not in (None, "", "NULL") else None
+            target = int(float(target_raw)) if target_raw not in (None, "", "NULL") else None
         except (ValueError, TypeError):
             target = None
         out.append({
@@ -266,12 +266,12 @@ def build_wbr_comments_array(rows):
             "target":     target,
             "reasoning":  (r.get("REASONING") or "").strip(),
             "comment":    (r.get("COMMENT") or "").strip(),
-            "contacted":  int(r.get("CONTACTED") or 0),
-            "rs":         int(r.get("RECRUITER_SCREENS") or 0),
-            "act_scr":    int(r.get("ACTUAL_SCREENS") or 0),
-            "ats":        int(r.get("ATS") or 0),
-            "offered":    int(r.get("OFFERS") or 0),
-            "hired":      int(r.get("HIRES") or 0),
+            "contacted":  int(float(r.get("CONTACTED") or 0)),
+            "rs":         int(float(r.get("RECRUITER_SCREENS") or 0)),
+            "act_scr":    int(float(r.get("ACTUAL_SCREENS") or 0)),
+            "ats":        int(float(r.get("ATS") or 0)),
+            "offered":    int(float(r.get("OFFERS") or 0)),
+            "hired":      int(float(r.get("HIRES") or 0)),
         })
     # Sort by year DESC, week DESC, sourcer ASC for stable output
     out.sort(key=lambda e: (-e["year"], -e["week"], e["ts"]))
