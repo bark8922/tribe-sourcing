@@ -27,6 +27,14 @@ TARGET_FILE = "data.json"
 INPUT_CSV_NAME = "snowflake_sourcing_dashboard.csv"
 WBR_INPUT_CSV_NAME = "snowflake_wbr_comments.csv"
 CLOSING_INPUT_CSV_NAME = "snowflake_closing_jobs.csv"
+
+# Internal roles -- excluded from Closing Rates (Blake 2026-06-04)
+INTERNAL_CLIENTS = {
+    "BD - Tribe",
+    "Tribe: Talent Pools",
+    "Tribe.xyz - September 2024 Drive",
+    "Tribe.xyz (IR)",
+}
 METHODOLOGY_VERSION = "1.5"
 QUARTERLY_MIN_CONTACTED = 5
 EXCLUDED_SOURCERS = {"Sanja Pavlovikj"}
@@ -294,30 +302,43 @@ def _truthy(v):
 
 
 def build_closing_rates(rows):
-    """Job-level aggregator (Gustavo methodology).
-    Each row in `rows` is one effectively-closed job since 2025-01-01.
-    Closed-by-sourcing = job has >=1 hire AND the hire was sourced by the
-    job\'s responsible sourcer AND that sourcer is on the roster.
-    Emits 3 arrays: quarterly, by_client, by_sourcer.
-    Each aggregate row carries both total and individual-only counts so
-    the front-end toggle can flip between including/excluding bulk jobs."""
+    """Job-level aggregator (Gustavo methodology + Blake internal-exclusion).
+    Filters out internal roles, then emits:
+      - quarterly: top table (bulk/ind split per quarter)
+      - by_client: aggregated across all quarters
+      - by_sourcer: aggregated across all quarters
+      - by_client_per_quarter: dict keyed by quarter string -> [client rows]
+      - by_sourcer_per_quarter: dict keyed by quarter string -> [sourcer rows]
+    Front-end uses these slices when the user clicks a quarter row."""
     if not rows:
-        return {"quarterly": [], "by_client": [], "by_sourcer": []}
+        return {
+            "quarterly": [], "by_client": [], "by_sourcer": [],
+            "by_client_per_quarter": {}, "by_sourcer_per_quarter": {},
+        }
 
-    qtr = defaultdict(lambda: {
-        "bulk_closed": 0, "ind_closed": 0,
-        "bulk_sourced": 0, "ind_sourced": 0,
-    })
-    cli = defaultdict(lambda: {
-        "closed_total": 0, "closed_ind": 0,
-        "sourced_total": 0, "sourced_ind": 0,
-        "has_bulk": False,
-    })
-    src = defaultdict(lambda: {
-        "responsible_total": 0, "responsible_ind": 0,
-        "closed_by_them_total": 0, "closed_by_them_ind": 0,
-        "bulk_driven_count": 0, "ind_driven_count": 0,
-    })
+    # Pre-filter internal roles
+    rows = [r for r in rows if (r.get("CLIENT") or "").strip() not in INTERNAL_CLIENTS]
+
+    def _empty_qtr():
+        return {"bulk_closed": 0, "ind_closed": 0, "bulk_sourced": 0, "ind_sourced": 0}
+    def _empty_client():
+        return {
+            "closed_total": 0, "closed_ind": 0,
+            "sourced_total": 0, "sourced_ind": 0,
+            "has_bulk": False,
+        }
+    def _empty_sourcer():
+        return {
+            "responsible_total": 0, "responsible_ind": 0,
+            "closed_by_them_total": 0, "closed_by_them_ind": 0,
+            "bulk_driven_count": 0, "ind_driven_count": 0,
+        }
+
+    qtr = defaultdict(_empty_qtr)
+    cli_all = defaultdict(_empty_client)
+    src_all = defaultdict(_empty_sourcer)
+    cli_qtr = defaultdict(lambda: defaultdict(_empty_client))   # quarter -> client -> stats
+    src_qtr = defaultdict(lambda: defaultdict(_empty_sourcer))  # quarter -> sourcer -> stats
 
     for r in rows:
         try:
@@ -327,6 +348,7 @@ def build_closing_rates(rows):
             continue
         if y < 2025 or q < 1 or q > 4:
             continue
+        q_key = f"{y} Q{q}"
         is_bulk = _truthy(r.get("IS_BULK_JOB"))
         closed_by_sourcing = _truthy(r.get("CLOSED_BY_SOURCING"))
         responsible_in_roster = _truthy(r.get("IS_RESPONSIBLE_IN_ROSTER"))
@@ -342,42 +364,57 @@ def build_closing_rates(rows):
             if closed_by_sourcing: b["ind_sourced"] += 1
 
         if client:
-            c = cli[client]
-            c["closed_total"] += 1
-            if closed_by_sourcing: c["sourced_total"] += 1
-            if is_bulk:
-                c["has_bulk"] = True
-            else:
-                c["closed_ind"] += 1
-                if closed_by_sourcing: c["sourced_ind"] += 1
+            for bucket in (cli_all[client], cli_qtr[q_key][client]):
+                bucket["closed_total"] += 1
+                if closed_by_sourcing: bucket["sourced_total"] += 1
+                if is_bulk:
+                    bucket["has_bulk"] = True
+                else:
+                    bucket["closed_ind"] += 1
+                    if closed_by_sourcing: bucket["sourced_ind"] += 1
 
         if responsible_in_roster and sourcer:
-            s = src[sourcer]
-            s["responsible_total"] += 1
-            if closed_by_sourcing: s["closed_by_them_total"] += 1
-            if is_bulk:
-                if closed_by_sourcing: s["bulk_driven_count"] += 1
-            else:
-                s["responsible_ind"] += 1
-                if closed_by_sourcing:
-                    s["closed_by_them_ind"] += 1
-                    s["ind_driven_count"] += 1
+            for bucket in (src_all[sourcer], src_qtr[q_key][sourcer]):
+                bucket["responsible_total"] += 1
+                if closed_by_sourcing: bucket["closed_by_them_total"] += 1
+                if is_bulk:
+                    if closed_by_sourcing: bucket["bulk_driven_count"] += 1
+                else:
+                    bucket["responsible_ind"] += 1
+                    if closed_by_sourcing:
+                        bucket["closed_by_them_ind"] += 1
+                        bucket["ind_driven_count"] += 1
 
     quarterly = sorted(
         [{"q": f"{y} Q{q}", **v} for (y, q), v in qtr.items()],
         key=lambda x: x["q"], reverse=True,
     )
-    by_client = sorted(
-        [{"client": k, **v, "is_bulk_client": v["has_bulk"]} for k, v in cli.items() if v["closed_total"] >= 5],
-        key=lambda x: -x["closed_total"],
-    )
-    by_sourcer = sorted(
-        [{"sourcer": k, **v,
-          "is_bulk_driven": v["bulk_driven_count"] > v["ind_driven_count"]}
-         for k, v in src.items()],
-        key=lambda x: -x["closed_by_them_total"],
-    )
-    return {"quarterly": quarterly, "by_client": by_client, "by_sourcer": by_sourcer}
+
+    def _client_list(cli_map):
+        return sorted(
+            [{"client": k, **v, "is_bulk_client": v["has_bulk"]} for k, v in cli_map.items() if v["closed_total"] >= 5],
+            key=lambda x: -x["closed_total"],
+        )
+    def _sourcer_list(src_map):
+        return sorted(
+            [{"sourcer": k, **v,
+              "is_bulk_driven": v["bulk_driven_count"] > v["ind_driven_count"]}
+             for k, v in src_map.items()],
+            key=lambda x: -x["closed_by_them_total"],
+        )
+
+    by_client = _client_list(cli_all)
+    by_sourcer = _sourcer_list(src_all)
+    by_client_per_quarter = {qk: _client_list(m) for qk, m in cli_qtr.items()}
+    by_sourcer_per_quarter = {qk: _sourcer_list(m) for qk, m in src_qtr.items()}
+
+    return {
+        "quarterly": quarterly,
+        "by_client": by_client,
+        "by_sourcer": by_sourcer,
+        "by_client_per_quarter": by_client_per_quarter,
+        "by_sourcer_per_quarter": by_sourcer_per_quarter,
+    }
 
 def main():
     print("=== main() called ===", flush=True)
