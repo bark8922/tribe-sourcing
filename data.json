@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-06-03T17:47:24Z",
+  "generated_at": "2026-06-04T06:44:55Z",
   "source": "Keboola sourcing_dashboard_per_sourcer (v1.5) + Finance dashboard ea (ct-based cost classification)",
   "methodology_version": "1.5",
   "quarterly": [
     {
       "q": "2026 Q2",
       "in_progress": true,
-      "contacted": 9130,
-      "pos_resp": 1359,
-      "rs": 1072,
-      "act_scr": 790,
-      "ats": 452,
-      "offered": 13,
+      "contacted": 9171,
+      "pos_resp": 1370,
+      "rs": 1075,
+      "act_scr": 796,
+      "ats": 457,
+      "offered": 14,
       "hired": 11,
       "team_size": 9,
       "sourcers": [
