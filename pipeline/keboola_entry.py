@@ -26,6 +26,7 @@ REPO = "bark8922/tribe-sourcing"
 TARGET_FILE = "data.json"
 INPUT_CSV_NAME = "snowflake_sourcing_dashboard.csv"
 WBR_INPUT_CSV_NAME = "snowflake_wbr_comments.csv"
+CLOSING_INPUT_CSV_NAME = "snowflake_closing_hires.csv"
 METHODOLOGY_VERSION = "1.5"
 QUARTERLY_MIN_CONTACTED = 5
 EXCLUDED_SOURCERS = {"Sanja Pavlovikj"}
@@ -278,6 +279,79 @@ def build_wbr_comments_array(rows):
     return out
 
 
+
+def read_closing_hires(ci):
+    """Read sourcing_closing_hires CSV. Returns [] if input mapping isn't wired."""
+    for tbl in ci.get_input_tables_definitions():
+        if Path(tbl.full_path).name == CLOSING_INPUT_CSV_NAME:
+            with open(tbl.full_path, newline="") as f:
+                return list(csv.DictReader(f))
+    return []
+
+
+def _truthy(v):
+    return str(v).strip().lower() in ("true", "1", "t", "yes")
+
+
+def build_closing_rates(rows):
+    """From hire-level fact table, build 3 pre-aggregated arrays:
+    quarterly, by_client, by_sourcer. Front-end picks which to render."""
+    if not rows:
+        return {"quarterly": [], "by_client": [], "by_sourcer": []}
+
+    qtr = defaultdict(lambda: {"bulk": 0, "ind": 0, "src_bulk": 0, "src_ind": 0})
+    cli = defaultdict(lambda: {"hires": 0, "sourced": 0, "is_bulk_client": False})
+    src = defaultdict(lambda: {"hires_closed": 0, "bulk_driven": 0, "individual_driven": 0})
+
+    for r in rows:
+        try:
+            y = int(float(r.get("ISO_YEAR") or 0))
+            q = int(float(r.get("QUARTER") or 0))
+        except (ValueError, TypeError):
+            continue
+        if y < 2025 or q < 1 or q > 4:
+            continue
+        is_bulk = _truthy(r.get("IS_BULK_ROLE"))
+        is_sourced = _truthy(r.get("IS_SOURCED_BY_ROSTER"))
+        client = (r.get("CLIENT") or "").strip()
+        sourcer = (r.get("SOURCER") or "").strip()
+
+        bucket = qtr[(y, q)]
+        if is_bulk:
+            bucket["bulk"] += 1
+            if is_sourced: bucket["src_bulk"] += 1
+        else:
+            bucket["ind"] += 1
+            if is_sourced: bucket["src_ind"] += 1
+
+        if client:
+            c = cli[client]
+            c["hires"] += 1
+            if is_sourced: c["sourced"] += 1
+            if is_bulk: c["is_bulk_client"] = True
+
+        if is_sourced and sourcer:
+            s = src[sourcer]
+            s["hires_closed"] += 1
+            if is_bulk: s["bulk_driven"] += 1
+            else: s["individual_driven"] += 1
+
+    quarterly = sorted(
+        [{"q": f"{y} Q{q}", **v} for (y, q), v in qtr.items()],
+        key=lambda x: x["q"], reverse=True,
+    )
+    by_client = sorted(
+        [{"client": k, **v} for k, v in cli.items() if v["hires"] >= 5],
+        key=lambda x: -x["hires"],
+    )
+    by_sourcer = sorted(
+        [{"sourcer": k, **v, "is_bulk_driven": v["bulk_driven"] > v["individual_driven"]}
+         for k, v in src.items()],
+        key=lambda x: -x["hires_closed"],
+    )
+    return {"quarterly": quarterly, "by_client": by_client, "by_sourcer": by_sourcer}
+
+
 def main():
     print("=== main() called ===", flush=True)
     ci = CommonInterface()
@@ -320,6 +394,20 @@ def main():
     except Exception as e:
         print("[phase3] WARNING: wbr_comments build failed: " + str(e), flush=True)
 
+    # Phase 4: closing rates (graceful)
+    closing_rates = {"quarterly": [], "by_client": [], "by_sourcer": []}
+    try:
+        hire_rows = read_closing_hires(ci)
+        if hire_rows:
+            closing_rates = build_closing_rates(hire_rows)
+            print("[phase4] built closing_rates: q=" + str(len(closing_rates["quarterly"])) +
+                  " clients=" + str(len(closing_rates["by_client"])) +
+                  " sourcers=" + str(len(closing_rates["by_sourcer"])), flush=True)
+        else:
+            print("[phase4] no closing-hires input mapping yet — skipping", flush=True)
+    except Exception as e:
+        print("[phase4] WARNING: closing_rates build failed: " + str(e), flush=True)
+
     payload = {
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "source": "Keboola sourcing_dashboard_per_sourcer (v1.5) + Finance dashboard ea (ct-based cost classification)",
@@ -327,6 +415,7 @@ def main():
         "quarterly": quarterly,
         "cost": cost,
         "wbr_comments": wbr_comments,
+        "closing_rates": closing_rates,
     }
     content = json.dumps(payload, indent=2, ensure_ascii=False) + "\n"
 

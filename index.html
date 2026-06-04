@@ -13,6 +13,12 @@
   .tab-btn.active { color:#fff; font-weight:600; border-bottom-color:#3b82f6; }
   .tab-panel { display:none; }
   .tab-panel.active { display:block; }
+  .sortable { cursor:pointer; user-select:none; }
+  .sortable:hover { color:#fff; }
+  .sortable .arrow { opacity:0.4; font-size:10px; margin-left:4px; }
+  .sortable.active .arrow { opacity:1; }
+  .toggle-mini { display:inline-flex; align-items:center; gap:6px; font-size:10px; font-weight:500; color:#9ca3af; }
+  .toggle-mini input { accent-color:#3b82f6; }
 </style>
 </head>
 <body class="min-h-screen p-6">
@@ -35,6 +41,7 @@
     <button class="tab-btn active" data-tab="ts">TS-Summary</button>
     <button class="tab-btn" data-tab="cost">Cost &amp; Sustainability</button>
     <button class="tab-btn" data-tab="wbr">WBR Comments</button>
+    <button class="tab-btn" data-tab="closing">Closing Rates</button>
   </div>
 
   <div class="tab-panel active" id="panel-ts">
@@ -196,6 +203,87 @@
     </div>
   </div>
 
+  <div class="tab-panel" id="panel-closing">
+    <div class="bg-gray-800 border border-gray-700 rounded-lg p-4 mb-6">
+      <div class="flex items-start gap-2 mb-3">
+        <span class="tag bg-blue-700 text-blue-100 flex-shrink-0">METHODOLOGY</span>
+        <p class="text-sm text-gray-300 leading-relaxed">
+          <strong>Hire-based.</strong> Each hire = one closing event. Sourced = the candidate&#39;s first event was created by one of our 19 roster sourcers. Bucketed by actual hire date.
+        </p>
+      </div>
+      <div class="text-xs text-gray-400 ml-1">
+        <strong class="text-gray-200">Bulk roles</strong> (11+ hires on one job, mostly Wolt courier batches) are tagged with a purple chip. The toggle in the rate column controls whether bulk hires factor into the closing-rate calculation.
+      </div>
+    </div>
+    <div class="bg-gray-800 border border-gray-700 rounded-lg overflow-hidden mb-6">
+      <div class="p-4 border-b border-gray-700">
+        <h2 class="text-lg font-semibold">Closing rate by quarter</h2>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="bg-gray-900 text-gray-300 uppercase text-xs">
+            <tr>
+              <th class="text-left p-3">Quarter</th>
+              <th class="text-right p-3">Bulk hires</th>
+              <th class="text-right p-3">Individual hires</th>
+              <th class="text-right p-3">Total hires</th>
+              <th class="text-right p-3">Sourced by us</th>
+              <th class="text-right p-3 bg-gray-800">
+                <div class="flex flex-col items-end gap-1">
+                  <span>Closing rate</span>
+                  <label class="toggle-mini">
+                    <input type="checkbox" id="closingIncludeBulk" checked>
+                    incl. bulk
+                  </label>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody id="closingQtrTbody"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="grid grid-cols-2 gap-6">
+      <div class="bg-gray-800 border border-gray-700 rounded-lg overflow-hidden">
+        <div class="p-4 border-b border-gray-700">
+          <h2 class="text-lg font-semibold">By client</h2>
+          <p class="text-xs text-gray-500 mt-1">2025+. Click column headers to sort.</p>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead class="bg-gray-900 text-gray-300 uppercase text-xs">
+              <tr>
+                <th class="text-left p-3 sortable" data-sort="client" data-table="closingClient">Client <span class="arrow">&#9650;&#9660;</span></th>
+                <th class="text-right p-3 sortable" data-sort="hires" data-table="closingClient">Hires <span class="arrow">&#9650;&#9660;</span></th>
+                <th class="text-right p-3 sortable" data-sort="sourced" data-table="closingClient">Sourced <span class="arrow">&#9650;&#9660;</span></th>
+                <th class="text-right p-3 sortable" data-sort="rate" data-table="closingClient">Rate <span class="arrow">&#9650;&#9660;</span></th>
+              </tr>
+            </thead>
+            <tbody id="closingClientTbody"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="bg-gray-800 border border-gray-700 rounded-lg overflow-hidden">
+        <div class="p-4 border-b border-gray-700">
+          <h2 class="text-lg font-semibold">By sourcer</h2>
+          <p class="text-xs text-gray-500 mt-1">2025+. Click column headers to sort.</p>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead class="bg-gray-900 text-gray-300 uppercase text-xs">
+              <tr>
+                <th class="text-left p-3 sortable" data-sort="sourcer" data-table="closingSourcer">Sourcer <span class="arrow">&#9650;&#9660;</span></th>
+                <th class="text-right p-3 sortable active" data-sort="hires_closed" data-table="closingSourcer">Hires closed <span class="arrow">&#9660;</span></th>
+                <th class="text-right p-3 sortable" data-sort="is_bulk_driven" data-table="closingSourcer">Bulk-driven? <span class="arrow">&#9650;&#9660;</span></th>
+              </tr>
+            </thead>
+            <tbody id="closingSourcerTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="text-xs text-gray-500 text-right mt-6">
     Sourcing Dashboard . bark8922/tribe-sourcing
   </div>
@@ -246,6 +334,7 @@ async function loadData() {
     renderQuarterly(DATA.quarterly || []);
     renderCost(DATA.cost || []);
     initWBR(DATA.wbr_comments || []);
+    initClosing(DATA.closing_rates || null);
   } catch (err) {
     document.getElementById('dataMeta').innerHTML =
       '<span class="text-red-400">data.json failed to load</span>';
@@ -370,6 +459,84 @@ function renderWBR() {
       commentCell +
     '</tr>';
   }).join('');
+}
+
+
+let CLOSING = {quarterly:[], by_client:[], by_sourcer:[]};
+const closingSort = {
+  closingClient: {key:'hires', dir:'desc'},
+  closingSourcer: {key:'hires_closed', dir:'desc'},
+};
+function closingRateColor(r) {
+  if (r >= 30) return 'bg-green-900 text-green-200';
+  if (r >= 15) return 'bg-yellow-900 text-yellow-200';
+  return 'bg-red-900 text-red-200';
+}
+function initClosing(data) {
+  CLOSING = data || {quarterly:[], by_client:[], by_sourcer:[]};
+  const cb = document.getElementById('closingIncludeBulk');
+  if (cb) cb.addEventListener('change', renderClosing);
+  document.querySelectorAll('th.sortable').forEach(th => {
+    const t = th.dataset.table;
+    if (!t || !t.startsWith('closing')) return;
+    th.addEventListener('click', () => {
+      const st = closingSort[t];
+      const k = th.dataset.sort;
+      if (st.key === k) st.dir = st.dir === 'desc' ? 'asc' : 'desc';
+      else { st.key = k; st.dir = 'desc'; }
+      renderClosing();
+    });
+  });
+  renderClosing();
+}
+function renderClosing() {
+  const incBulk = document.getElementById('closingIncludeBulk') && document.getElementById('closingIncludeBulk').checked;
+  document.getElementById('closingQtrTbody').innerHTML = CLOSING.quarterly.map(r => {
+    const tot = (r.bulk || 0) + (r.ind || 0);
+    const s = (r.src_ind || 0) + (incBulk ? (r.src_bulk || 0) : 0);
+    const denom = (r.ind || 0) + (incBulk ? (r.bulk || 0) : 0);
+    const pct = denom ? (100 * s / denom) : 0;
+    return '<tr class="border-t border-gray-700 hover:bg-gray-900/50">' +
+      '<td class="p-3 font-medium">' + r.q + '</td>' +
+      '<td class="text-right p-3 text-gray-400">' + (r.bulk || 0).toLocaleString() + '</td>' +
+      '<td class="text-right p-3">' + (r.ind || 0).toLocaleString() + '</td>' +
+      '<td class="text-right p-3 font-semibold">' + tot.toLocaleString() + '</td>' +
+      '<td class="text-right p-3">' + s.toLocaleString() + '</td>' +
+      '<td class="text-right p-3 bg-gray-900/40"><span class="tag ' + closingRateColor(pct) + '">' + pct.toFixed(1) + '%</span></td>' +
+    '</tr>';
+  }).join('');
+  const stc = closingSort.closingClient;
+  const clients = [...CLOSING.by_client].sort((a,b) => {
+    let av, bv;
+    if (stc.key === 'rate') { av = a.hires ? a.sourced/a.hires : 0; bv = b.hires ? b.sourced/b.hires : 0; }
+    else { av = a[stc.key]; bv = b[stc.key]; }
+    if (typeof av === 'string') return stc.dir === 'desc' ? bv.localeCompare(av) : av.localeCompare(bv);
+    return stc.dir === 'desc' ? bv - av : av - bv;
+  });
+  document.getElementById('closingClientTbody').innerHTML = clients.map(r => {
+    const pct = r.hires ? (100 * r.sourced / r.hires) : 0;
+    return '<tr class="border-t border-gray-700 hover:bg-gray-900/50">' +
+      '<td class="p-3">' + r.client + (r.is_bulk_client ? ' <span class="tag bg-purple-900 text-purple-200 ml-1">bulk</span>' : '') + '</td>' +
+      '<td class="text-right p-3">' + r.hires.toLocaleString() + '</td>' +
+      '<td class="text-right p-3">' + r.sourced + '</td>' +
+      '<td class="text-right p-3"><span class="tag ' + closingRateColor(pct) + '">' + pct.toFixed(1) + '%</span></td>' +
+    '</tr>';
+  }).join('');
+  const sts = closingSort.closingSourcer;
+  const sourcers = [...CLOSING.by_sourcer].sort((a,b) => {
+    let av, bv;
+    if (sts.key === 'is_bulk_driven') { av = a.is_bulk_driven ? 1 : 0; bv = b.is_bulk_driven ? 1 : 0; }
+    else { av = a[sts.key]; bv = b[sts.key]; }
+    if (typeof av === 'string') return sts.dir === 'desc' ? bv.localeCompare(av) : av.localeCompare(bv);
+    return sts.dir === 'desc' ? bv - av : av - bv;
+  });
+  document.getElementById('closingSourcerTbody').innerHTML = sourcers.map(r =>
+    '<tr class="border-t border-gray-700 hover:bg-gray-900/50">' +
+    '<td class="p-3">' + r.sourcer + '</td>' +
+    '<td class="text-right p-3 font-semibold">' + r.hires_closed + '</td>' +
+    '<td class="text-right p-3 text-xs">' + (r.is_bulk_driven ? '<span class="tag bg-purple-900 text-purple-200">yes</span>' : '<span class="text-gray-600">no</span>') + '</td>' +
+    '</tr>'
+  ).join('');
 }
 </script>
 </body>
