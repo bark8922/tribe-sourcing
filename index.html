@@ -505,38 +505,58 @@ function renderClosing() {
       '<td class="text-right p-3 bg-gray-900/40"><span class="tag ' + closingRateColor(pct) + '">' + pct.toFixed(1) + '%</span></td>' +
     '</tr>';
   }).join('');
+
   const stc = closingSort.closingClient;
   const clients = [...CLOSING.by_client].sort((a,b) => {
+    const ah = incBulk ? (a.hires_total||0) : (a.hires_ind||0);
+    const bh = incBulk ? (b.hires_total||0) : (b.hires_ind||0);
+    const as = incBulk ? (a.sourced_total||0) : (a.sourced_ind||0);
+    const bs = incBulk ? (b.sourced_total||0) : (b.sourced_ind||0);
     let av, bv;
-    if (stc.key === 'rate') { av = a.hires ? a.sourced/a.hires : 0; bv = b.hires ? b.sourced/b.hires : 0; }
-    else { av = a[stc.key]; bv = b[stc.key]; }
+    if (stc.key === 'rate')        { av = ah ? as/ah : 0; bv = bh ? bs/bh : 0; }
+    else if (stc.key === 'hires')  { av = ah; bv = bh; }
+    else if (stc.key === 'sourced'){ av = as; bv = bs; }
+    else                            { av = a[stc.key]; bv = b[stc.key]; }
     if (typeof av === 'string') return stc.dir === 'desc' ? bv.localeCompare(av) : av.localeCompare(bv);
     return stc.dir === 'desc' ? bv - av : av - bv;
   });
-  document.getElementById('closingClientTbody').innerHTML = clients.map(r => {
-    const pct = r.hires ? (100 * r.sourced / r.hires) : 0;
+  document.getElementById('closingClientTbody').innerHTML = clients.filter(r => {
+    const h = incBulk ? (r.hires_total||0) : (r.hires_ind||0);
+    return h > 0;
+  }).map(r => {
+    const h = incBulk ? (r.hires_total||0) : (r.hires_ind||0);
+    const s = incBulk ? (r.sourced_total||0) : (r.sourced_ind||0);
+    const pct = h ? (100 * s / h) : 0;
     return '<tr class="border-t border-gray-700 hover:bg-gray-900/50">' +
       '<td class="p-3">' + r.client + (r.is_bulk_client ? ' <span class="tag bg-purple-900 text-purple-200 ml-1">bulk</span>' : '') + '</td>' +
-      '<td class="text-right p-3">' + r.hires.toLocaleString() + '</td>' +
-      '<td class="text-right p-3">' + r.sourced + '</td>' +
+      '<td class="text-right p-3">' + h.toLocaleString() + '</td>' +
+      '<td class="text-right p-3">' + s + '</td>' +
       '<td class="text-right p-3"><span class="tag ' + closingRateColor(pct) + '">' + pct.toFixed(1) + '%</span></td>' +
     '</tr>';
   }).join('');
+
   const sts = closingSort.closingSourcer;
   const sourcers = [...CLOSING.by_sourcer].sort((a,b) => {
+    const ah = incBulk ? (a.hires_total||0) : (a.hires_ind||0);
+    const bh = incBulk ? (b.hires_total||0) : (b.hires_ind||0);
     let av, bv;
-    if (sts.key === 'is_bulk_driven') { av = a.is_bulk_driven ? 1 : 0; bv = b.is_bulk_driven ? 1 : 0; }
-    else { av = a[sts.key]; bv = b[sts.key]; }
+    if (sts.key === 'hires_closed')       { av = ah; bv = bh; }
+    else if (sts.key === 'is_bulk_driven'){ av = a.is_bulk_driven ? 1 : 0; bv = b.is_bulk_driven ? 1 : 0; }
+    else                                   { av = a[sts.key]; bv = b[sts.key]; }
     if (typeof av === 'string') return sts.dir === 'desc' ? bv.localeCompare(av) : av.localeCompare(bv);
     return sts.dir === 'desc' ? bv - av : av - bv;
   });
-  document.getElementById('closingSourcerTbody').innerHTML = sourcers.map(r =>
-    '<tr class="border-t border-gray-700 hover:bg-gray-900/50">' +
-    '<td class="p-3">' + r.sourcer + '</td>' +
-    '<td class="text-right p-3 font-semibold">' + r.hires_closed + '</td>' +
-    '<td class="text-right p-3 text-xs">' + (r.is_bulk_driven ? '<span class="tag bg-purple-900 text-purple-200">yes</span>' : '<span class="text-gray-600">no</span>') + '</td>' +
-    '</tr>'
-  ).join('');
+  document.getElementById('closingSourcerTbody').innerHTML = sourcers.filter(r => {
+    const h = incBulk ? (r.hires_total||0) : (r.hires_ind||0);
+    return h > 0;
+  }).map(r => {
+    const h = incBulk ? (r.hires_total||0) : (r.hires_ind||0);
+    return '<tr class="border-t border-gray-700 hover:bg-gray-900/50">' +
+      '<td class="p-3">' + r.sourcer + '</td>' +
+      '<td class="text-right p-3 font-semibold">' + h + '</td>' +
+      '<td class="text-right p-3 text-xs">' + (r.is_bulk_driven ? '<span class="tag bg-purple-900 text-purple-200">yes</span>' : '<span class="text-gray-600">no</span>') + '</td>' +
+    '</tr>';
+  }).join('');
 }
 </script>
 </body>

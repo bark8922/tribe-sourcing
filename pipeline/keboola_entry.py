@@ -295,13 +295,21 @@ def _truthy(v):
 
 def build_closing_rates(rows):
     """From hire-level fact table, build 3 pre-aggregated arrays:
-    quarterly, by_client, by_sourcer. Front-end picks which to render."""
+    quarterly, by_client, by_sourcer. Each row carries both total and
+    individual-only counts so the front-end toggle can flip the rate."""
     if not rows:
         return {"quarterly": [], "by_client": [], "by_sourcer": []}
 
     qtr = defaultdict(lambda: {"bulk": 0, "ind": 0, "src_bulk": 0, "src_ind": 0})
-    cli = defaultdict(lambda: {"hires": 0, "sourced": 0, "is_bulk_client": False})
-    src = defaultdict(lambda: {"hires_closed": 0, "bulk_driven": 0, "individual_driven": 0})
+    cli = defaultdict(lambda: {
+        "hires_total": 0, "hires_ind": 0,
+        "sourced_total": 0, "sourced_ind": 0,
+        "is_bulk_client": False,
+    })
+    src = defaultdict(lambda: {
+        "hires_total": 0, "hires_ind": 0,
+        "bulk_driven_count": 0, "individual_driven_count": 0,
+    })
 
     for r in rows:
         try:
@@ -326,28 +334,35 @@ def build_closing_rates(rows):
 
         if client:
             c = cli[client]
-            c["hires"] += 1
-            if is_sourced: c["sourced"] += 1
-            if is_bulk: c["is_bulk_client"] = True
+            c["hires_total"] += 1
+            if is_sourced: c["sourced_total"] += 1
+            if is_bulk:
+                c["is_bulk_client"] = True
+            else:
+                c["hires_ind"] += 1
+                if is_sourced: c["sourced_ind"] += 1
 
         if is_sourced and sourcer:
             s = src[sourcer]
-            s["hires_closed"] += 1
-            if is_bulk: s["bulk_driven"] += 1
-            else: s["individual_driven"] += 1
+            s["hires_total"] += 1
+            if is_bulk: s["bulk_driven_count"] += 1
+            else:
+                s["hires_ind"] += 1
+                s["individual_driven_count"] += 1
 
     quarterly = sorted(
         [{"q": f"{y} Q{q}", **v} for (y, q), v in qtr.items()],
         key=lambda x: x["q"], reverse=True,
     )
     by_client = sorted(
-        [{"client": k, **v} for k, v in cli.items() if v["hires"] >= 5],
-        key=lambda x: -x["hires"],
+        [{"client": k, **v} for k, v in cli.items() if v["hires_total"] >= 5],
+        key=lambda x: -x["hires_total"],
     )
     by_sourcer = sorted(
-        [{"sourcer": k, **v, "is_bulk_driven": v["bulk_driven"] > v["individual_driven"]}
+        [{"sourcer": k, **v,
+          "is_bulk_driven": v["bulk_driven_count"] > v["individual_driven_count"]}
          for k, v in src.items()],
-        key=lambda x: -x["hires_closed"],
+        key=lambda x: -x["hires_total"],
     )
     return {"quarterly": quarterly, "by_client": by_client, "by_sourcer": by_sourcer}
 
