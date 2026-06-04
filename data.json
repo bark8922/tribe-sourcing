@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-06-04T08:37:58Z",
+  "generated_at": "2026-06-04T08:45:03Z",
   "source": "Keboola sourcing_dashboard_per_sourcer (v1.5) + Finance dashboard ea (ct-based cost classification)",
   "methodology_version": "1.5",
   "quarterly": [
     {
       "q": "2026 Q2",
       "in_progress": true,
-      "contacted": 9184,
-      "pos_resp": 1370,
+      "contacted": 9203,
+      "pos_resp": 1371,
       "rs": 1075,
       "act_scr": 796,
       "ats": 457,
@@ -14638,7 +14638,7 @@
       {
         "q": "2026 Q2",
         "bulk": 7,
-        "ind": 106,
+        "ind": 107,
         "src_bulk": 0,
         "src_ind": 18
       },
@@ -14729,8 +14729,8 @@
       },
       {
         "client": "AVIV",
-        "hires_total": 22,
-        "hires_ind": 22,
+        "hires_total": 23,
+        "hires_ind": 23,
         "sourced_total": 13,
         "sourced_ind": 13,
         "is_bulk_client": false
@@ -14752,11 +14752,11 @@
         "is_bulk_client": true
       },
       {
-        "client": "Tribe.xyz",
+        "client": "Statista",
         "hires_total": 12,
         "hires_ind": 12,
-        "sourced_total": 6,
-        "sourced_ind": 6,
+        "sourced_total": 12,
+        "sourced_ind": 12,
         "is_bulk_client": false
       },
       {
@@ -14768,11 +14768,11 @@
         "is_bulk_client": false
       },
       {
-        "client": "Statista",
+        "client": "Tribe.xyz",
         "hires_total": 12,
         "hires_ind": 12,
-        "sourced_total": 12,
-        "sourced_ind": 12,
+        "sourced_total": 6,
+        "sourced_ind": 6,
         "is_bulk_client": false
       },
       {
