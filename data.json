@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-04T08:45:03Z",
+  "generated_at": "2026-06-04T08:54:55Z",
   "source": "Keboola sourcing_dashboard_per_sourcer (v1.5) + Finance dashboard ea (ct-based cost classification)",
   "methodology_version": "1.5",
   "quarterly": [
@@ -14752,11 +14752,11 @@
         "is_bulk_client": true
       },
       {
-        "client": "Statista",
+        "client": "Tribe.xyz",
         "hires_total": 12,
         "hires_ind": 12,
-        "sourced_total": 12,
-        "sourced_ind": 12,
+        "sourced_total": 6,
+        "sourced_ind": 6,
         "is_bulk_client": false
       },
       {
@@ -14768,11 +14768,11 @@
         "is_bulk_client": false
       },
       {
-        "client": "Tribe.xyz",
+        "client": "Statista",
         "hires_total": 12,
         "hires_ind": 12,
-        "sourced_total": 6,
-        "sourced_ind": 6,
+        "sourced_total": 12,
+        "sourced_ind": 12,
         "is_bulk_client": false
       },
       {
@@ -14922,7 +14922,7 @@
         "is_bulk_driven": false
       },
       {
-        "sourcer": "Luis Bravo",
+        "sourcer": "Elena Lage",
         "hires_total": 2,
         "hires_ind": 2,
         "bulk_driven_count": 0,
@@ -14930,7 +14930,7 @@
         "is_bulk_driven": false
       },
       {
-        "sourcer": "Elena Lage",
+        "sourcer": "Luis Bravo",
         "hires_total": 2,
         "hires_ind": 2,
         "bulk_driven_count": 0,
