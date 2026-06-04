@@ -23,6 +23,19 @@
   .sortable.active .arrow { opacity:1; }
   .toggle-mini { display:inline-flex; align-items:center; gap:6px; font-size:10px; font-weight:500; color:#9ca3af; }
   .toggle-mini input { accent-color:#3b82f6; }
+  .tt-wrap { position:relative; display:inline-block; cursor:help; }
+  .tt-wrap:hover .tt-box { opacity:1; visibility:visible; transform:translateY(0); }
+  .tt-box {
+    position:absolute; top:100%; right:0; margin-top:4px; z-index:50;
+    background:#1f2937; color:#fff; border:1px solid #374151;
+    padding:8px 10px; border-radius:6px; font-size:11px; font-weight:400;
+    white-space:nowrap; text-align:left; line-height:1.5;
+    box-shadow:0 4px 12px rgba(0,0,0,0.4);
+    opacity:0; visibility:hidden; transform:translateY(-2px);
+    transition:opacity .12s ease, transform .12s ease, visibility .12s;
+    pointer-events:none;
+  }
+  .tt-box-title { font-size:10px; font-weight:600; color:#9ca3af; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:4px; }
 </style>
 </head>
 <body class="min-h-screen p-6">
@@ -352,7 +365,7 @@ function renderQuarterly(rows) {
   tbody.innerHTML = rows.map(r => {
     const hps = r.team_size > 0 ? (r.hired / r.team_size).toFixed(2) : '--';
     const tag = r.in_progress ? ' <span class="tag bg-yellow-700 text-yellow-100 ml-1">in progress</span>' : '';
-    const sourcers = (r.sourcers || []).join('&#10;');
+    const sourcersHtml = (r.sourcers || []).map(s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;')).join('<br>');
     return '<tr class="border-t border-gray-700 hover:bg-gray-900/50">' +
       '<td class="p-3 font-medium">' + r.q + tag + '</td>' +
       '<td class="text-right p-3">' + fmt(r.contacted) + '</td>' +
@@ -362,7 +375,12 @@ function renderQuarterly(rows) {
       '<td class="text-right p-3">' + fmt(r.ats) + '</td>' +
       '<td class="text-right p-3">' + fmt(r.offered) + '</td>' +
       '<td class="text-right p-3">' + fmt(r.hired) + '</td>' +
-      '<td class="text-right p-3 cursor-help" title="' + sourcers + '">' + fmt(r.team_size) + '</td>' +
+      '<td class="text-right p-3">' +
+        '<span class="tt-wrap">' +
+          fmt(r.team_size) +
+          '<span class="tt-box"><span class="tt-box-title">Sourcers in quarter</span>' + sourcersHtml + '</span>' +
+        '</span>' +
+      '</td>' +
       '<td class="text-right p-3 bg-gray-900/40">' + hps + '</td>' +
     '</tr>';
   }).join('');
