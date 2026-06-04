@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-04T08:05:16Z",
+  "generated_at": "2026-06-04T08:37:58Z",
   "source": "Keboola sourcing_dashboard_per_sourcer (v1.5) + Finance dashboard ea (ct-based cost classification)",
   "methodology_version": "1.5",
   "quarterly": [
@@ -14681,214 +14681,260 @@
     "by_client": [
       {
         "client": "Wolt",
-        "hires": 3335,
-        "sourced": 666,
+        "hires_total": 3335,
+        "hires_ind": 1101,
+        "sourced_total": 666,
+        "sourced_ind": 162,
         "is_bulk_client": true
       },
       {
         "client": "Glovo",
-        "hires": 184,
-        "sourced": 18,
+        "hires_total": 184,
+        "hires_ind": 147,
+        "sourced_total": 18,
+        "sourced_ind": 6,
         "is_bulk_client": true
       },
       {
         "client": "Taxfix",
-        "hires": 55,
-        "sourced": 9,
+        "hires_total": 55,
+        "hires_ind": 55,
+        "sourced_total": 9,
+        "sourced_ind": 9,
         "is_bulk_client": false
       },
       {
         "client": "Parloa",
-        "hires": 31,
-        "sourced": 2,
+        "hires_total": 31,
+        "hires_ind": 18,
+        "sourced_total": 2,
+        "sourced_ind": 2,
         "is_bulk_client": true
       },
       {
         "client": "Aleph Alpha",
-        "hires": 29,
-        "sourced": 7,
+        "hires_total": 29,
+        "hires_ind": 29,
+        "sourced_total": 7,
+        "sourced_ind": 7,
         "is_bulk_client": false
       },
       {
         "client": "Nexi",
-        "hires": 26,
-        "sourced": 0,
+        "hires_total": 26,
+        "hires_ind": 26,
+        "sourced_total": 0,
+        "sourced_ind": 0,
         "is_bulk_client": false
       },
       {
         "client": "AVIV",
-        "hires": 22,
-        "sourced": 13,
+        "hires_total": 22,
+        "hires_ind": 22,
+        "sourced_total": 13,
+        "sourced_ind": 13,
         "is_bulk_client": false
       },
       {
         "client": "Eucalyptus",
-        "hires": 19,
-        "sourced": 0,
+        "hires_total": 19,
+        "hires_ind": 19,
+        "sourced_total": 0,
+        "sourced_ind": 0,
         "is_bulk_client": false
       },
       {
         "client": "Doordash",
-        "hires": 16,
-        "sourced": 3,
+        "hires_total": 16,
+        "hires_ind": 4,
+        "sourced_total": 3,
+        "sourced_ind": 3,
         "is_bulk_client": true
       },
       {
         "client": "Tribe.xyz",
-        "hires": 12,
-        "sourced": 6,
+        "hires_total": 12,
+        "hires_ind": 12,
+        "sourced_total": 6,
+        "sourced_ind": 6,
         "is_bulk_client": false
       },
       {
         "client": "PhantomBuster",
-        "hires": 12,
-        "sourced": 0,
+        "hires_total": 12,
+        "hires_ind": 12,
+        "sourced_total": 0,
+        "sourced_ind": 0,
         "is_bulk_client": false
       },
       {
         "client": "Statista",
-        "hires": 12,
-        "sourced": 12,
+        "hires_total": 12,
+        "hires_ind": 12,
+        "sourced_total": 12,
+        "sourced_ind": 12,
         "is_bulk_client": false
       },
       {
         "client": "Wemolo",
-        "hires": 10,
-        "sourced": 10,
+        "hires_total": 10,
+        "hires_ind": 10,
+        "sourced_total": 10,
+        "sourced_ind": 10,
         "is_bulk_client": false
       },
       {
         "client": "Scorewarrior",
-        "hires": 6,
-        "sourced": 0,
+        "hires_total": 6,
+        "hires_ind": 6,
+        "sourced_total": 0,
+        "sourced_ind": 0,
         "is_bulk_client": false
       }
     ],
     "by_sourcer": [
       {
         "sourcer": "Chantal Bozkurt",
-        "hires_closed": 330,
-        "bulk_driven": 233,
-        "individual_driven": 97,
+        "hires_total": 330,
+        "hires_ind": 97,
+        "bulk_driven_count": 233,
+        "individual_driven_count": 97,
         "is_bulk_driven": true
       },
       {
         "sourcer": "Dolores Palotas",
-        "hires_closed": 270,
-        "bulk_driven": 260,
-        "individual_driven": 10,
+        "hires_total": 270,
+        "hires_ind": 10,
+        "bulk_driven_count": 260,
+        "individual_driven_count": 10,
         "is_bulk_driven": true
       },
       {
         "sourcer": "Ejla Suljcic",
-        "hires_closed": 19,
-        "bulk_driven": 5,
-        "individual_driven": 14,
+        "hires_total": 19,
+        "hires_ind": 14,
+        "bulk_driven_count": 5,
+        "individual_driven_count": 14,
         "is_bulk_driven": false
       },
       {
         "sourcer": "Milica Veselinovic",
-        "hires_closed": 18,
-        "bulk_driven": 0,
-        "individual_driven": 18,
+        "hires_total": 18,
+        "hires_ind": 18,
+        "bulk_driven_count": 0,
+        "individual_driven_count": 18,
         "is_bulk_driven": false
       },
       {
         "sourcer": "Andrea Akovic",
-        "hires_closed": 17,
-        "bulk_driven": 0,
-        "individual_driven": 17,
+        "hires_total": 17,
+        "hires_ind": 17,
+        "bulk_driven_count": 0,
+        "individual_driven_count": 17,
         "is_bulk_driven": false
       },
       {
         "sourcer": "Valeriia Yurykova",
-        "hires_closed": 16,
-        "bulk_driven": 5,
-        "individual_driven": 11,
+        "hires_total": 16,
+        "hires_ind": 11,
+        "bulk_driven_count": 5,
+        "individual_driven_count": 11,
         "is_bulk_driven": false
       },
       {
         "sourcer": "Aleksandra Markovic",
-        "hires_closed": 15,
-        "bulk_driven": 8,
-        "individual_driven": 7,
+        "hires_total": 15,
+        "hires_ind": 7,
+        "bulk_driven_count": 8,
+        "individual_driven_count": 7,
         "is_bulk_driven": true
       },
       {
         "sourcer": "Gustavo Loureiro Castro",
-        "hires_closed": 14,
-        "bulk_driven": 0,
-        "individual_driven": 14,
+        "hires_total": 14,
+        "hires_ind": 14,
+        "bulk_driven_count": 0,
+        "individual_driven_count": 14,
         "is_bulk_driven": false
       },
       {
         "sourcer": "Nare Avetisyan",
-        "hires_closed": 11,
-        "bulk_driven": 2,
-        "individual_driven": 9,
+        "hires_total": 11,
+        "hires_ind": 9,
+        "bulk_driven_count": 2,
+        "individual_driven_count": 9,
         "is_bulk_driven": false
       },
       {
         "sourcer": "Rodrigo Gomes",
-        "hires_closed": 10,
-        "bulk_driven": 0,
-        "individual_driven": 10,
+        "hires_total": 10,
+        "hires_ind": 10,
+        "bulk_driven_count": 0,
+        "individual_driven_count": 10,
         "is_bulk_driven": false
       },
       {
         "sourcer": "Zelimir Stajcic",
-        "hires_closed": 9,
-        "bulk_driven": 0,
-        "individual_driven": 9,
+        "hires_total": 9,
+        "hires_ind": 9,
+        "bulk_driven_count": 0,
+        "individual_driven_count": 9,
         "is_bulk_driven": false
       },
       {
         "sourcer": "Marina Lazarevic",
-        "hires_closed": 8,
-        "bulk_driven": 0,
-        "individual_driven": 8,
+        "hires_total": 8,
+        "hires_ind": 8,
+        "bulk_driven_count": 0,
+        "individual_driven_count": 8,
         "is_bulk_driven": false
       },
       {
         "sourcer": "Elena Petrovska",
-        "hires_closed": 7,
-        "bulk_driven": 0,
-        "individual_driven": 7,
+        "hires_total": 7,
+        "hires_ind": 7,
+        "bulk_driven_count": 0,
+        "individual_driven_count": 7,
         "is_bulk_driven": false
       },
       {
         "sourcer": "Alberto Barroca",
-        "hires_closed": 6,
-        "bulk_driven": 3,
-        "individual_driven": 3,
+        "hires_total": 6,
+        "hires_ind": 3,
+        "bulk_driven_count": 3,
+        "individual_driven_count": 3,
         "is_bulk_driven": false
       },
       {
         "sourcer": "Mia Gjorgievska",
-        "hires_closed": 5,
-        "bulk_driven": 0,
-        "individual_driven": 5,
+        "hires_total": 5,
+        "hires_ind": 5,
+        "bulk_driven_count": 0,
+        "individual_driven_count": 5,
         "is_bulk_driven": false
       },
       {
         "sourcer": "Aleksandra Karatanovska",
-        "hires_closed": 4,
-        "bulk_driven": 0,
-        "individual_driven": 4,
+        "hires_total": 4,
+        "hires_ind": 4,
+        "bulk_driven_count": 0,
+        "individual_driven_count": 4,
         "is_bulk_driven": false
       },
       {
         "sourcer": "Luis Bravo",
-        "hires_closed": 2,
-        "bulk_driven": 0,
-        "individual_driven": 2,
+        "hires_total": 2,
+        "hires_ind": 2,
+        "bulk_driven_count": 0,
+        "individual_driven_count": 2,
         "is_bulk_driven": false
       },
       {
         "sourcer": "Elena Lage",
-        "hires_closed": 2,
-        "bulk_driven": 0,
-        "individual_driven": 2,
+        "hires_total": 2,
+        "hires_ind": 2,
+        "bulk_driven_count": 0,
+        "individual_driven_count": 2,
         "is_bulk_driven": false
       }
     ]
