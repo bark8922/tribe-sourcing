@@ -23,6 +23,8 @@
   .sortable.active .arrow { opacity:1; }
   .toggle-mini { display:inline-flex; align-items:center; gap:6px; font-size:10px; font-weight:500; color:#9ca3af; }
   .toggle-mini input { accent-color:#3b82f6; }
+  #panel-intext .tag { min-width:62px; text-align:center; }
+  #panel-intext table th, #panel-intext table td { white-space:nowrap; }
   .tt-wrap { position:relative; display:inline-block; cursor:help; }
   .tt-wrap:hover .tt-box { opacity:1; visibility:visible; transform:translateY(0); }
   .tt-box {
@@ -59,6 +61,7 @@
     <button class="tab-btn" data-tab="cost">Cost &amp; Sustainability</button>
     <button class="tab-btn" data-tab="wbr">WBR Comments</button>
     <button class="tab-btn" data-tab="closing">Closing Rates</button>
+    <button class="tab-btn" data-tab="intext">Internal vs External</button>
   </div>
 
   <div class="tab-panel active" id="panel-ts">
@@ -302,6 +305,48 @@
     </div>
   </div>
 
+  <div class="tab-panel" id="panel-intext">
+    <div class="bg-gray-800 border border-gray-700 rounded-lg p-4 mb-6">
+      <div class="flex items-start gap-2 mb-3">
+        <span class="tag bg-blue-700 text-blue-100 flex-shrink-0">METHODOLOGY</span>
+        <p class="text-sm text-gray-300 leading-relaxed">
+          Each contact is bucketed by what allocation the sourcer was on at the time. <strong>Internal</strong> = work done while on Bench/Internal. <strong>External</strong> = work done while allocated to a client. Numbers are de-duplicated across the team. Hired counts candidates contacted in that quarter who eventually closed (any later date).
+        </p>
+      </div>
+      <div class="mt-3 pt-3 border-t border-gray-700 flex items-center justify-between">
+        <label class="toggle-mini cursor-pointer">
+          <input type="checkbox" id="ieIncludeBulk">
+          Include bulk roles (11+ hires/job, mostly Wolt courier batches)
+        </label>
+        <span class="text-xs text-gray-500" id="ieBulkState">default: bulk roles excluded</span>
+      </div>
+    </div>
+    <div class="bg-gray-800 border border-gray-700 rounded-lg overflow-hidden mb-6">
+      <div class="p-4 border-b border-gray-700">
+        <h2 class="text-lg font-semibold">Internal vs External Sourcing &mdash; quarterly</h2>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="bg-gray-900 text-gray-300 uppercase text-xs">
+            <tr>
+              <th class="text-left p-2 pl-4">Quarter</th>
+              <th class="text-left p-2">Type</th>
+              <th class="text-center p-2">Contacted</th>
+              <th class="text-center p-2">Positive Response</th>
+              <th class="text-center p-2">Recruiter Screens</th>
+              <th class="text-center p-2">Actual Screens</th>
+              <th class="text-center p-2">Moved to ATS</th>
+              <th class="text-center p-2">Offered</th>
+              <th class="text-center p-2">Hired</th>
+              <th class="text-center p-2 pr-4">Jobs</th>
+            </tr>
+          </thead>
+          <tbody id="ieTbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
   <div class="text-xs text-gray-500 text-right mt-6">
     Sourcing Dashboard . bark8922/tribe-sourcing
   </div>
@@ -353,6 +398,7 @@ async function loadData() {
     renderCost(DATA.cost || []);
     initWBR(DATA.wbr_comments || []);
     initClosing(DATA.closing_rates || null);
+    initIntExt(DATA.int_vs_ext || []);
   } catch (err) {
     document.getElementById('dataMeta').innerHTML =
       '<span class="text-red-400">data.json failed to load</span>';
@@ -607,6 +653,52 @@ function renderClosing() {
       '<td class="text-right p-3"><span class="tag ' + closingRateColor(pct) + '">' + pct.toFixed(1) + '%</span></td>' +
     '</tr>';
   }).join('');
+}
+
+
+let IE_ROWS = [];
+function initIntExt(rows) {
+  IE_ROWS = rows || [];
+  const cb = document.getElementById('ieIncludeBulk');
+  if (cb) cb.addEventListener('change', renderIntExt);
+  renderIntExt();
+}
+function renderIntExt() {
+  if (!document.getElementById('ieTbody')) return;
+  const incBulk = document.getElementById('ieIncludeBulk') && document.getElementById('ieIncludeBulk').checked;
+  document.getElementById('ieBulkState').textContent = incBulk
+    ? 'bulk roles INCLUDED'
+    : 'default: bulk roles excluded';
+
+  const quarters = [...new Set(IE_ROWS.map(r => r.q))].sort().reverse();
+  const FIELDS = ['contacted','pr','rs','scr','ats','off','hir','jobs'];
+  let html = '';
+  quarters.forEach((q, qi) => {
+    ['Internal','External'].forEach((bucket, bi) => {
+      const rows = IE_ROWS.filter(r => r.q === q && r.bucket === bucket && (incBulk || r.bulk === 0));
+      const agg = {};
+      FIELDS.forEach(f => agg[f] = rows.reduce((s,r) => s + (r[f]||0), 0));
+      const tone = bucket === 'Internal' ? 'bg-blue-900/15' : 'bg-purple-900/15';
+      const chip = bucket === 'Internal' ? 'bg-blue-900 text-blue-200' : 'bg-purple-900 text-purple-200';
+      const showQ = bi === 0 ? '<td class="p-2 pl-4 font-medium align-top" rowspan="2">' + q + '</td>' : '';
+      html += '<tr class="border-t border-gray-700 ' + tone + '">' +
+        showQ +
+        '<td class="p-2 text-left"><span class="tag ' + chip + '">' + bucket + '</span></td>' +
+        '<td class="p-2 text-center">' + agg.contacted.toLocaleString() + '</td>' +
+        '<td class="p-2 text-center">' + agg.pr.toLocaleString() + '</td>' +
+        '<td class="p-2 text-center">' + agg.rs.toLocaleString() + '</td>' +
+        '<td class="p-2 text-center">' + agg.scr.toLocaleString() + '</td>' +
+        '<td class="p-2 text-center">' + agg.ats.toLocaleString() + '</td>' +
+        '<td class="p-2 text-center">' + agg.off.toLocaleString() + '</td>' +
+        '<td class="p-2 text-center font-semibold">' + agg.hir.toLocaleString() + '</td>' +
+        '<td class="p-2 pr-4 text-center">' + agg.jobs.toLocaleString() + '</td>' +
+      '</tr>';
+    });
+    if (qi < quarters.length - 1) {
+      html += '<tr><td colspan="10" class="h-1 bg-gray-900 p-0"></td></tr>';
+    }
+  });
+  document.getElementById('ieTbody').innerHTML = html;
 }
 </script>
 </body>

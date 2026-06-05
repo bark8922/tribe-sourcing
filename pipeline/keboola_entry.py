@@ -27,6 +27,7 @@ TARGET_FILE = "data.json"
 INPUT_CSV_NAME = "snowflake_sourcing_dashboard.csv"
 WBR_INPUT_CSV_NAME = "snowflake_wbr_comments.csv"
 CLOSING_INPUT_CSV_NAME = "snowflake_closing_jobs.csv"
+INTEXT_INPUT_CSV_NAME = "snowflake_int_vs_ext.csv"
 
 # Internal roles -- excluded from Closing Rates (Blake 2026-06-04)
 INTERNAL_CLIENTS = {
@@ -416,6 +417,44 @@ def build_closing_rates(rows):
         "by_sourcer_per_quarter": by_sourcer_per_quarter,
     }
 
+
+def read_int_vs_ext(ci):
+    """Read sourcing_int_vs_ext CSV. Returns [] if input mapping isn't wired."""
+    for tbl in ci.get_input_tables_definitions():
+        if Path(tbl.full_path).name == INTEXT_INPUT_CSV_NAME:
+            with open(tbl.full_path, newline="") as f:
+                return list(csv.DictReader(f))
+    return []
+
+
+def build_int_vs_ext(rows):
+    """Pass through one row per (year, quarter, bucket, is_bulk).
+    Front-end aggregates the bulk rows when the toggle is enabled."""
+    out = []
+    for r in rows:
+        try:
+            y = int(float(r.get("ISO_YEAR") or 0))
+            q = int(float(r.get("QUARTER") or 0))
+        except (ValueError, TypeError):
+            continue
+        if y < 2025 or q < 1 or q > 4:
+            continue
+        out.append({
+            "q":         f"{y} Q{q}",
+            "bucket":    (r.get("BUCKET") or "").strip(),
+            "bulk":      1 if _truthy(r.get("IS_BULK")) else 0,
+            "contacted": int(float(r.get("CONTACTED") or 0)),
+            "pr":        int(float(r.get("POS_RESP") or 0)),
+            "rs":        int(float(r.get("RS") or 0)),
+            "scr":       int(float(r.get("ACT_SCR") or 0)),
+            "ats":       int(float(r.get("ATS") or 0)),
+            "off":       int(float(r.get("OFFERED") or 0)),
+            "hir":       int(float(r.get("HIRED") or 0)),
+            "jobs":      int(float(r.get("JOBS") or 0)),
+        })
+    return out
+
+
 def main():
     print("=== main() called ===", flush=True)
     ci = CommonInterface()
@@ -472,6 +511,18 @@ def main():
     except Exception as e:
         print("[phase4] WARNING: closing_rates build failed: " + str(e), flush=True)
 
+    # Phase 5: internal vs external (graceful)
+    int_vs_ext = []
+    try:
+        ie_rows = read_int_vs_ext(ci)
+        if ie_rows:
+            int_vs_ext = build_int_vs_ext(ie_rows)
+            print("[phase5] built int_vs_ext: " + str(len(int_vs_ext)) + " rows", flush=True)
+        else:
+            print("[phase5] no int_vs_ext input mapping yet — skipping", flush=True)
+    except Exception as e:
+        print("[phase5] WARNING: int_vs_ext build failed: " + str(e), flush=True)
+
     payload = {
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "source": "Keboola sourcing_dashboard_per_sourcer (v1.5) + Finance dashboard ea (ct-based cost classification)",
@@ -480,6 +531,7 @@ def main():
         "cost": cost,
         "wbr_comments": wbr_comments,
         "closing_rates": closing_rates,
+        "int_vs_ext": int_vs_ext,
     }
     content = json.dumps(payload, indent=2, ensure_ascii=False) + "\n"
 
