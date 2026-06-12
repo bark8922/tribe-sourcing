@@ -231,11 +231,15 @@
       <div class="flex items-start gap-2 mb-3">
         <span class="tag bg-blue-700 text-blue-100 flex-shrink-0">METHODOLOGY</span>
         <p class="text-sm text-gray-300 leading-relaxed">
-          <strong>Job-based.</strong> Each closed role = 1 event. A job is &quot;closed by sourcing&quot; when (a) at least one hire was made on it, and (b) the hire was sourced by anyone on our TS team (any team sourcer, not just the job&#39;s assigned responsible sourcer). &quot;Closed&quot; = archived in Bubble OR (hire made + no activity in 90 days) OR (no activity in 90 days).
+          The question this tab answers: <strong class="text-gray-100">of all the roles that closed this quarter, what share did our sourcing team close?</strong>
         </p>
       </div>
-      <div class="text-xs text-gray-400 ml-1">
-        <strong class="text-gray-200">Bulk roles</strong> = jobs where the total hires made is 4 or more (mostly Wolt and similar volume hiring). Tagged with a purple chip. The toggle in the rate column controls whether bulk hires factor into the closing-rate calculation. <strong class="text-gray-200">Click a quarter row</strong> to filter the By Client and By Sourcer tables to that quarter. Tribe-internal recruiting clients (BD - Tribe, Tribe: Talent Pools, September 2024 Drive, Tribe IR) are excluded.
+      <div class="text-sm text-gray-300 leading-relaxed ml-1 space-y-2">
+        <p>A role counts as <strong class="text-gray-200">closed</strong> if it&#39;s archived in Bubble, OR if at least one hire was made and nothing&#39;s happened on it in 90+ days, OR if nothing&#39;s happened on it in 90+ days. That&#39;s the universe of closed roles for the quarter.</p>
+        <p>A closed role counts as <strong class="text-gray-200">closed by us</strong> if at least one hire on it was sourced by anyone on the TS team &mdash; not just the role&#39;s assigned sourcer. <strong class="text-gray-200">Closing rate = Closed by us &divide; Total closed.</strong></p>
+      </div>
+      <div class="text-xs text-gray-500 leading-relaxed ml-1 mt-3 pt-3 border-t border-gray-700">
+        Bulk roles (&ge;4 hires/job, mostly Wolt courier batches) get a purple chip. Toggle &quot;incl. bulk&quot; on the rate column to control whether they count. Click any quarter row to drill down into Internal vs External and to filter the By Client + By Sourcer tables below. Tribe-internal recruiting clients (BD - Tribe, Tribe: Talent Pools, September 2024 Drive, Tribe IR) excluded.
       </div>
     </div>
     <div class="bg-gray-800 border border-gray-700 rounded-lg overflow-hidden mb-6">
@@ -266,27 +270,6 @@
         </table>
       </div>
     </div>
-    <div class="bg-gray-800 border border-gray-700 rounded-lg overflow-hidden mb-6">
-      <div class="p-4 border-b border-gray-700">
-        <h2 class="text-lg font-semibold">Internal vs External &mdash; closed by us</h2>
-        <p class="text-xs text-gray-500 mt-1">Split by where the TS sourcer was at contact time. A job can appear in both rows if different hires were sourced by people in different allocations.</p>
-      </div>
-      <div class="overflow-x-auto">
-        <table class="w-full text-sm">
-          <thead class="bg-gray-900 text-gray-300 uppercase text-xs">
-            <tr>
-              <th class="text-left p-3">Quarter</th>
-              <th class="text-left p-3">Type</th>
-              <th class="text-right p-3">Total closed</th>
-              <th class="text-right p-3">Closed by this allocation</th>
-              <th class="text-right p-3 bg-gray-800">Closing rate</th>
-            </tr>
-          </thead>
-          <tbody id="closingIvETbody"></tbody>
-        </table>
-      </div>
-    </div>
-
     <div class="grid grid-cols-2 gap-6">
       <div class="bg-gray-800 border border-gray-700 rounded-lg overflow-hidden">
         <div class="p-4 border-b border-gray-700">
@@ -586,7 +569,8 @@ function initClosing(data) {
 function renderClosing() {
   const incBulk = document.getElementById('closingIncludeBulk') && document.getElementById('closingIncludeBulk').checked;
 
-  document.getElementById('closingQtrTbody').innerHTML = CLOSING.quarterly.map(r => {
+  let qtrHtml = '';
+  (CLOSING.quarterly || []).forEach(r => {
     const bulk = r.bulk_closed || 0;
     const ind = r.ind_closed || 0;
     const tot = bulk + ind;
@@ -594,15 +578,37 @@ function renderClosing() {
     const denom = ind + (incBulk ? bulk : 0);
     const pct = denom ? (100 * sourced / denom) : 0;
     const sel = (CLOSING_SELECTED_QTR === r.q) ? ' selected' : '';
-    return '<tr class="qtr-row border-t border-gray-700' + sel + '" data-quarter="' + r.q + '">' +
-      '<td class="p-3 font-medium">' + r.q + '</td>' +
+    qtrHtml += '<tr class="qtr-row border-t border-gray-700' + sel + '" data-quarter="' + r.q + '">' +
+      '<td class="p-3 font-medium">' + r.q + (sel ? ' <span class="text-xs text-gray-500">&#9660;</span>' : '') + '</td>' +
       '<td class="text-right p-3 text-gray-400">' + bulk.toLocaleString() + '</td>' +
       '<td class="text-right p-3">' + ind.toLocaleString() + '</td>' +
       '<td class="text-right p-3 font-semibold">' + tot.toLocaleString() + '</td>' +
       '<td class="text-right p-3">' + sourced.toLocaleString() + '</td>' +
       '<td class="text-right p-3 bg-gray-900/40"><span class="tag ' + closingRateColor(pct) + '">' + pct.toFixed(1) + '%</span></td>' +
     '</tr>';
-  }).join('');
+    if (CLOSING_SELECTED_QTR === r.q) {
+      const ieRow = (CLOSING.int_vs_ext || []).find(x => x.q === r.q);
+      if (ieRow) {
+        const intH = incBulk ? ieRow.internal_total : ieRow.internal_ind;
+        const extH = incBulk ? ieRow.external_total : ieRow.external_ind;
+        const intPct = denom ? (100 * intH / denom) : 0;
+        const extPct = denom ? (100 * extH / denom) : 0;
+        qtrHtml += '<tr class="bg-blue-900/10 text-gray-400 text-xs">' +
+          '<td class="p-2 pl-10">&#x21B3; <span class="tag bg-blue-900 text-blue-200">Internal</span></td>' +
+          '<td></td><td></td><td></td>' +
+          '<td class="text-right p-2">' + intH.toLocaleString() + '</td>' +
+          '<td class="text-right p-2 bg-gray-900/40"><span class="tag ' + closingRateColor(intPct) + '">' + intPct.toFixed(1) + '%</span></td>' +
+        '</tr>';
+        qtrHtml += '<tr class="bg-purple-900/10 text-gray-400 text-xs">' +
+          '<td class="p-2 pl-10">&#x21B3; <span class="tag bg-purple-900 text-purple-200">External</span></td>' +
+          '<td></td><td></td><td></td>' +
+          '<td class="text-right p-2">' + extH.toLocaleString() + '</td>' +
+          '<td class="text-right p-2 bg-gray-900/40"><span class="tag ' + closingRateColor(extPct) + '">' + extPct.toFixed(1) + '%</span></td>' +
+        '</tr>';
+      }
+    }
+  });
+  document.getElementById('closingQtrTbody').innerHTML = qtrHtml;
 
   document.querySelectorAll('#closingQtrTbody .qtr-row').forEach(tr => {
     tr.addEventListener('click', () => {
@@ -678,36 +684,6 @@ function renderClosing() {
     '</tr>';
   }).join('');
 
-  // Closing Internal vs External comparison
-  const ie = (CLOSING && CLOSING.int_vs_ext) || [];
-  const ieTbody = document.getElementById('closingIvETbody');
-  if (ieTbody) {
-    let ieHtml = '';
-    ie.forEach((r, qi) => {
-      const tot = incBulk ? r.closed_total : r.closed_ind;
-      const intH = incBulk ? r.internal_total : r.internal_ind;
-      const extH = incBulk ? r.external_total : r.external_ind;
-      const intPct = tot ? (100 * intH / tot) : 0;
-      const extPct = tot ? (100 * extH / tot) : 0;
-      ieHtml += '<tr class="border-t border-gray-700 bg-blue-900/15">' +
-        '<td class="p-3 font-medium align-top" rowspan="2">' + r.q + '</td>' +
-        '<td class="p-3"><span class="tag bg-blue-900 text-blue-200">Internal</span></td>' +
-        '<td class="text-right p-3">' + tot.toLocaleString() + '</td>' +
-        '<td class="text-right p-3 font-semibold">' + intH.toLocaleString() + '</td>' +
-        '<td class="text-right p-3 bg-gray-900/40"><span class="tag ' + closingRateColor(intPct) + '">' + intPct.toFixed(1) + '%</span></td>' +
-      '</tr>';
-      ieHtml += '<tr class="border-t border-gray-700 bg-purple-900/15">' +
-        '<td class="p-3"><span class="tag bg-purple-900 text-purple-200">External</span></td>' +
-        '<td class="text-right p-3">' + tot.toLocaleString() + '</td>' +
-        '<td class="text-right p-3 font-semibold">' + extH.toLocaleString() + '</td>' +
-        '<td class="text-right p-3 bg-gray-900/40"><span class="tag ' + closingRateColor(extPct) + '">' + extPct.toFixed(1) + '%</span></td>' +
-      '</tr>';
-      if (qi < ie.length - 1) {
-        ieHtml += '<tr><td colspan="5" class="h-1 bg-gray-900 p-0"></td></tr>';
-      }
-    });
-    ieTbody.innerHTML = ieHtml;
-  }
 }
 
 
