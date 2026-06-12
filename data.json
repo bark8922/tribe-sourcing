@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-12T12:06:09Z",
+  "generated_at": "2026-06-12T12:13:05Z",
   "source": "Keboola sourcing_dashboard_per_sourcer (v1.5) + Finance dashboard ea (ct-based cost classification)",
   "methodology_version": "1.5",
   "quarterly": [
@@ -16855,8 +16855,8 @@
     "int_vs_ext": [
       {
         "q": "2026 Q2",
-        "closed_total": 105,
-        "closed_ind": 101,
+        "closed_total": 192,
+        "closed_ind": 183,
         "internal_total": 14,
         "internal_ind": 13,
         "external_total": 9,
@@ -16864,8 +16864,8 @@
       },
       {
         "q": "2026 Q1",
-        "closed_total": 116,
-        "closed_ind": 104,
+        "closed_total": 284,
+        "closed_ind": 260,
         "internal_total": 12,
         "internal_ind": 10,
         "external_total": 23,
@@ -16873,8 +16873,8 @@
       },
       {
         "q": "2025 Q4",
-        "closed_total": 151,
-        "closed_ind": 138,
+        "closed_total": 367,
+        "closed_ind": 335,
         "internal_total": 18,
         "internal_ind": 17,
         "external_total": 24,
@@ -16882,8 +16882,8 @@
       },
       {
         "q": "2025 Q3",
-        "closed_total": 151,
-        "closed_ind": 146,
+        "closed_total": 353,
+        "closed_ind": 332,
         "internal_total": 14,
         "internal_ind": 13,
         "external_total": 20,
@@ -16891,8 +16891,8 @@
       },
       {
         "q": "2025 Q2",
-        "closed_total": 162,
-        "closed_ind": 159,
+        "closed_total": 397,
+        "closed_ind": 380,
         "internal_total": 15,
         "internal_ind": 15,
         "external_total": 8,
@@ -16900,8 +16900,8 @@
       },
       {
         "q": "2025 Q1",
-        "closed_total": 110,
-        "closed_ind": 107,
+        "closed_total": 309,
+        "closed_ind": 291,
         "internal_total": 18,
         "internal_ind": 18,
         "external_total": 10,
