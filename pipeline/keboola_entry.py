@@ -212,6 +212,51 @@ def read_input_csv(ci):
     raise RuntimeError("Input table " + INPUT_CSV_NAME + " not in input mapping")
 
 
+def _i(v):
+    """Snowflake numeric strings -> int (handles '0.00000', '', None)."""
+    s = str(v).strip()
+    if not s or s.lower() == "none":
+        return 0
+    try:
+        return int(float(s))
+    except (ValueError, TypeError):
+        return 0
+
+
+def build_int_vs_ext(rows):
+    """Map sourcing_int_vs_ext CSV rows -> Phase 5 dashboard array.
+
+    Page renderer (initIntExt) expects per row:
+      q, bucket, bulk, contacted, pr, rs, scr, ats, off, hir, jobs
+    SQL columns:
+      ISO_YEAR, QUARTER, BUCKET, IS_BULK, CONTACTED, JOBS, POS_RESP,
+      RS, ACT_SCR, ATS, OFFERED, HIRED
+    """
+    out = []
+    for r in rows or []:
+        try:
+            y = _i(r.get("ISO_YEAR"))
+            q_num = _i(r.get("QUARTER"))
+            if y == 0 or q_num == 0:
+                continue
+            out.append({
+                "q": str(y) + " Q" + str(q_num),
+                "bucket": (r.get("BUCKET") or "").strip(),
+                "bulk": _i(r.get("IS_BULK")),
+                "contacted": _i(r.get("CONTACTED")),
+                "jobs": _i(r.get("JOBS")),
+                "pr": _i(r.get("POS_RESP")),
+                "rs": _i(r.get("RS")),
+                "scr": _i(r.get("ACT_SCR")),
+                "ats": _i(r.get("ATS")),
+                "off": _i(r.get("OFFERED")),
+                "hir": _i(r.get("HIRED")),
+            })
+        except Exception:
+            continue
+    return out
+
+
 def push_to_github(token, content):
     url = "https://api.github.com/repos/" + REPO + "/contents/" + TARGET_FILE
     headers = {
