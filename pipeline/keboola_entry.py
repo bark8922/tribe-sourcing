@@ -312,6 +312,15 @@ def read_closing_attribs(ci):
     return []
 
 
+def read_int_vs_ext(ci):
+    """Read sourcing_int_vs_ext CSV. Returns [] if input mapping isn't wired."""
+    for tbl in ci.get_input_tables_definitions():
+        if Path(tbl.full_path).name == INTEXT_INPUT_CSV_NAME:
+            with open(tbl.full_path, newline="") as f:
+                return list(csv.DictReader(f))
+    return []
+
+
 def build_closing_rates(rows, attribs=None):
     """Job-level aggregator. Uses Gustavo's loose rule:
     Closed by sourcing = any TS team sourcer was the actual sourcer of a hire
