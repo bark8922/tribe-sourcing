@@ -647,7 +647,7 @@ function renderClosing() {
     const s = incBulk ? (r.sourced_total||0) : (r.sourced_ind||0);
     const pct = h ? (100 * s / h) : 0;
     return '<tr class="border-t border-gray-700 hover:bg-gray-900/50">' +
-      '<td class="p-3">' + r.client + (r.is_bulk_client ? ' <span class="tag bg-purple-900 text-purple-200 ml-1">bulk</span>' : '') + '</td>' +
+      '<td class="p-3">' + r.client + (r.is_bulk_client ? ' <span class="tag ' + (incBulk ? 'bg-purple-900 text-purple-200' : 'bg-gray-700 text-gray-500') + ' ml-1">bulk</span>' : '') + '</td>' +
       '<td class="text-right p-3">' + h.toLocaleString() + '</td>' +
       '<td class="text-right p-3">' + s + '</td>' +
       '<td class="text-right p-3"><span class="tag ' + closingRateColor(pct) + '">' + pct.toFixed(1) + '%</span></td>' +
@@ -677,7 +677,7 @@ function renderClosing() {
     const ac = incBulk ? (r.closed_by_them_total||0) : (r.closed_by_them_ind||0);
     const pct = ar ? (100 * ac / ar) : 0;
     return '<tr class="border-t border-gray-700 hover:bg-gray-900/50">' +
-      '<td class="p-3">' + r.sourcer + (r.is_bulk_driven ? ' <span class="tag bg-purple-900 text-purple-200 ml-1">bulk</span>' : '') + '</td>' +
+      '<td class="p-3">' + r.sourcer + (r.is_bulk_driven ? ' <span class="tag ' + (incBulk ? 'bg-purple-900 text-purple-200' : 'bg-gray-700 text-gray-500') + ' ml-1">bulk</span>' : '') + '</td>' +
       '<td class="text-right p-3">' + ar + '</td>' +
       '<td class="text-right p-3 font-semibold">' + ac + '</td>' +
       '<td class="text-right p-3"><span class="tag ' + closingRateColor(pct) + '">' + pct.toFixed(1) + '%</span></td>' +
