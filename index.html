@@ -115,11 +115,17 @@
       <div class="flex items-start gap-2 mb-3">
         <span class="tag bg-purple-700 text-purple-100 flex-shrink-0">METHODOLOGY</span>
         <p class="text-sm text-gray-300 leading-relaxed">
-          Sustainability Score = External Margin / Internal Cost. Higher = more value created per dollar spent on internal sourcing.
+          The question this tab answers: <strong class="text-gray-100">does our sourcing team pay for itself?</strong>
         </p>
       </div>
-      <div class="text-xs text-gray-400 ml-1">
-        Cost split by allocation type: <strong class="text-gray-200">Bench</strong> = full internal cost. <strong class="text-gray-200">Client</strong> = split by bench-days fraction. Internal/Core Tribe/On Leave excluded.
+      <div class="text-xs text-gray-400 ml-1 leading-relaxed space-y-1">
+        <div><strong class="text-gray-200">Internal Cost</strong> &mdash; what our sourcers cost while sitting on bench / internal time (no client billing).</div>
+        <div><strong class="text-gray-200">External Revenue</strong> &mdash; what we billed clients for sourcer time during the quarter.</div>
+        <div><strong class="text-gray-200">External Cost</strong> &mdash; what those same sourcers cost us during the time they were billed to a client.</div>
+        <div><strong class="text-gray-200">External Margin</strong> &mdash; External Revenue &minus; External Cost. The profit our sourcers generate from billed work.</div>
+        <div><strong class="text-gray-200">Sustainability Score</strong> &mdash; External Margin &divide; Internal Cost. Above 1.0 means the margin from billed work pays for the internal team. Higher = healthier.</div>
+        <div><strong class="text-gray-200">Cost / Hire</strong> &mdash; (Internal Cost + External Cost) &divide; Hires.</div>
+        <div class="pt-2 text-gray-500">Allocation split day-by-day from BambooHR: time on <strong>Bench / Internal</strong> &rarr; internal cost; time on a <strong>Client</strong> &rarr; external cost. Core Tribe and On Leave excluded.</div>
       </div>
     </div>
     <div class="bg-gray-800 border border-gray-700 rounded-lg overflow-hidden mb-6">
