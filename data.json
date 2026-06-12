@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-12T14:46:17Z",
+  "generated_at": "2026-06-12T14:54:05Z",
   "source": "Keboola sourcing_dashboard_per_sourcer (v1.5) + Finance dashboard ea (ct-based cost classification)",
   "methodology_version": "1.5",
   "quarterly": [
@@ -16913,7 +16913,7 @@
     {
       "q": "2025 Q1",
       "bucket": "Internal",
-      "bulk": 0,
+      "bulk": 1,
       "contacted": 1890,
       "jobs": 16,
       "pr": 0,
@@ -16926,7 +16926,7 @@
     {
       "q": "2026 Q1",
       "bucket": "External",
-      "bulk": 0,
+      "bulk": 1,
       "contacted": 630,
       "jobs": 26,
       "pr": 338,
@@ -16952,7 +16952,7 @@
     {
       "q": "2025 Q4",
       "bucket": "External",
-      "bulk": 0,
+      "bulk": 1,
       "contacted": 290,
       "jobs": 25,
       "pr": 290,
@@ -16965,7 +16965,7 @@
     {
       "q": "2026 Q2",
       "bucket": "External",
-      "bulk": 0,
+      "bulk": 1,
       "contacted": 288,
       "jobs": 1,
       "pr": 67,
@@ -16978,7 +16978,7 @@
     {
       "q": "2025 Q3",
       "bucket": "External",
-      "bulk": 0,
+      "bulk": 1,
       "contacted": 1215,
       "jobs": 15,
       "pr": 237,
@@ -17017,7 +17017,7 @@
     {
       "q": "2026 Q1",
       "bucket": "Internal",
-      "bulk": 0,
+      "bulk": 1,
       "contacted": 20,
       "jobs": 1,
       "pr": 12,
@@ -17056,7 +17056,7 @@
     {
       "q": "2025 Q4",
       "bucket": "Internal",
-      "bulk": 0,
+      "bulk": 1,
       "contacted": 1545,
       "jobs": 6,
       "pr": 167,
@@ -17069,7 +17069,7 @@
     {
       "q": "2025 Q1",
       "bucket": "External",
-      "bulk": 0,
+      "bulk": 1,
       "contacted": 336,
       "jobs": 5,
       "pr": 0,
@@ -17082,7 +17082,7 @@
     {
       "q": "2025 Q2",
       "bucket": "External",
-      "bulk": 0,
+      "bulk": 1,
       "contacted": 912,
       "jobs": 6,
       "pr": 134,
@@ -17095,7 +17095,7 @@
     {
       "q": "2025 Q3",
       "bucket": "Internal",
-      "bulk": 0,
+      "bulk": 1,
       "contacted": 1559,
       "jobs": 7,
       "pr": 343,
@@ -17186,7 +17186,7 @@
     {
       "q": "2025 Q2",
       "bucket": "Internal",
-      "bulk": 0,
+      "bulk": 1,
       "contacted": 2115,
       "jobs": 9,
       "pr": 454,
