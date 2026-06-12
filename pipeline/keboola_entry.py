@@ -434,12 +434,63 @@ def build_closing_rates(rows, attribs=None):
     by_client_per_quarter = {qk: _client_list(m) for qk, m in cli_qtr.items()}
     by_sourcer_per_quarter = {qk: _sourcer_list(m) for qk, m in src_qtr.items()}
 
+    # Internal vs External closing comparison (per quarter)
+    # A closed job is "closed by Internal" if any TS sourcer on Internal allocation sourced a hire on it
+    # Same for External. A job can be in both (different hires sourced by sourcers in different allocations)
+    int_ext_qtr = defaultdict(lambda: {
+        "closed_total": 0, "closed_ind": 0,
+        "internal_total": 0, "internal_ind": 0,
+        "external_total": 0, "external_ind": 0,
+    })
+    # Track sets per (quarter, bucket) to avoid double-counting a job
+    jobs_internal = defaultdict(set)  # quarter -> set(job_id)
+    jobs_external = defaultdict(set)
+    jobs_internal_ind = defaultdict(set)
+    jobs_external_ind = defaultdict(set)
+    jobs_total = defaultdict(set)
+    jobs_total_ind = defaultdict(set)
+    for r in (attribs or []):
+        try:
+            y = int(float(r.get("ISO_YEAR") or 0))
+            q = int(float(r.get("QUARTER") or 0))
+        except (ValueError, TypeError):
+            continue
+        if y < 2025 or q < 1 or q > 4: continue
+        if (r.get("CLIENT") or "").strip() in INTERNAL_CLIENTS: continue
+        q_key = f"{y} Q{q}"
+        is_bulk = _truthy(r.get("IS_BULK_JOB"))
+        sourced = _truthy(r.get("SOURCED_A_HIRE"))
+        bucket = (r.get("SOURCER_BUCKET") or "").strip()
+        job_id = r.get("JOB_ID")
+        if not job_id: continue
+        # All closed jobs (responsible OR sourced) — capture for total
+        jobs_total[q_key].add(job_id)
+        if not is_bulk: jobs_total_ind[q_key].add(job_id)
+        if sourced and bucket == "Internal":
+            jobs_internal[q_key].add(job_id)
+            if not is_bulk: jobs_internal_ind[q_key].add(job_id)
+        elif sourced and bucket == "External":
+            jobs_external[q_key].add(job_id)
+            if not is_bulk: jobs_external_ind[q_key].add(job_id)
+    closing_int_vs_ext = []
+    for q_key in sorted(jobs_total.keys(), reverse=True):
+        closing_int_vs_ext.append({
+            "q": q_key,
+            "closed_total": len(jobs_total[q_key]),
+            "closed_ind": len(jobs_total_ind[q_key]),
+            "internal_total": len(jobs_internal[q_key]),
+            "internal_ind": len(jobs_internal_ind[q_key]),
+            "external_total": len(jobs_external[q_key]),
+            "external_ind": len(jobs_external_ind[q_key]),
+        })
+
     return {
         "quarterly": quarterly,
         "by_client": by_client,
         "by_sourcer": by_sourcer,
         "by_client_per_quarter": by_client_per_quarter,
         "by_sourcer_per_quarter": by_sourcer_per_quarter,
+        "int_vs_ext": closing_int_vs_ext,
     }
 
 

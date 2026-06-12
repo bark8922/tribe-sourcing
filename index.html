@@ -263,6 +263,27 @@
         </table>
       </div>
     </div>
+    <div class="bg-gray-800 border border-gray-700 rounded-lg overflow-hidden mb-6">
+      <div class="p-4 border-b border-gray-700">
+        <h2 class="text-lg font-semibold">Internal vs External &mdash; closed by us</h2>
+        <p class="text-xs text-gray-500 mt-1">Split by where the TS sourcer was at contact time. A job can appear in both rows if different hires were sourced by people in different allocations.</p>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="bg-gray-900 text-gray-300 uppercase text-xs">
+            <tr>
+              <th class="text-left p-3">Quarter</th>
+              <th class="text-left p-3">Type</th>
+              <th class="text-right p-3">Total closed</th>
+              <th class="text-right p-3">Closed by this allocation</th>
+              <th class="text-right p-3 bg-gray-800">Closing rate</th>
+            </tr>
+          </thead>
+          <tbody id="closingIvETbody"></tbody>
+        </table>
+      </div>
+    </div>
+
     <div class="grid grid-cols-2 gap-6">
       <div class="bg-gray-800 border border-gray-700 rounded-lg overflow-hidden">
         <div class="p-4 border-b border-gray-700">
@@ -653,6 +674,37 @@ function renderClosing() {
       '<td class="text-right p-3"><span class="tag ' + closingRateColor(pct) + '">' + pct.toFixed(1) + '%</span></td>' +
     '</tr>';
   }).join('');
+
+  // Closing Internal vs External comparison
+  const ie = (CLOSING && CLOSING.int_vs_ext) || [];
+  const ieTbody = document.getElementById('closingIvETbody');
+  if (ieTbody) {
+    let ieHtml = '';
+    ie.forEach((r, qi) => {
+      const tot = incBulk ? r.closed_total : r.closed_ind;
+      const intH = incBulk ? r.internal_total : r.internal_ind;
+      const extH = incBulk ? r.external_total : r.external_ind;
+      const intPct = tot ? (100 * intH / tot) : 0;
+      const extPct = tot ? (100 * extH / tot) : 0;
+      ieHtml += '<tr class="border-t border-gray-700 bg-blue-900/15">' +
+        '<td class="p-3 font-medium align-top" rowspan="2">' + r.q + '</td>' +
+        '<td class="p-3"><span class="tag bg-blue-900 text-blue-200">Internal</span></td>' +
+        '<td class="text-right p-3">' + tot.toLocaleString() + '</td>' +
+        '<td class="text-right p-3 font-semibold">' + intH.toLocaleString() + '</td>' +
+        '<td class="text-right p-3 bg-gray-900/40"><span class="tag ' + closingRateColor(intPct) + '">' + intPct.toFixed(1) + '%</span></td>' +
+      '</tr>';
+      ieHtml += '<tr class="border-t border-gray-700 bg-purple-900/15">' +
+        '<td class="p-3"><span class="tag bg-purple-900 text-purple-200">External</span></td>' +
+        '<td class="text-right p-3">' + tot.toLocaleString() + '</td>' +
+        '<td class="text-right p-3 font-semibold">' + extH.toLocaleString() + '</td>' +
+        '<td class="text-right p-3 bg-gray-900/40"><span class="tag ' + closingRateColor(extPct) + '">' + extPct.toFixed(1) + '%</span></td>' +
+      '</tr>';
+      if (qi < ie.length - 1) {
+        ieHtml += '<tr><td colspan="5" class="h-1 bg-gray-900 p-0"></td></tr>';
+      }
+    });
+    ieTbody.innerHTML = ieHtml;
+  }
 }
 
 
