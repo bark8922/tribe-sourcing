@@ -232,7 +232,7 @@
         </p>
       </div>
       <div class="text-xs text-gray-400 ml-1">
-        <strong class="text-gray-200">Bulk roles</strong> (4+ hires on one job, mostly Wolt-style volume work) are tagged with a purple chip. The toggle in the rate column controls whether bulk hires factor into the closing-rate calculation. <strong class="text-gray-200">Click a quarter row</strong> to filter the By Client and By Sourcer tables to that quarter. Internal roles (BD - Tribe, Tribe: Talent Pools, September 2024 Drive, Tribe IR) are excluded.
+        <strong class="text-gray-200">Bulk roles</strong> = jobs where the total hires made is 4 or more (mostly Wolt and similar volume hiring). Tagged with a purple chip. The toggle in the rate column controls whether bulk hires factor into the closing-rate calculation. <strong class="text-gray-200">Click a quarter row</strong> to filter the By Client and By Sourcer tables to that quarter. Tribe-internal recruiting clients (BD - Tribe, Tribe: Talent Pools, September 2024 Drive, Tribe IR) are excluded.
       </div>
     </div>
     <div class="bg-gray-800 border border-gray-700 rounded-lg overflow-hidden mb-6">
@@ -310,13 +310,13 @@
       <div class="flex items-start gap-2 mb-3">
         <span class="tag bg-blue-700 text-blue-100 flex-shrink-0">METHODOLOGY</span>
         <p class="text-sm text-gray-300 leading-relaxed">
-          Each contact is bucketed by what allocation the sourcer was on at the time. <strong>Internal</strong> = work done while on Bench/Internal. <strong>External</strong> = work done while allocated to a client. Numbers are de-duplicated across the team. Hired counts candidates contacted in that quarter who eventually closed (any later date).
+          Each row totals the team's sourcing output, split by where the sourcer was at the time of contact. <strong>Internal</strong> = work done while on Bench/Internal (not billed to a client). <strong>External</strong> = work done while allocated to a client (billable). Same person can show up in both rows if they switched allocation mid-quarter.
         </p>
       </div>
       <div class="mt-3 pt-3 border-t border-gray-700 flex items-center justify-between">
         <label class="toggle-mini cursor-pointer">
           <input type="checkbox" id="ieIncludeBulk">
-          Include bulk roles (4+ hires/job, mostly Wolt-style volume work)
+          Include bulk roles (jobs where the total hires made is 4 or more, mostly Wolt and similar volume hiring)
         </label>
         <span class="text-xs text-gray-500" id="ieBulkState">default: bulk roles excluded</span>
       </div>
