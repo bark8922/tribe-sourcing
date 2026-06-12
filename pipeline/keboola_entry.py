@@ -242,7 +242,7 @@ def build_int_vs_ext(rows):
             out.append({
                 "q": str(y) + " Q" + str(q_num),
                 "bucket": (r.get("BUCKET") or "").strip(),
-                "bulk": _i(r.get("IS_BULK")),
+                "bulk": 1 if str(r.get("IS_BULK","")).strip().lower() in ("true","1","t","yes") else 0,
                 "contacted": _i(r.get("CONTACTED")),
                 "jobs": _i(r.get("JOBS")),
                 "pr": _i(r.get("POS_RESP")),
