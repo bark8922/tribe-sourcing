@@ -28,6 +28,7 @@ INPUT_CSV_NAME = "snowflake_sourcing_dashboard.csv"
 WBR_INPUT_CSV_NAME = "snowflake_wbr_comments.csv"
 CLOSING_INPUT_CSV_NAME = "snowflake_closing_jobs.csv"
 INTEXT_INPUT_CSV_NAME = "snowflake_int_vs_ext.csv"
+ATTRIBS_INPUT_CSV_NAME = "snowflake_closing_attribs.csv"
 
 # Internal roles -- excluded from Closing Rates (Blake 2026-06-04)
 INTERNAL_CLIENTS = {
@@ -302,15 +303,19 @@ def _truthy(v):
     return str(v).strip().lower() in ("true", "1", "t", "yes")
 
 
-def build_closing_rates(rows):
-    """Job-level aggregator (Gustavo methodology + Blake internal-exclusion).
-    Filters out internal roles, then emits:
-      - quarterly: top table (bulk/ind split per quarter)
-      - by_client: aggregated across all quarters
-      - by_sourcer: aggregated across all quarters
-      - by_client_per_quarter: dict keyed by quarter string -> [client rows]
-      - by_sourcer_per_quarter: dict keyed by quarter string -> [sourcer rows]
-    Front-end uses these slices when the user clicks a quarter row."""
+def read_closing_attribs(ci):
+    """Read sourcing_closing_attributions CSV. Returns [] if not wired."""
+    for tbl in ci.get_input_tables_definitions():
+        if Path(tbl.full_path).name == ATTRIBS_INPUT_CSV_NAME:
+            with open(tbl.full_path, newline="") as f:
+                return list(csv.DictReader(f))
+    return []
+
+
+def build_closing_rates(rows, attribs=None):
+    """Job-level aggregator. Uses Gustavo's loose rule:
+    Closed by sourcing = any TS team sourcer was the actual sourcer of a hire
+    (not requiring they were the responsible_sourcer)."""
     if not rows:
         return {
             "quarterly": [], "by_client": [], "by_sourcer": [],
@@ -319,6 +324,8 @@ def build_closing_rates(rows):
 
     # Pre-filter internal roles
     rows = [r for r in rows if (r.get("CLIENT") or "").strip() not in INTERNAL_CLIENTS]
+    attribs = attribs or []
+    attribs = [r for r in attribs if (r.get("CLIENT") or "").strip() not in INTERNAL_CLIENTS]
 
     def _empty_qtr():
         return {"bulk_closed": 0, "ind_closed": 0, "bulk_sourced": 0, "ind_sourced": 0}
@@ -338,9 +345,10 @@ def build_closing_rates(rows):
     qtr = defaultdict(_empty_qtr)
     cli_all = defaultdict(_empty_client)
     src_all = defaultdict(_empty_sourcer)
-    cli_qtr = defaultdict(lambda: defaultdict(_empty_client))   # quarter -> client -> stats
-    src_qtr = defaultdict(lambda: defaultdict(_empty_sourcer))  # quarter -> sourcer -> stats
+    cli_qtr = defaultdict(lambda: defaultdict(_empty_client))
+    src_qtr = defaultdict(lambda: defaultdict(_empty_sourcer))
 
+    # --- Quarter + by_client aggregation from job-level rows ---
     for r in rows:
         try:
             y = int(float(r.get("ISO_YEAR") or 0))
@@ -351,10 +359,9 @@ def build_closing_rates(rows):
             continue
         q_key = f"{y} Q{q}"
         is_bulk = _truthy(r.get("IS_BULK_JOB"))
-        closed_by_sourcing = _truthy(r.get("CLOSED_BY_SOURCING"))
-        responsible_in_roster = _truthy(r.get("IS_RESPONSIBLE_IN_ROSTER"))
+        # Use the LOOSER rule: any TS team sourcer sourced a hire
+        closed_by_sourcing = _truthy(r.get("CLOSED_BY_TS_TEAM"))
         client = (r.get("CLIENT") or "").strip()
-        sourcer = (r.get("RESPONSIBLE_SOURCER") or "").strip()
 
         b = qtr[(y, q)]
         if is_bulk:
@@ -374,17 +381,35 @@ def build_closing_rates(rows):
                     bucket["closed_ind"] += 1
                     if closed_by_sourcing: bucket["sourced_ind"] += 1
 
-        if responsible_in_roster and sourcer:
-            for bucket in (src_all[sourcer], src_qtr[q_key][sourcer]):
+    # --- By Sourcer aggregation from attribution rows (per job, per sourcer) ---
+    for r in attribs:
+        try:
+            y = int(float(r.get("ISO_YEAR") or 0))
+            q = int(float(r.get("QUARTER") or 0))
+        except (ValueError, TypeError):
+            continue
+        if y < 2025 or q < 1 or q > 4:
+            continue
+        q_key = f"{y} Q{q}"
+        is_bulk = _truthy(r.get("IS_BULK_JOB"))
+        is_responsible = _truthy(r.get("IS_RESPONSIBLE"))
+        sourced_a_hire = _truthy(r.get("SOURCED_A_HIRE"))
+        sourcer = (r.get("SOURCER") or "").strip()
+        if not sourcer:
+            continue
+
+        for bucket in (src_all[sourcer], src_qtr[q_key][sourcer]):
+            if is_responsible:
                 bucket["responsible_total"] += 1
-                if closed_by_sourcing: bucket["closed_by_them_total"] += 1
-                if is_bulk:
-                    if closed_by_sourcing: bucket["bulk_driven_count"] += 1
-                else:
+                if not is_bulk:
                     bucket["responsible_ind"] += 1
-                    if closed_by_sourcing:
-                        bucket["closed_by_them_ind"] += 1
-                        bucket["ind_driven_count"] += 1
+            if sourced_a_hire:
+                bucket["closed_by_them_total"] += 1
+                if is_bulk:
+                    bucket["bulk_driven_count"] += 1
+                else:
+                    bucket["closed_by_them_ind"] += 1
+                    bucket["ind_driven_count"] += 1
 
     quarterly = sorted(
         [{"q": f"{y} Q{q}", **v} for (y, q), v in qtr.items()],
@@ -416,43 +441,6 @@ def build_closing_rates(rows):
         "by_client_per_quarter": by_client_per_quarter,
         "by_sourcer_per_quarter": by_sourcer_per_quarter,
     }
-
-
-def read_int_vs_ext(ci):
-    """Read sourcing_int_vs_ext CSV. Returns [] if input mapping isn't wired."""
-    for tbl in ci.get_input_tables_definitions():
-        if Path(tbl.full_path).name == INTEXT_INPUT_CSV_NAME:
-            with open(tbl.full_path, newline="") as f:
-                return list(csv.DictReader(f))
-    return []
-
-
-def build_int_vs_ext(rows):
-    """Pass through one row per (year, quarter, bucket, is_bulk).
-    Front-end aggregates the bulk rows when the toggle is enabled."""
-    out = []
-    for r in rows:
-        try:
-            y = int(float(r.get("ISO_YEAR") or 0))
-            q = int(float(r.get("QUARTER") or 0))
-        except (ValueError, TypeError):
-            continue
-        if y < 2025 or q < 1 or q > 4:
-            continue
-        out.append({
-            "q":         f"{y} Q{q}",
-            "bucket":    (r.get("BUCKET") or "").strip(),
-            "bulk":      1 if _truthy(r.get("IS_BULK")) else 0,
-            "contacted": int(float(r.get("CONTACTED") or 0)),
-            "pr":        int(float(r.get("POS_RESP") or 0)),
-            "rs":        int(float(r.get("RS") or 0)),
-            "scr":       int(float(r.get("ACT_SCR") or 0)),
-            "ats":       int(float(r.get("ATS") or 0)),
-            "off":       int(float(r.get("OFFERED") or 0)),
-            "hir":       int(float(r.get("HIRED") or 0)),
-            "jobs":      int(float(r.get("JOBS") or 0)),
-        })
-    return out
 
 
 def main():
@@ -502,7 +490,8 @@ def main():
     try:
         hire_rows = read_closing_hires(ci)
         if hire_rows:
-            closing_rates = build_closing_rates(hire_rows)
+            attrib_rows = read_closing_attribs(ci)
+            closing_rates = build_closing_rates(hire_rows, attribs=attrib_rows)
             print("[phase4] built closing_rates: q=" + str(len(closing_rates["quarterly"])) +
                   " clients=" + str(len(closing_rates["by_client"])) +
                   " sourcers=" + str(len(closing_rates["by_sourcer"])), flush=True)
