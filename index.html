@@ -808,6 +808,12 @@ function initJobRatio(rows) {
   }
   const fmtPct = (v) => (v == null ? '—' : v.toFixed(1) + '%');
   const fmtNum = (v) => (v == null ? '—' : v.toFixed(1));
+  const gcd = (a, b) => { a = Math.abs(a); b = Math.abs(b); while (b) { [a, b] = [b, a % b]; } return a || 1; };
+  const fmtRatio = (a, b) => {
+    if (!a || !b) return (a || 0) + ':' + (b || 0);
+    const g = gcd(a, b);
+    return (a / g) + ':' + (b / g);
+  };
   tbody.innerHTML = rows.map(r => (
     '<tr class="border-t border-gray-700 hover:bg-gray-900/40">' +
       '<td class="p-3 font-medium">' + r.month + '</td>' +
@@ -817,7 +823,7 @@ function initJobRatio(rows) {
       '<td class="text-right p-3 text-gray-400">' + (r.ts_size || 0).toLocaleString() + '</td>' +
       '<td class="text-right p-3 bg-gray-900/30 font-semibold">' + fmtNum(r.jobs_per_ts) + '</td>' +
       '<td class="text-right p-3 bg-gray-900/30">' + fmtPct(r.ts_coverage) + '</td>' +
-      '<td class="text-right p-3 bg-gray-900/30">' + ((r.ta_size||0) + ':' + (r.ts_size||0)) + '</td>' +
+      '<td class="text-right p-3 bg-gray-900/30">' + fmtRatio(r.ta_size, r.ts_size) + '</td>' +
     '</tr>'
   )).join('');
 }
