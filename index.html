@@ -378,7 +378,9 @@
         <p><strong class="text-gray-200">Internal TS Team Size</strong> &mdash; distinct off-client TS sourcers (Bench / Internal) who made at least one contact in the month.</p>
         <p><strong class="text-gray-200">TA Active Jobs</strong> &mdash; distinct jobs where a TA moved a candidate to a downstream stage (Recruiter Screen, Moved to ATS, Onsite, Offer, Hired) in the month.</p>
         <p><strong class="text-gray-200">TA Team Size</strong> &mdash; distinct TAs who made at least one such downstream stage move in the month.</p>
-        <p><strong class="text-gray-200">Jobs / TS</strong> = TS Active Jobs &divide; Internal TS Team Size. <strong class="text-gray-200">TS Coverage</strong> = TS Active Jobs &divide; TA Active Jobs. <strong class="text-gray-200">TA:TS Ratio</strong> = TA Team Size &divide; Internal TS Team Size.</p>
+        <p><strong class="text-gray-200">Jobs / TS</strong> &mdash; TS Active Jobs &divide; Internal TS Team Size.</p>
+        <p><strong class="text-gray-200">TS Coverage</strong> &mdash; TS Active Jobs &divide; TA Active Jobs.</p>
+        <p><strong class="text-gray-200">TA:TS Ratio</strong> &mdash; TA Team Size : Internal TS Team Size (e.g. 33 TAs to 7 sourcers = 33:7).</p>
       </div>
       <div class="text-xs text-gray-500 leading-relaxed ml-1 mt-3 pt-3 border-t border-gray-700">
         Rosters: TS = the 19-sourcer roster used elsewhere in this dashboard (Sanja excluded). TA = the list maintained by the recruiting dashboard&#39;s WBR weekly roster. External recruiters excluded. Tribe-internal jobs included.
@@ -805,7 +807,7 @@ function initJobRatio(rows) {
       '<td class="text-right p-3 text-gray-400">' + (r.ts_size || 0).toLocaleString() + '</td>' +
       '<td class="text-right p-3 bg-gray-900/30 font-semibold">' + fmtNum(r.jobs_per_ts) + '</td>' +
       '<td class="text-right p-3 bg-gray-900/30">' + fmtPct(r.ts_coverage) + '</td>' +
-      '<td class="text-right p-3 bg-gray-900/30">' + fmtNum(r.ta_to_ts_ratio) + '</td>' +
+      '<td class="text-right p-3 bg-gray-900/30">' + ((r.ta_size||0) + ':' + (r.ts_size||0)) + '</td>' +
     '</tr>'
   )).join('');
 }
