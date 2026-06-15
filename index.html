@@ -62,6 +62,7 @@
     <button class="tab-btn" data-tab="wbr">WBR Comments</button>
     <button class="tab-btn" data-tab="closing">Closing Rates</button>
     <button class="tab-btn" data-tab="intext">Internal vs External</button>
+    <button class="tab-btn" data-tab="jobratio">Job Ratio</button>
   </div>
 
   <div class="tab-panel active" id="panel-ts">
@@ -363,6 +364,50 @@
     </div>
   </div>
 
+
+  <div class="tab-panel" id="panel-jobratio">
+    <div class="bg-gray-800 border border-gray-700 rounded-lg p-4 mb-6">
+      <div class="flex items-start gap-2 mb-3">
+        <span class="tag bg-blue-700 text-blue-100 flex-shrink-0">METHODOLOGY</span>
+        <p class="text-sm text-gray-300 leading-relaxed">
+          The question this tab answers: <strong class="text-gray-100">how does our internal sourcing team scale relative to the TA team, month by month?</strong>
+        </p>
+      </div>
+      <div class="text-sm text-gray-300 leading-relaxed ml-1 space-y-2">
+        <p><strong class="text-gray-200">TS Active Jobs</strong> &mdash; distinct jobs where someone on the TS roster, while on Bench / Internal allocation that day, made a contact in the month.</p>
+        <p><strong class="text-gray-200">Internal TS Team Size</strong> &mdash; distinct off-client TS sourcers (Bench / Internal) who made at least one contact in the month.</p>
+        <p><strong class="text-gray-200">TA Active Jobs</strong> &mdash; distinct jobs where a TA moved a candidate to a downstream stage (Recruiter Screen, Moved to ATS, Onsite, Offer, Hired) in the month.</p>
+        <p><strong class="text-gray-200">TA Team Size</strong> &mdash; distinct TAs who made at least one such downstream stage move in the month.</p>
+        <p><strong class="text-gray-200">Jobs / TS</strong> = TS Active Jobs &divide; Internal TS Team Size. <strong class="text-gray-200">TS Coverage</strong> = TS Active Jobs &divide; TA Active Jobs. <strong class="text-gray-200">TA:TS Ratio</strong> = TA Team Size &divide; Internal TS Team Size.</p>
+      </div>
+      <div class="text-xs text-gray-500 leading-relaxed ml-1 mt-3 pt-3 border-t border-gray-700">
+        Rosters: TS = the 19-sourcer roster used elsewhere in this dashboard (Sanja excluded). TA = the list maintained by the recruiting dashboard&#39;s WBR weekly roster. External recruiters excluded. Tribe-internal jobs included.
+      </div>
+    </div>
+    <div class="bg-gray-800 border border-gray-700 rounded-lg overflow-hidden mb-6">
+      <div class="p-4 border-b border-gray-700">
+        <h2 class="text-lg font-semibold">TS Job Ratio &mdash; monthly</h2>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="bg-gray-900 text-gray-300 uppercase text-xs">
+            <tr>
+              <th class="text-left p-3">Month</th>
+              <th class="text-right p-3">TA Active Jobs</th>
+              <th class="text-right p-3">TA Team Size</th>
+              <th class="text-right p-3">TS Active Jobs</th>
+              <th class="text-right p-3">Internal TS Team Size</th>
+              <th class="text-right p-3 bg-gray-900/40">Jobs / TS</th>
+              <th class="text-right p-3 bg-gray-900/40">TS Coverage</th>
+              <th class="text-right p-3 bg-gray-900/40">TA:TS Ratio</th>
+            </tr>
+          </thead>
+          <tbody id="jobratioTbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
   <div class="text-xs text-gray-500 text-right mt-6">
     Sourcing Dashboard . bark8922/tribe-sourcing
   </div>
@@ -415,6 +460,7 @@ async function loadData() {
     initWBR(DATA.wbr_comments || []);
     initClosing(DATA.closing_rates || null);
     initIntExt(DATA.int_vs_ext || []);
+    initJobRatio(DATA.job_ratio || []);
   } catch (err) {
     document.getElementById('dataMeta').innerHTML =
       '<span class="text-red-400">data.json failed to load</span>';
@@ -740,6 +786,30 @@ function renderIntExt() {
   });
   document.getElementById('ieTbody').innerHTML = html;
 }
+
+function initJobRatio(rows) {
+  const tbody = document.getElementById('jobratioTbody');
+  if (!tbody) return;
+  if (!rows || !rows.length) {
+    tbody.innerHTML = '<tr><td colspan="8" class="p-4 text-center text-gray-500 text-sm">No data yet &mdash; run the Keboola refresh to populate.</td></tr>';
+    return;
+  }
+  const fmtPct = (v) => (v == null ? '—' : v.toFixed(1) + '%');
+  const fmtNum = (v) => (v == null ? '—' : v.toFixed(1));
+  tbody.innerHTML = rows.map(r => (
+    '<tr class="border-t border-gray-700 hover:bg-gray-900/40">' +
+      '<td class="p-3 font-medium">' + r.month + '</td>' +
+      '<td class="text-right p-3">' + (r.ta_jobs || 0).toLocaleString() + '</td>' +
+      '<td class="text-right p-3 text-gray-400">' + (r.ta_size || 0).toLocaleString() + '</td>' +
+      '<td class="text-right p-3">' + (r.ts_jobs || 0).toLocaleString() + '</td>' +
+      '<td class="text-right p-3 text-gray-400">' + (r.ts_size || 0).toLocaleString() + '</td>' +
+      '<td class="text-right p-3 bg-gray-900/30 font-semibold">' + fmtNum(r.jobs_per_ts) + '</td>' +
+      '<td class="text-right p-3 bg-gray-900/30">' + fmtPct(r.ts_coverage) + '</td>' +
+      '<td class="text-right p-3 bg-gray-900/30">' + fmtNum(r.ta_to_ts_ratio) + '</td>' +
+    '</tr>'
+  )).join('');
+}
+
 </script>
 </body>
 </html>

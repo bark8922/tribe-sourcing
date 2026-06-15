@@ -29,6 +29,7 @@ WBR_INPUT_CSV_NAME = "snowflake_wbr_comments.csv"
 CLOSING_INPUT_CSV_NAME = "snowflake_closing_jobs.csv"
 INTEXT_INPUT_CSV_NAME = "snowflake_int_vs_ext.csv"
 ATTRIBS_INPUT_CSV_NAME = "snowflake_closing_attribs.csv"
+JOBRATIO_INPUT_CSV_NAME = "snowflake_job_ratio.csv"
 
 # Internal roles -- excluded from Closing Rates (Blake 2026-06-04)
 INTERNAL_CLIENTS = {
@@ -366,6 +367,52 @@ def read_int_vs_ext(ci):
     return []
 
 
+def read_job_ratio(ci):
+    """Read sourcing_ts_job_ratio_monthly CSV. Returns [] if not wired."""
+    for tbl in ci.get_input_tables_definitions():
+        if Path(tbl.full_path).name == JOBRATIO_INPUT_CSV_NAME:
+            with open(tbl.full_path, newline="") as f:
+                return list(csv.DictReader(f))
+    return []
+
+
+def build_job_ratio(rows):
+    """Map sourcing_ts_job_ratio_monthly CSV rows -> Phase 6 dashboard array.
+
+    Page renderer expects per row:
+      month, ta_jobs, ta_size, ts_jobs, ts_size, jobs_per_ts, ts_coverage, ta_to_ts_ratio
+    SQL columns:
+      ISO_YEAR, MONTH_NUM, MONTH_LABEL, TA_ACTIVE_JOBS, TA_TEAM_SIZE, TS_ACTIVE_JOBS, TS_TEAM_SIZE
+    """
+    out = []
+    for r in rows or []:
+        try:
+            ta_jobs = _i(r.get("TA_ACTIVE_JOBS"))
+            ta_size = _i(r.get("TA_TEAM_SIZE"))
+            ts_jobs = _i(r.get("TS_ACTIVE_JOBS"))
+            ts_size = _i(r.get("TS_TEAM_SIZE"))
+            month = (r.get("MONTH_LABEL") or "").strip()
+            if not month:
+                continue
+            jobs_per_ts = round(ts_jobs / ts_size, 1) if ts_size else None
+            ts_cov = round(100.0 * ts_jobs / ta_jobs, 1) if ta_jobs else None
+            ta_to_ts = round(ta_size / ts_size, 1) if ts_size else None
+            out.append({
+                "month": month,
+                "ta_jobs": ta_jobs,
+                "ta_size": ta_size,
+                "ts_jobs": ts_jobs,
+                "ts_size": ts_size,
+                "jobs_per_ts": jobs_per_ts,
+                "ts_coverage": ts_cov,
+                "ta_to_ts_ratio": ta_to_ts,
+            })
+        except Exception:
+            continue
+    out.sort(key=lambda x: x["month"], reverse=True)
+    return out
+
+
 def build_closing_rates(rows, attribs=None):
     """Job-level aggregator. Uses Gustavo's loose rule:
     Closed by sourcing = any TS team sourcer was the actual sourcer of a hire
@@ -623,6 +670,18 @@ def main():
     except Exception as e:
         print("[phase5] WARNING: int_vs_ext build failed: " + str(e), flush=True)
 
+    # Phase 6: TS Job Ratio (graceful)
+    job_ratio = []
+    try:
+        jr_rows = read_job_ratio(ci)
+        if jr_rows:
+            job_ratio = build_job_ratio(jr_rows)
+            print("[phase6] built job_ratio: " + str(len(job_ratio)) + " rows", flush=True)
+        else:
+            print("[phase6] no job_ratio input mapping yet — skipping", flush=True)
+    except Exception as e:
+        print("[phase6] WARNING: job_ratio build failed: " + str(e), flush=True)
+
     payload = {
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "source": "Keboola sourcing_dashboard_per_sourcer (v1.5) + Finance dashboard ea (ct-based cost classification)",
@@ -632,6 +691,7 @@ def main():
         "wbr_comments": wbr_comments,
         "closing_rates": closing_rates,
         "int_vs_ext": int_vs_ext,
+        "job_ratio": job_ratio,
     }
     content = json.dumps(payload, indent=2, ensure_ascii=False) + "\n"
 
