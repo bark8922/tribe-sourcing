@@ -30,6 +30,8 @@ CLOSING_INPUT_CSV_NAME = "snowflake_closing_jobs.csv"
 INTEXT_INPUT_CSV_NAME = "snowflake_int_vs_ext.csv"
 ATTRIBS_INPUT_CSV_NAME = "snowflake_closing_attribs.csv"
 JOBRATIO_INPUT_CSV_NAME = "snowflake_job_ratio.csv"
+HIRES_BY_CLIENT_CSV_NAME = "snowflake_hires_by_client.csv"
+HIRES_BY_SOURCER_CSV_NAME = "snowflake_hires_by_sourcer.csv"
 
 # Internal roles -- excluded from Closing Rates (Blake 2026-06-04)
 INTERNAL_CLIENTS = {
@@ -376,6 +378,47 @@ def read_job_ratio(ci):
     return []
 
 
+def read_hires_by_client(ci):
+    """Read sourcing_hires_by_client_quarter CSV. Returns [] if not wired."""
+    for tbl in ci.get_input_tables_definitions():
+        if Path(tbl.full_path).name == HIRES_BY_CLIENT_CSV_NAME:
+            with open(tbl.full_path, newline="") as f:
+                return list(csv.DictReader(f))
+    return []
+
+
+def read_hires_by_sourcer(ci):
+    """Read sourcing_hires_by_sourcer_quarter CSV. Returns [] if not wired."""
+    for tbl in ci.get_input_tables_definitions():
+        if Path(tbl.full_path).name == HIRES_BY_SOURCER_CSV_NAME:
+            with open(tbl.full_path, newline="") as f:
+                return list(csv.DictReader(f))
+    return []
+
+
+def _hires_lookup(rows, key_col):
+    """Pivot hires CSV rows -> {(qkey, key): hires, ("all", key): hires_total}.
+
+    qkey format = "YYYY QN" (matches existing by_*_per_quarter keys).
+    """
+    per_q = {}
+    totals = {}
+    for r in rows or []:
+        try:
+            y = int(float(r.get("ISO_YEAR") or 0))
+            q = int(float(r.get("QUARTER") or 0))
+            h = int(float(r.get("HIRES") or 0))
+        except (ValueError, TypeError):
+            continue
+        key = (r.get(key_col) or "").strip()
+        if not key or y < 2025 or q < 1 or q > 4:
+            continue
+        qk = f"{y} Q{q}"
+        per_q[(qk, key)] = per_q.get((qk, key), 0) + h
+        totals[key] = totals.get(key, 0) + h
+    return per_q, totals
+
+
 def build_job_ratio(rows):
     """Map sourcing_ts_job_ratio_monthly CSV rows -> Phase 6 dashboard array.
 
@@ -413,7 +456,7 @@ def build_job_ratio(rows):
     return out
 
 
-def build_closing_rates(rows, attribs=None):
+def build_closing_rates(rows, attribs=None, hires_by_client=None, hires_by_sourcer=None):
     """Job-level aggregator. Uses Gustavo's loose rule:
     Closed by sourcing = any TS team sourcer was the actual sourcer of a hire
     (not requiring they were the responsible_sourcer)."""
@@ -535,6 +578,21 @@ def build_closing_rates(rows, attribs=None):
     by_client_per_quarter = {qk: _client_list(m) for qk, m in cli_qtr.items()}
     by_sourcer_per_quarter = {qk: _sourcer_list(m) for qk, m in src_qtr.items()}
 
+    # Merge actual hires (from candidate_stage.date_hired) into each row.
+    # New "Hires" column on by_client / by_sourcer tables; existing "closed" stays.
+    cli_per_q, cli_tot = _hires_lookup(hires_by_client or [], "CLIENT")
+    src_per_q, src_tot = _hires_lookup(hires_by_sourcer or [], "SOURCER")
+    for r in by_client:
+        r["actual_hires"] = cli_tot.get(r["client"], 0)
+    for r in by_sourcer:
+        r["actual_hires"] = src_tot.get(r["sourcer"], 0)
+    for qk, rows_q in by_client_per_quarter.items():
+        for r in rows_q:
+            r["actual_hires"] = cli_per_q.get((qk, r["client"]), 0)
+    for qk, rows_q in by_sourcer_per_quarter.items():
+        for r in rows_q:
+            r["actual_hires"] = src_per_q.get((qk, r["sourcer"]), 0)
+
     # Internal vs External closing comparison (per quarter)
     # Denominator = all closed jobs (from job-level data, matches headline)
     # Numerator = closed jobs where a TS sourcer on Internal/External allocation sourced a hire
@@ -649,7 +707,7 @@ def main():
         hire_rows = read_closing_hires(ci)
         if hire_rows:
             attrib_rows = read_closing_attribs(ci)
-            closing_rates = build_closing_rates(hire_rows, attribs=attrib_rows)
+            closing_rates = build_closing_rates(hire_rows, attribs=attrib_rows, hires_by_client=read_hires_by_client(ci), hires_by_sourcer=read_hires_by_sourcer(ci))
             print("[phase4] built closing_rates: q=" + str(len(closing_rates["quarterly"])) +
                   " clients=" + str(len(closing_rates["by_client"])) +
                   " sourcers=" + str(len(closing_rates["by_sourcer"])), flush=True)
