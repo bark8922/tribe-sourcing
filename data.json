@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-08-25T11:47:20Z",
+  "generated_at": "2026-08-25T14:16:44Z",
   "source": "Keboola sourcing_dashboard_per_sourcer (v1.5) + Finance dashboard ea (ct-based cost classification)",
   "methodology_version": "1.5",
   "quarterly": [
     {
       "q": "2026 Q3",
       "in_progress": true,
-      "contacted": 4152,
-      "pos_resp": 555,
-      "rs": 389,
-      "act_scr": 303,
-      "ats": 162,
+      "contacted": 4236,
+      "pos_resp": 597,
+      "rs": 391,
+      "act_scr": 304,
+      "ats": 163,
       "offered": 13,
       "hired": 8,
       "team_size": 5,
@@ -301,7 +301,7 @@
       "contacted": 169,
       "rs": 14,
       "act_scr": 14,
-      "ats": 11,
+      "ats": 10,
       "offered": 2,
       "hired": 1
     },
@@ -16190,16 +16190,6 @@
         "actual_hires": 0
       },
       {
-        "client": "Eucalyptus",
-        "closed_total": 16,
-        "closed_ind": 16,
-        "sourced_total": 0,
-        "sourced_ind": 0,
-        "has_bulk": false,
-        "is_bulk_client": false,
-        "actual_hires": 29
-      },
-      {
         "client": "Scorewarrior",
         "closed_total": 16,
         "closed_ind": 16,
@@ -16210,14 +16200,14 @@
         "actual_hires": 6
       },
       {
-        "client": "Wargaming.net",
-        "closed_total": 15,
-        "closed_ind": 14,
+        "client": "Eucalyptus",
+        "closed_total": 16,
+        "closed_ind": 16,
         "sourced_total": 0,
         "sourced_ind": 0,
-        "has_bulk": true,
-        "is_bulk_client": true,
-        "actual_hires": 0
+        "has_bulk": false,
+        "is_bulk_client": false,
+        "actual_hires": 29
       },
       {
         "client": "SevenRooms",
@@ -16230,6 +16220,16 @@
         "actual_hires": 5
       },
       {
+        "client": "Wargaming.net",
+        "closed_total": 15,
+        "closed_ind": 14,
+        "sourced_total": 0,
+        "sourced_ind": 0,
+        "has_bulk": true,
+        "is_bulk_client": true,
+        "actual_hires": 0
+      },
+      {
         "client": "Aiven",
         "closed_total": 14,
         "closed_ind": 14,
@@ -16238,16 +16238,6 @@
         "has_bulk": false,
         "is_bulk_client": false,
         "actual_hires": 13
-      },
-      {
-        "client": "eleQtron",
-        "closed_total": 13,
-        "closed_ind": 13,
-        "sourced_total": 1,
-        "sourced_ind": 1,
-        "has_bulk": false,
-        "is_bulk_client": false,
-        "actual_hires": 4
       },
       {
         "client": "TEST CLIENT 123",
@@ -16260,6 +16250,16 @@
         "actual_hires": 0
       },
       {
+        "client": "eleQtron",
+        "closed_total": 13,
+        "closed_ind": 13,
+        "sourced_total": 1,
+        "sourced_ind": 1,
+        "has_bulk": false,
+        "is_bulk_client": false,
+        "actual_hires": 4
+      },
+      {
         "client": "Kranus Health",
         "closed_total": 10,
         "closed_ind": 10,
@@ -16268,16 +16268,6 @@
         "has_bulk": false,
         "is_bulk_client": false,
         "actual_hires": 4
-      },
-      {
-        "client": "Upvest",
-        "closed_total": 10,
-        "closed_ind": 10,
-        "sourced_total": 0,
-        "sourced_ind": 0,
-        "has_bulk": false,
-        "is_bulk_client": false,
-        "actual_hires": 0
       },
       {
         "client": "Doordash",
@@ -16290,14 +16280,14 @@
         "actual_hires": 17
       },
       {
-        "client": "Sumitomo",
-        "closed_total": 7,
-        "closed_ind": 7,
+        "client": "Upvest",
+        "closed_total": 10,
+        "closed_ind": 10,
         "sourced_total": 0,
         "sourced_ind": 0,
         "has_bulk": false,
         "is_bulk_client": false,
-        "actual_hires": 4
+        "actual_hires": 0
       },
       {
         "client": "Enam",
@@ -16308,6 +16298,26 @@
         "has_bulk": false,
         "is_bulk_client": false,
         "actual_hires": 5
+      },
+      {
+        "client": "Sumitomo",
+        "closed_total": 7,
+        "closed_ind": 7,
+        "sourced_total": 0,
+        "sourced_ind": 0,
+        "has_bulk": false,
+        "is_bulk_client": false,
+        "actual_hires": 4
+      },
+      {
+        "client": "DualEntry",
+        "closed_total": 6,
+        "closed_ind": 6,
+        "sourced_total": 0,
+        "sourced_ind": 0,
+        "has_bulk": false,
+        "is_bulk_client": false,
+        "actual_hires": 3
       },
       {
         "client": "FTAPI",
@@ -16328,16 +16338,6 @@
         "has_bulk": false,
         "is_bulk_client": false,
         "actual_hires": 0
-      },
-      {
-        "client": "DualEntry",
-        "closed_total": 6,
-        "closed_ind": 6,
-        "sourced_total": 0,
-        "sourced_ind": 0,
-        "has_bulk": false,
-        "is_bulk_client": false,
-        "actual_hires": 3
       },
       {
         "client": "Grover",
@@ -16374,17 +16374,6 @@
         "actual_hires": 19
       },
       {
-        "sourcer": "Dolores Palotas",
-        "responsible_total": 24,
-        "responsible_ind": 14,
-        "closed_by_them_total": 19,
-        "closed_by_them_ind": 8,
-        "bulk_driven_count": 11,
-        "ind_driven_count": 8,
-        "is_bulk_driven": true,
-        "actual_hires": 274
-      },
-      {
         "sourcer": "Gustavo Loureiro Castro",
         "responsible_total": 52,
         "responsible_ind": 52,
@@ -16394,6 +16383,17 @@
         "ind_driven_count": 19,
         "is_bulk_driven": false,
         "actual_hires": 21
+      },
+      {
+        "sourcer": "Dolores Palotas",
+        "responsible_total": 24,
+        "responsible_ind": 14,
+        "closed_by_them_total": 19,
+        "closed_by_them_ind": 8,
+        "bulk_driven_count": 11,
+        "ind_driven_count": 8,
+        "is_bulk_driven": true,
+        "actual_hires": 274
       },
       {
         "sourcer": "Milica Veselinovic",
@@ -16407,17 +16407,6 @@
         "actual_hires": 18
       },
       {
-        "sourcer": "Valeriia Yurykova",
-        "responsible_total": 96,
-        "responsible_ind": 93,
-        "closed_by_them_total": 16,
-        "closed_by_them_ind": 15,
-        "bulk_driven_count": 1,
-        "ind_driven_count": 15,
-        "is_bulk_driven": false,
-        "actual_hires": 22
-      },
-      {
         "sourcer": "Rodrigo Gomes",
         "responsible_total": 117,
         "responsible_ind": 116,
@@ -16427,6 +16416,17 @@
         "ind_driven_count": 16,
         "is_bulk_driven": false,
         "actual_hires": 14
+      },
+      {
+        "sourcer": "Valeriia Yurykova",
+        "responsible_total": 96,
+        "responsible_ind": 93,
+        "closed_by_them_total": 16,
+        "closed_by_them_ind": 15,
+        "bulk_driven_count": 1,
+        "ind_driven_count": 15,
+        "is_bulk_driven": false,
+        "actual_hires": 22
       },
       {
         "sourcer": "Ejla Suljcic",
@@ -16451,17 +16451,6 @@
         "actual_hires": 9
       },
       {
-        "sourcer": "Aleksandra Markovic",
-        "responsible_total": 31,
-        "responsible_ind": 30,
-        "closed_by_them_total": 9,
-        "closed_by_them_ind": 8,
-        "bulk_driven_count": 1,
-        "ind_driven_count": 8,
-        "is_bulk_driven": false,
-        "actual_hires": 15
-      },
-      {
         "sourcer": "Zelimir Stajcic",
         "responsible_total": 44,
         "responsible_ind": 43,
@@ -16482,6 +16471,17 @@
         "ind_driven_count": 7,
         "is_bulk_driven": false,
         "actual_hires": 12
+      },
+      {
+        "sourcer": "Aleksandra Markovic",
+        "responsible_total": 31,
+        "responsible_ind": 30,
+        "closed_by_them_total": 9,
+        "closed_by_them_ind": 8,
+        "bulk_driven_count": 1,
+        "ind_driven_count": 8,
+        "is_bulk_driven": false,
+        "actual_hires": 15
       },
       {
         "sourcer": "Marina Lazarevic",
@@ -16622,6 +16622,108 @@
           "has_bulk": false,
           "is_bulk_client": false,
           "actual_hires": 0
+        }
+      ],
+      "2026 Q1": [
+        {
+          "client": "Wolt",
+          "closed_total": 159,
+          "closed_ind": 139,
+          "sourced_total": 22,
+          "sourced_ind": 12,
+          "has_bulk": true,
+          "is_bulk_client": true,
+          "actual_hires": 926
+        },
+        {
+          "client": "Fever",
+          "closed_total": 24,
+          "closed_ind": 24,
+          "sourced_total": 0,
+          "sourced_ind": 0,
+          "has_bulk": false,
+          "is_bulk_client": false,
+          "actual_hires": 0
+        },
+        {
+          "client": "Tribe.xyz",
+          "closed_total": 17,
+          "closed_ind": 16,
+          "sourced_total": 1,
+          "sourced_ind": 1,
+          "has_bulk": true,
+          "is_bulk_client": true,
+          "actual_hires": 0
+        },
+        {
+          "client": "Taxfix",
+          "closed_total": 16,
+          "closed_ind": 16,
+          "sourced_total": 4,
+          "sourced_ind": 4,
+          "has_bulk": false,
+          "is_bulk_client": false,
+          "actual_hires": 7
+        },
+        {
+          "client": "Nexi",
+          "closed_total": 9,
+          "closed_ind": 8,
+          "sourced_total": 0,
+          "sourced_ind": 0,
+          "has_bulk": true,
+          "is_bulk_client": true,
+          "actual_hires": 10
+        },
+        {
+          "client": "Statista",
+          "closed_total": 9,
+          "closed_ind": 9,
+          "sourced_total": 4,
+          "sourced_ind": 4,
+          "has_bulk": false,
+          "is_bulk_client": false,
+          "actual_hires": 0
+        },
+        {
+          "client": "DualEntry",
+          "closed_total": 6,
+          "closed_ind": 6,
+          "sourced_total": 0,
+          "sourced_ind": 0,
+          "has_bulk": false,
+          "is_bulk_client": false,
+          "actual_hires": 3
+        },
+        {
+          "client": "AVIV",
+          "closed_total": 6,
+          "closed_ind": 6,
+          "sourced_total": 1,
+          "sourced_ind": 1,
+          "has_bulk": false,
+          "is_bulk_client": false,
+          "actual_hires": 9
+        },
+        {
+          "client": "Doordash",
+          "closed_total": 6,
+          "closed_ind": 5,
+          "sourced_total": 0,
+          "sourced_ind": 0,
+          "has_bulk": true,
+          "is_bulk_client": true,
+          "actual_hires": 11
+        },
+        {
+          "client": "Eucalyptus",
+          "closed_total": 6,
+          "closed_ind": 6,
+          "sourced_total": 0,
+          "sourced_ind": 0,
+          "has_bulk": false,
+          "is_bulk_client": false,
+          "actual_hires": 8
         }
       ],
       "2025 Q3": [
@@ -16778,188 +16880,136 @@
           "actual_hires": 4
         }
       ],
-      "2026 Q3": [
+      "2026 Q2": [
+        {
+          "client": "Wolt",
+          "closed_total": 110,
+          "closed_ind": 103,
+          "sourced_total": 10,
+          "sourced_ind": 6,
+          "has_bulk": true,
+          "is_bulk_client": true,
+          "actual_hires": 77
+        },
+        {
+          "client": "Tribe.xyz",
+          "closed_total": 33,
+          "closed_ind": 33,
+          "sourced_total": 2,
+          "sourced_ind": 2,
+          "has_bulk": false,
+          "is_bulk_client": false,
+          "actual_hires": 1
+        },
         {
           "client": "AVIV",
-          "closed_total": 45,
-          "closed_ind": 44,
-          "sourced_total": 9,
-          "sourced_ind": 8,
-          "has_bulk": true,
-          "is_bulk_client": true,
-          "actual_hires": 9
-        },
-        {
-          "client": "Wolt",
-          "closed_total": 34,
-          "closed_ind": 32,
-          "sourced_total": 2,
-          "sourced_ind": 2,
-          "has_bulk": true,
-          "is_bulk_client": true,
-          "actual_hires": 23
-        },
-        {
-          "client": "Tribe.xyz",
-          "closed_total": 26,
-          "closed_ind": 26,
-          "sourced_total": 0,
-          "sourced_ind": 0,
-          "has_bulk": false,
-          "is_bulk_client": false,
-          "actual_hires": 0
-        },
-        {
-          "client": "Glovo",
-          "closed_total": 19,
-          "closed_ind": 16,
-          "sourced_total": 3,
-          "sourced_ind": 2,
-          "has_bulk": true,
-          "is_bulk_client": true,
-          "actual_hires": 15
-        },
-        {
-          "client": "TEST CLIENT 123",
-          "closed_total": 12,
-          "closed_ind": 12,
-          "sourced_total": 0,
-          "sourced_ind": 0,
-          "has_bulk": false,
-          "is_bulk_client": false,
-          "actual_hires": 0
-        },
-        {
-          "client": "Parloa",
-          "closed_total": 7,
-          "closed_ind": 7,
-          "sourced_total": 2,
-          "sourced_ind": 2,
-          "has_bulk": false,
-          "is_bulk_client": false,
-          "actual_hires": 16
-        },
-        {
-          "client": "Taxfix",
-          "closed_total": 7,
-          "closed_ind": 7,
-          "sourced_total": 1,
-          "sourced_ind": 1,
-          "has_bulk": false,
-          "is_bulk_client": false,
-          "actual_hires": 4
-        },
-        {
-          "client": "Aiven",
-          "closed_total": 6,
-          "closed_ind": 6,
-          "sourced_total": 0,
-          "sourced_ind": 0,
-          "has_bulk": false,
-          "is_bulk_client": false,
-          "actual_hires": 8
-        }
-      ],
-      "2026 Q1": [
-        {
-          "client": "Wolt",
-          "closed_total": 159,
-          "closed_ind": 139,
-          "sourced_total": 22,
-          "sourced_ind": 12,
-          "has_bulk": true,
-          "is_bulk_client": true,
-          "actual_hires": 926
-        },
-        {
-          "client": "Fever",
-          "closed_total": 24,
-          "closed_ind": 24,
-          "sourced_total": 0,
-          "sourced_ind": 0,
-          "has_bulk": false,
-          "is_bulk_client": false,
-          "actual_hires": 0
-        },
-        {
-          "client": "Tribe.xyz",
-          "closed_total": 17,
-          "closed_ind": 16,
-          "sourced_total": 1,
-          "sourced_ind": 1,
-          "has_bulk": true,
-          "is_bulk_client": true,
-          "actual_hires": 0
-        },
-        {
-          "client": "Taxfix",
-          "closed_total": 16,
-          "closed_ind": 16,
+          "closed_total": 29,
+          "closed_ind": 29,
           "sourced_total": 4,
           "sourced_ind": 4,
           "has_bulk": false,
           "is_bulk_client": false,
-          "actual_hires": 7
-        },
-        {
-          "client": "Statista",
-          "closed_total": 9,
-          "closed_ind": 9,
-          "sourced_total": 4,
-          "sourced_ind": 4,
-          "has_bulk": false,
-          "is_bulk_client": false,
-          "actual_hires": 0
+          "actual_hires": 29
         },
         {
           "client": "Nexi",
+          "closed_total": 19,
+          "closed_ind": 19,
+          "sourced_total": 0,
+          "sourced_ind": 0,
+          "has_bulk": false,
+          "is_bulk_client": false,
+          "actual_hires": 15
+        },
+        {
+          "client": "Taxfix",
+          "closed_total": 12,
+          "closed_ind": 12,
+          "sourced_total": 1,
+          "sourced_ind": 1,
+          "has_bulk": false,
+          "is_bulk_client": false,
+          "actual_hires": 5
+        },
+        {
+          "client": "PhantomBuster",
           "closed_total": 9,
           "closed_ind": 8,
           "sourced_total": 0,
           "sourced_ind": 0,
           "has_bulk": true,
           "is_bulk_client": true,
-          "actual_hires": 10
+          "actual_hires": 6
         },
         {
-          "client": "AVIV",
-          "closed_total": 6,
-          "closed_ind": 6,
+          "client": "Upvest",
+          "closed_total": 9,
+          "closed_ind": 9,
+          "sourced_total": 0,
+          "sourced_ind": 0,
+          "has_bulk": false,
+          "is_bulk_client": false,
+          "actual_hires": 0
+        },
+        {
+          "client": "Aiven",
+          "closed_total": 8,
+          "closed_ind": 8,
+          "sourced_total": 0,
+          "sourced_ind": 0,
+          "has_bulk": false,
+          "is_bulk_client": false,
+          "actual_hires": 5
+        },
+        {
+          "client": "Parloa",
+          "closed_total": 8,
+          "closed_ind": 8,
           "sourced_total": 1,
           "sourced_ind": 1,
           "has_bulk": false,
           "is_bulk_client": false,
-          "actual_hires": 9
-        },
-        {
-          "client": "DualEntry",
-          "closed_total": 6,
-          "closed_ind": 6,
-          "sourced_total": 0,
-          "sourced_ind": 0,
-          "has_bulk": false,
-          "is_bulk_client": false,
-          "actual_hires": 3
+          "actual_hires": 16
         },
         {
           "client": "Eucalyptus",
+          "closed_total": 8,
+          "closed_ind": 8,
+          "sourced_total": 0,
+          "sourced_ind": 0,
+          "has_bulk": false,
+          "is_bulk_client": false,
+          "actual_hires": 10
+        },
+        {
+          "client": "SevenRooms",
+          "closed_total": 7,
+          "closed_ind": 7,
+          "sourced_total": 1,
+          "sourced_ind": 1,
+          "has_bulk": false,
+          "is_bulk_client": false,
+          "actual_hires": 2
+        },
+        {
+          "client": "FTAPI",
           "closed_total": 6,
           "closed_ind": 6,
           "sourced_total": 0,
           "sourced_ind": 0,
           "has_bulk": false,
           "is_bulk_client": false,
-          "actual_hires": 8
+          "actual_hires": 0
         },
         {
-          "client": "Doordash",
-          "closed_total": 6,
+          "client": "Scorewarrior",
+          "closed_total": 5,
           "closed_ind": 5,
           "sourced_total": 0,
           "sourced_ind": 0,
-          "has_bulk": true,
-          "is_bulk_client": true,
-          "actual_hires": 11
+          "has_bulk": false,
+          "is_bulk_client": false,
+          "actual_hires": 0
         }
       ],
       "2025 Q4": [
@@ -17034,16 +17084,6 @@
           "actual_hires": 2
         },
         {
-          "client": "Fever",
-          "closed_total": 7,
-          "closed_ind": 7,
-          "sourced_total": 0,
-          "sourced_ind": 0,
-          "has_bulk": false,
-          "is_bulk_client": false,
-          "actual_hires": 0
-        },
-        {
           "client": "Parloa",
           "closed_total": 7,
           "closed_ind": 7,
@@ -17052,6 +17092,16 @@
           "has_bulk": false,
           "is_bulk_client": false,
           "actual_hires": 5
+        },
+        {
+          "client": "Fever",
+          "closed_total": 7,
+          "closed_ind": 7,
+          "sourced_total": 0,
+          "sourced_ind": 0,
+          "has_bulk": false,
+          "is_bulk_client": false,
+          "actual_hires": 0
         },
         {
           "client": "Circula",
@@ -17074,71 +17124,31 @@
           "actual_hires": 0
         }
       ],
-      "2026 Q2": [
+      "2026 Q3": [
         {
-          "client": "Wolt",
-          "closed_total": 110,
-          "closed_ind": 103,
-          "sourced_total": 10,
-          "sourced_ind": 6,
+          "client": "AVIV",
+          "closed_total": 45,
+          "closed_ind": 44,
+          "sourced_total": 9,
+          "sourced_ind": 8,
           "has_bulk": true,
           "is_bulk_client": true,
-          "actual_hires": 77
+          "actual_hires": 9
+        },
+        {
+          "client": "Wolt",
+          "closed_total": 34,
+          "closed_ind": 32,
+          "sourced_total": 2,
+          "sourced_ind": 2,
+          "has_bulk": true,
+          "is_bulk_client": true,
+          "actual_hires": 23
         },
         {
           "client": "Tribe.xyz",
-          "closed_total": 33,
-          "closed_ind": 33,
-          "sourced_total": 2,
-          "sourced_ind": 2,
-          "has_bulk": false,
-          "is_bulk_client": false,
-          "actual_hires": 1
-        },
-        {
-          "client": "AVIV",
-          "closed_total": 29,
-          "closed_ind": 29,
-          "sourced_total": 4,
-          "sourced_ind": 4,
-          "has_bulk": false,
-          "is_bulk_client": false,
-          "actual_hires": 29
-        },
-        {
-          "client": "Nexi",
-          "closed_total": 19,
-          "closed_ind": 19,
-          "sourced_total": 0,
-          "sourced_ind": 0,
-          "has_bulk": false,
-          "is_bulk_client": false,
-          "actual_hires": 15
-        },
-        {
-          "client": "Taxfix",
-          "closed_total": 12,
-          "closed_ind": 12,
-          "sourced_total": 1,
-          "sourced_ind": 1,
-          "has_bulk": false,
-          "is_bulk_client": false,
-          "actual_hires": 5
-        },
-        {
-          "client": "PhantomBuster",
-          "closed_total": 9,
-          "closed_ind": 8,
-          "sourced_total": 0,
-          "sourced_ind": 0,
-          "has_bulk": true,
-          "is_bulk_client": true,
-          "actual_hires": 6
-        },
-        {
-          "client": "Upvest",
-          "closed_total": 9,
-          "closed_ind": 9,
+          "closed_total": 26,
+          "closed_ind": 26,
           "sourced_total": 0,
           "sourced_ind": 0,
           "has_bulk": false,
@@ -17146,246 +17156,58 @@
           "actual_hires": 0
         },
         {
-          "client": "Parloa",
-          "closed_total": 8,
-          "closed_ind": 8,
-          "sourced_total": 1,
-          "sourced_ind": 1,
-          "has_bulk": false,
-          "is_bulk_client": false,
-          "actual_hires": 16
+          "client": "Glovo",
+          "closed_total": 19,
+          "closed_ind": 16,
+          "sourced_total": 3,
+          "sourced_ind": 2,
+          "has_bulk": true,
+          "is_bulk_client": true,
+          "actual_hires": 15
         },
         {
-          "client": "Aiven",
-          "closed_total": 8,
-          "closed_ind": 8,
+          "client": "TEST CLIENT 123",
+          "closed_total": 12,
+          "closed_ind": 12,
           "sourced_total": 0,
           "sourced_ind": 0,
           "has_bulk": false,
           "is_bulk_client": false,
-          "actual_hires": 5
+          "actual_hires": 0
         },
         {
-          "client": "Eucalyptus",
-          "closed_total": 8,
-          "closed_ind": 8,
-          "sourced_total": 0,
-          "sourced_ind": 0,
-          "has_bulk": false,
-          "is_bulk_client": false,
-          "actual_hires": 10
-        },
-        {
-          "client": "SevenRooms",
+          "client": "Taxfix",
           "closed_total": 7,
           "closed_ind": 7,
           "sourced_total": 1,
           "sourced_ind": 1,
           "has_bulk": false,
           "is_bulk_client": false,
-          "actual_hires": 2
+          "actual_hires": 4
         },
         {
-          "client": "FTAPI",
+          "client": "Parloa",
+          "closed_total": 7,
+          "closed_ind": 7,
+          "sourced_total": 2,
+          "sourced_ind": 2,
+          "has_bulk": false,
+          "is_bulk_client": false,
+          "actual_hires": 16
+        },
+        {
+          "client": "Aiven",
           "closed_total": 6,
           "closed_ind": 6,
           "sourced_total": 0,
           "sourced_ind": 0,
           "has_bulk": false,
           "is_bulk_client": false,
-          "actual_hires": 0
-        },
-        {
-          "client": "Scorewarrior",
-          "closed_total": 5,
-          "closed_ind": 5,
-          "sourced_total": 0,
-          "sourced_ind": 0,
-          "has_bulk": false,
-          "is_bulk_client": false,
-          "actual_hires": 0
+          "actual_hires": 8
         }
       ]
     },
     "by_sourcer_per_quarter": {
-      "2026 Q2": [
-        {
-          "sourcer": "Elena Petrovska",
-          "responsible_total": 22,
-          "responsible_ind": 22,
-          "closed_by_them_total": 4,
-          "closed_by_them_ind": 4,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 4,
-          "is_bulk_driven": false,
-          "actual_hires": 4
-        },
-        {
-          "sourcer": "Dolores Palotas",
-          "responsible_total": 3,
-          "responsible_ind": 1,
-          "closed_by_them_total": 4,
-          "closed_by_them_ind": 1,
-          "bulk_driven_count": 3,
-          "ind_driven_count": 1,
-          "is_bulk_driven": true,
-          "actual_hires": 1
-        },
-        {
-          "sourcer": "Valeriia Yurykova",
-          "responsible_total": 19,
-          "responsible_ind": 19,
-          "closed_by_them_total": 3,
-          "closed_by_them_ind": 3,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 3,
-          "is_bulk_driven": false,
-          "actual_hires": 4
-        },
-        {
-          "sourcer": "Nare Avetisyan",
-          "responsible_total": 11,
-          "responsible_ind": 11,
-          "closed_by_them_total": 3,
-          "closed_by_them_ind": 3,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 3,
-          "is_bulk_driven": false,
-          "actual_hires": 7
-        },
-        {
-          "sourcer": "Milica Veselinovic",
-          "responsible_total": 12,
-          "responsible_ind": 12,
-          "closed_by_them_total": 2,
-          "closed_by_them_ind": 2,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 2,
-          "is_bulk_driven": false,
-          "actual_hires": 1
-        },
-        {
-          "sourcer": "Marina Lazarevic",
-          "responsible_total": 7,
-          "responsible_ind": 7,
-          "closed_by_them_total": 2,
-          "closed_by_them_ind": 2,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 2,
-          "is_bulk_driven": false,
-          "actual_hires": 4
-        },
-        {
-          "sourcer": "Ejla Suljcic",
-          "responsible_total": 5,
-          "responsible_ind": 5,
-          "closed_by_them_total": 1,
-          "closed_by_them_ind": 1,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 1,
-          "is_bulk_driven": false,
-          "actual_hires": 6
-        },
-        {
-          "sourcer": "Chantal Bozkurt",
-          "responsible_total": 1,
-          "responsible_ind": 1,
-          "closed_by_them_total": 1,
-          "closed_by_them_ind": 1,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 1,
-          "is_bulk_driven": false,
-          "actual_hires": 0
-        },
-        {
-          "sourcer": "Zelimir Stajcic",
-          "responsible_total": 3,
-          "responsible_ind": 3,
-          "closed_by_them_total": 1,
-          "closed_by_them_ind": 1,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 1,
-          "is_bulk_driven": false,
-          "actual_hires": 0
-        },
-        {
-          "sourcer": "Gustavo Loureiro Castro",
-          "responsible_total": 4,
-          "responsible_ind": 4,
-          "closed_by_them_total": 1,
-          "closed_by_them_ind": 1,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 1,
-          "is_bulk_driven": false,
-          "actual_hires": 4
-        },
-        {
-          "sourcer": "Aleksandra Markovic",
-          "responsible_total": 1,
-          "responsible_ind": 0,
-          "closed_by_them_total": 1,
-          "closed_by_them_ind": 0,
-          "bulk_driven_count": 1,
-          "ind_driven_count": 0,
-          "is_bulk_driven": true,
-          "actual_hires": 0
-        },
-        {
-          "sourcer": "Alberto Barroca",
-          "responsible_total": 0,
-          "responsible_ind": 0,
-          "closed_by_them_total": 1,
-          "closed_by_them_ind": 0,
-          "bulk_driven_count": 1,
-          "ind_driven_count": 0,
-          "is_bulk_driven": true,
-          "actual_hires": 0
-        },
-        {
-          "sourcer": "Rodrigo Gomes",
-          "responsible_total": 47,
-          "responsible_ind": 47,
-          "closed_by_them_total": 0,
-          "closed_by_them_ind": 0,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 0,
-          "is_bulk_driven": false,
-          "actual_hires": 2
-        },
-        {
-          "sourcer": "Naledi Ngwenya",
-          "responsible_total": 9,
-          "responsible_ind": 9,
-          "closed_by_them_total": 0,
-          "closed_by_them_ind": 0,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 0,
-          "is_bulk_driven": false,
-          "actual_hires": 2
-        },
-        {
-          "sourcer": "Andrea Akovic",
-          "responsible_total": 2,
-          "responsible_ind": 2,
-          "closed_by_them_total": 0,
-          "closed_by_them_ind": 0,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 0,
-          "is_bulk_driven": false,
-          "actual_hires": 2
-        },
-        {
-          "sourcer": "Mia Gjorgievska",
-          "responsible_total": 1,
-          "responsible_ind": 1,
-          "closed_by_them_total": 0,
-          "closed_by_them_ind": 0,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 0,
-          "is_bulk_driven": false,
-          "actual_hires": 0
-        }
-      ],
       "2025 Q4": [
         {
           "sourcer": "Chantal Bozkurt",
@@ -17432,17 +17254,6 @@
           "actual_hires": 4
         },
         {
-          "sourcer": "Andrea Akovic",
-          "responsible_total": 7,
-          "responsible_ind": 7,
-          "closed_by_them_total": 3,
-          "closed_by_them_ind": 3,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 3,
-          "is_bulk_driven": false,
-          "actual_hires": 1
-        },
-        {
           "sourcer": "Mia Gjorgievska",
           "responsible_total": 12,
           "responsible_ind": 11,
@@ -17454,15 +17265,15 @@
           "actual_hires": 0
         },
         {
-          "sourcer": "Zelimir Stajcic",
-          "responsible_total": 8,
+          "sourcer": "Andrea Akovic",
+          "responsible_total": 7,
           "responsible_ind": 7,
-          "closed_by_them_total": 2,
-          "closed_by_them_ind": 2,
+          "closed_by_them_total": 3,
+          "closed_by_them_ind": 3,
           "bulk_driven_count": 0,
-          "ind_driven_count": 2,
+          "ind_driven_count": 3,
           "is_bulk_driven": false,
-          "actual_hires": 3
+          "actual_hires": 1
         },
         {
           "sourcer": "Elena Petrovska",
@@ -17476,6 +17287,17 @@
           "actual_hires": 1
         },
         {
+          "sourcer": "Zelimir Stajcic",
+          "responsible_total": 8,
+          "responsible_ind": 7,
+          "closed_by_them_total": 2,
+          "closed_by_them_ind": 2,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 2,
+          "is_bulk_driven": false,
+          "actual_hires": 3
+        },
+        {
           "sourcer": "Elena Lage",
           "responsible_total": 4,
           "responsible_ind": 4,
@@ -17487,31 +17309,20 @@
           "actual_hires": 1
         },
         {
-          "sourcer": "Valeriia Yurykova",
-          "responsible_total": 11,
-          "responsible_ind": 10,
-          "closed_by_them_total": 1,
-          "closed_by_them_ind": 1,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 1,
-          "is_bulk_driven": false,
-          "actual_hires": 1
-        },
-        {
-          "sourcer": "Dolores Palotas",
-          "responsible_total": 0,
-          "responsible_ind": 0,
+          "sourcer": "Marina Lazarevic",
+          "responsible_total": 1,
+          "responsible_ind": 1,
           "closed_by_them_total": 1,
           "closed_by_them_ind": 0,
           "bulk_driven_count": 1,
           "ind_driven_count": 0,
           "is_bulk_driven": true,
-          "actual_hires": 192
+          "actual_hires": 0
         },
         {
-          "sourcer": "Alberto Barroca",
-          "responsible_total": 3,
-          "responsible_ind": 2,
+          "sourcer": "Aleksandra Karatanovska",
+          "responsible_total": 4,
+          "responsible_ind": 3,
           "closed_by_them_total": 1,
           "closed_by_them_ind": 1,
           "bulk_driven_count": 0,
@@ -17531,9 +17342,20 @@
           "actual_hires": 7
         },
         {
-          "sourcer": "Aleksandra Karatanovska",
-          "responsible_total": 4,
-          "responsible_ind": 3,
+          "sourcer": "Dolores Palotas",
+          "responsible_total": 0,
+          "responsible_ind": 0,
+          "closed_by_them_total": 1,
+          "closed_by_them_ind": 0,
+          "bulk_driven_count": 1,
+          "ind_driven_count": 0,
+          "is_bulk_driven": true,
+          "actual_hires": 192
+        },
+        {
+          "sourcer": "Valeriia Yurykova",
+          "responsible_total": 11,
+          "responsible_ind": 10,
           "closed_by_them_total": 1,
           "closed_by_them_ind": 1,
           "bulk_driven_count": 0,
@@ -17542,15 +17364,15 @@
           "actual_hires": 1
         },
         {
-          "sourcer": "Marina Lazarevic",
-          "responsible_total": 1,
-          "responsible_ind": 1,
+          "sourcer": "Alberto Barroca",
+          "responsible_total": 3,
+          "responsible_ind": 2,
           "closed_by_them_total": 1,
-          "closed_by_them_ind": 0,
-          "bulk_driven_count": 1,
-          "ind_driven_count": 0,
-          "is_bulk_driven": true,
-          "actual_hires": 0
+          "closed_by_them_ind": 1,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 1,
+          "is_bulk_driven": false,
+          "actual_hires": 1
         },
         {
           "sourcer": "Ejla Suljcic",
@@ -17588,17 +17410,6 @@
           "actual_hires": 37
         },
         {
-          "sourcer": "Andrea Akovic",
-          "responsible_total": 22,
-          "responsible_ind": 21,
-          "closed_by_them_total": 5,
-          "closed_by_them_ind": 4,
-          "bulk_driven_count": 1,
-          "ind_driven_count": 4,
-          "is_bulk_driven": false,
-          "actual_hires": 3
-        },
-        {
           "sourcer": "Zelimir Stajcic",
           "responsible_total": 14,
           "responsible_ind": 14,
@@ -17608,6 +17419,17 @@
           "ind_driven_count": 5,
           "is_bulk_driven": false,
           "actual_hires": 5
+        },
+        {
+          "sourcer": "Andrea Akovic",
+          "responsible_total": 22,
+          "responsible_ind": 21,
+          "closed_by_them_total": 5,
+          "closed_by_them_ind": 4,
+          "bulk_driven_count": 1,
+          "ind_driven_count": 4,
+          "is_bulk_driven": false,
+          "actual_hires": 3
         },
         {
           "sourcer": "Gustavo Loureiro Castro",
@@ -17621,17 +17443,6 @@
           "actual_hires": 6
         },
         {
-          "sourcer": "Aleksandra Markovic",
-          "responsible_total": 7,
-          "responsible_ind": 7,
-          "closed_by_them_total": 3,
-          "closed_by_them_ind": 3,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 3,
-          "is_bulk_driven": false,
-          "actual_hires": 0
-        },
-        {
           "sourcer": "Milica Veselinovic",
           "responsible_total": 6,
           "responsible_ind": 6,
@@ -17643,13 +17454,13 @@
           "actual_hires": 2
         },
         {
-          "sourcer": "Rodrigo Gomes",
-          "responsible_total": 5,
-          "responsible_ind": 5,
-          "closed_by_them_total": 2,
-          "closed_by_them_ind": 2,
+          "sourcer": "Aleksandra Markovic",
+          "responsible_total": 7,
+          "responsible_ind": 7,
+          "closed_by_them_total": 3,
+          "closed_by_them_ind": 3,
           "bulk_driven_count": 0,
-          "ind_driven_count": 2,
+          "ind_driven_count": 3,
           "is_bulk_driven": false,
           "actual_hires": 0
         },
@@ -17665,6 +17476,17 @@
           "actual_hires": 7
         },
         {
+          "sourcer": "Rodrigo Gomes",
+          "responsible_total": 5,
+          "responsible_ind": 5,
+          "closed_by_them_total": 2,
+          "closed_by_them_ind": 2,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 2,
+          "is_bulk_driven": false,
+          "actual_hires": 0
+        },
+        {
           "sourcer": "Elena Petrovska",
           "responsible_total": 8,
           "responsible_ind": 8,
@@ -17674,6 +17496,17 @@
           "ind_driven_count": 1,
           "is_bulk_driven": false,
           "actual_hires": 1
+        },
+        {
+          "sourcer": "Dolores Palotas",
+          "responsible_total": 0,
+          "responsible_ind": 0,
+          "closed_by_them_total": 1,
+          "closed_by_them_ind": 1,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 1,
+          "is_bulk_driven": false,
+          "actual_hires": 12
         },
         {
           "sourcer": "Valeriia Yurykova",
@@ -17698,20 +17531,9 @@
           "actual_hires": 0
         },
         {
-          "sourcer": "Dolores Palotas",
-          "responsible_total": 0,
-          "responsible_ind": 0,
-          "closed_by_them_total": 1,
-          "closed_by_them_ind": 1,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 1,
-          "is_bulk_driven": false,
-          "actual_hires": 12
-        },
-        {
-          "sourcer": "Alberto Barroca",
-          "responsible_total": 4,
-          "responsible_ind": 4,
+          "sourcer": "Luis Bravo",
+          "responsible_total": 3,
+          "responsible_ind": 3,
           "closed_by_them_total": 0,
           "closed_by_them_ind": 0,
           "bulk_driven_count": 0,
@@ -17720,9 +17542,9 @@
           "actual_hires": 0
         },
         {
-          "sourcer": "Luis Bravo",
-          "responsible_total": 3,
-          "responsible_ind": 3,
+          "sourcer": "Mia Gjorgievska",
+          "responsible_total": 4,
+          "responsible_ind": 4,
           "closed_by_them_total": 0,
           "closed_by_them_ind": 0,
           "bulk_driven_count": 0,
@@ -17753,7 +17575,7 @@
           "actual_hires": 0
         },
         {
-          "sourcer": "Mia Gjorgievska",
+          "sourcer": "Alberto Barroca",
           "responsible_total": 4,
           "responsible_ind": 4,
           "closed_by_them_total": 0,
@@ -17821,15 +17643,15 @@
           "actual_hires": 2
         },
         {
-          "sourcer": "Valeriia Yurykova",
-          "responsible_total": 11,
-          "responsible_ind": 10,
+          "sourcer": "Rodrigo Gomes",
+          "responsible_total": 4,
+          "responsible_ind": 4,
           "closed_by_them_total": 2,
-          "closed_by_them_ind": 1,
-          "bulk_driven_count": 1,
-          "ind_driven_count": 1,
+          "closed_by_them_ind": 2,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 2,
           "is_bulk_driven": false,
-          "actual_hires": 1
+          "actual_hires": 2
         },
         {
           "sourcer": "Andrea Akovic",
@@ -17843,6 +17665,17 @@
           "actual_hires": 0
         },
         {
+          "sourcer": "Valeriia Yurykova",
+          "responsible_total": 11,
+          "responsible_ind": 10,
+          "closed_by_them_total": 2,
+          "closed_by_them_ind": 1,
+          "bulk_driven_count": 1,
+          "ind_driven_count": 1,
+          "is_bulk_driven": false,
+          "actual_hires": 1
+        },
+        {
           "sourcer": "Aleksandra Markovic",
           "responsible_total": 2,
           "responsible_ind": 2,
@@ -17852,17 +17685,6 @@
           "ind_driven_count": 2,
           "is_bulk_driven": false,
           "actual_hires": 4
-        },
-        {
-          "sourcer": "Rodrigo Gomes",
-          "responsible_total": 4,
-          "responsible_ind": 4,
-          "closed_by_them_total": 2,
-          "closed_by_them_ind": 2,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 2,
-          "is_bulk_driven": false,
-          "actual_hires": 2
         },
         {
           "sourcer": "Marina Lazarevic",
@@ -17876,15 +17698,15 @@
           "actual_hires": 5
         },
         {
-          "sourcer": "Alberto Barroca",
-          "responsible_total": 2,
+          "sourcer": "Nare Avetisyan",
+          "responsible_total": 1,
           "responsible_ind": 1,
           "closed_by_them_total": 1,
           "closed_by_them_ind": 0,
           "bulk_driven_count": 1,
           "ind_driven_count": 0,
           "is_bulk_driven": true,
-          "actual_hires": 0
+          "actual_hires": 1
         },
         {
           "sourcer": "Milica Veselinovic",
@@ -17909,25 +17731,14 @@
           "actual_hires": 1
         },
         {
-          "sourcer": "Nare Avetisyan",
-          "responsible_total": 1,
+          "sourcer": "Alberto Barroca",
+          "responsible_total": 2,
           "responsible_ind": 1,
           "closed_by_them_total": 1,
           "closed_by_them_ind": 0,
           "bulk_driven_count": 1,
           "ind_driven_count": 0,
           "is_bulk_driven": true,
-          "actual_hires": 1
-        },
-        {
-          "sourcer": "Aleksandra Karatanovska",
-          "responsible_total": 1,
-          "responsible_ind": 1,
-          "closed_by_them_total": 0,
-          "closed_by_them_ind": 0,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 0,
-          "is_bulk_driven": false,
           "actual_hires": 0
         },
         {
@@ -17940,189 +17751,11 @@
           "ind_driven_count": 0,
           "is_bulk_driven": false,
           "actual_hires": 0
-        }
-      ],
-      "2025 Q2": [
-        {
-          "sourcer": "Dolores Palotas",
-          "responsible_total": 8,
-          "responsible_ind": 7,
-          "closed_by_them_total": 3,
-          "closed_by_them_ind": 3,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 3,
-          "is_bulk_driven": false,
-          "actual_hires": 1
-        },
-        {
-          "sourcer": "Valeriia Yurykova",
-          "responsible_total": 21,
-          "responsible_ind": 21,
-          "closed_by_them_total": 3,
-          "closed_by_them_ind": 3,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 3,
-          "is_bulk_driven": false,
-          "actual_hires": 7
-        },
-        {
-          "sourcer": "Chantal Bozkurt",
-          "responsible_total": 11,
-          "responsible_ind": 11,
-          "closed_by_them_total": 2,
-          "closed_by_them_ind": 2,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 2,
-          "is_bulk_driven": false,
-          "actual_hires": 1
-        },
-        {
-          "sourcer": "Ejla Suljcic",
-          "responsible_total": 7,
-          "responsible_ind": 7,
-          "closed_by_them_total": 2,
-          "closed_by_them_ind": 2,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 2,
-          "is_bulk_driven": false,
-          "actual_hires": 3
-        },
-        {
-          "sourcer": "Gustavo Loureiro Castro",
-          "responsible_total": 5,
-          "responsible_ind": 5,
-          "closed_by_them_total": 2,
-          "closed_by_them_ind": 2,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 2,
-          "is_bulk_driven": false,
-          "actual_hires": 1
-        },
-        {
-          "sourcer": "Luis Bravo",
-          "responsible_total": 17,
-          "responsible_ind": 17,
-          "closed_by_them_total": 2,
-          "closed_by_them_ind": 2,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 2,
-          "is_bulk_driven": false,
-          "actual_hires": 2
-        },
-        {
-          "sourcer": "Milica Veselinovic",
-          "responsible_total": 8,
-          "responsible_ind": 8,
-          "closed_by_them_total": 2,
-          "closed_by_them_ind": 2,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 2,
-          "is_bulk_driven": false,
-          "actual_hires": 4
-        },
-        {
-          "sourcer": "Andrea Akovic",
-          "responsible_total": 10,
-          "responsible_ind": 10,
-          "closed_by_them_total": 2,
-          "closed_by_them_ind": 2,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 2,
-          "is_bulk_driven": false,
-          "actual_hires": 8
-        },
-        {
-          "sourcer": "Nare Avetisyan",
-          "responsible_total": 5,
-          "responsible_ind": 5,
-          "closed_by_them_total": 2,
-          "closed_by_them_ind": 2,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 2,
-          "is_bulk_driven": false,
-          "actual_hires": 3
-        },
-        {
-          "sourcer": "Rodrigo Gomes",
-          "responsible_total": 9,
-          "responsible_ind": 9,
-          "closed_by_them_total": 2,
-          "closed_by_them_ind": 2,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 2,
-          "is_bulk_driven": false,
-          "actual_hires": 2
-        },
-        {
-          "sourcer": "Aleksandra Markovic",
-          "responsible_total": 12,
-          "responsible_ind": 12,
-          "closed_by_them_total": 1,
-          "closed_by_them_ind": 1,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 1,
-          "is_bulk_driven": false,
-          "actual_hires": 1
-        },
-        {
-          "sourcer": "Alberto Barroca",
-          "responsible_total": 12,
-          "responsible_ind": 11,
-          "closed_by_them_total": 1,
-          "closed_by_them_ind": 1,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 1,
-          "is_bulk_driven": false,
-          "actual_hires": 4
-        },
-        {
-          "sourcer": "Zelimir Stajcic",
-          "responsible_total": 13,
-          "responsible_ind": 13,
-          "closed_by_them_total": 0,
-          "closed_by_them_ind": 0,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 0,
-          "is_bulk_driven": false,
-          "actual_hires": 0
-        },
-        {
-          "sourcer": "Mia Gjorgievska",
-          "responsible_total": 8,
-          "responsible_ind": 7,
-          "closed_by_them_total": 0,
-          "closed_by_them_ind": 0,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 0,
-          "is_bulk_driven": false,
-          "actual_hires": 1
-        },
-        {
-          "sourcer": "Elena Petrovska",
-          "responsible_total": 5,
-          "responsible_ind": 5,
-          "closed_by_them_total": 0,
-          "closed_by_them_ind": 0,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 0,
-          "is_bulk_driven": false,
-          "actual_hires": 1
-        },
-        {
-          "sourcer": "Elena Lage",
-          "responsible_total": 8,
-          "responsible_ind": 8,
-          "closed_by_them_total": 0,
-          "closed_by_them_ind": 0,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 0,
-          "is_bulk_driven": false,
-          "actual_hires": 0
         },
         {
           "sourcer": "Aleksandra Karatanovska",
-          "responsible_total": 2,
-          "responsible_ind": 2,
+          "responsible_total": 1,
+          "responsible_ind": 1,
           "closed_by_them_total": 0,
           "closed_by_them_ind": 0,
           "bulk_driven_count": 0,
@@ -18166,17 +17799,6 @@
           "actual_hires": 4
         },
         {
-          "sourcer": "Rodrigo Gomes",
-          "responsible_total": 6,
-          "responsible_ind": 6,
-          "closed_by_them_total": 2,
-          "closed_by_them_ind": 2,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 2,
-          "is_bulk_driven": false,
-          "actual_hires": 2
-        },
-        {
           "sourcer": "Aleksandra Karatanovska",
           "responsible_total": 4,
           "responsible_ind": 4,
@@ -18188,6 +17810,17 @@
           "actual_hires": 3
         },
         {
+          "sourcer": "Rodrigo Gomes",
+          "responsible_total": 6,
+          "responsible_ind": 6,
+          "closed_by_them_total": 2,
+          "closed_by_them_ind": 2,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 2,
+          "is_bulk_driven": false,
+          "actual_hires": 2
+        },
+        {
           "sourcer": "Ejla Suljcic",
           "responsible_total": 1,
           "responsible_ind": 1,
@@ -18195,6 +17828,39 @@
           "closed_by_them_ind": 2,
           "bulk_driven_count": 0,
           "ind_driven_count": 2,
+          "is_bulk_driven": false,
+          "actual_hires": 4
+        },
+        {
+          "sourcer": "Dolores Palotas",
+          "responsible_total": 2,
+          "responsible_ind": 2,
+          "closed_by_them_total": 1,
+          "closed_by_them_ind": 1,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 1,
+          "is_bulk_driven": false,
+          "actual_hires": 2
+        },
+        {
+          "sourcer": "Gustavo Loureiro Castro",
+          "responsible_total": 4,
+          "responsible_ind": 4,
+          "closed_by_them_total": 1,
+          "closed_by_them_ind": 1,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 1,
+          "is_bulk_driven": false,
+          "actual_hires": 2
+        },
+        {
+          "sourcer": "Mia Gjorgievska",
+          "responsible_total": 12,
+          "responsible_ind": 12,
+          "closed_by_them_total": 1,
+          "closed_by_them_ind": 1,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 1,
           "is_bulk_driven": false,
           "actual_hires": 4
         },
@@ -18221,39 +17887,6 @@
           "actual_hires": 1
         },
         {
-          "sourcer": "Mia Gjorgievska",
-          "responsible_total": 12,
-          "responsible_ind": 12,
-          "closed_by_them_total": 1,
-          "closed_by_them_ind": 1,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 1,
-          "is_bulk_driven": false,
-          "actual_hires": 4
-        },
-        {
-          "sourcer": "Gustavo Loureiro Castro",
-          "responsible_total": 4,
-          "responsible_ind": 4,
-          "closed_by_them_total": 1,
-          "closed_by_them_ind": 1,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 1,
-          "is_bulk_driven": false,
-          "actual_hires": 2
-        },
-        {
-          "sourcer": "Dolores Palotas",
-          "responsible_total": 2,
-          "responsible_ind": 2,
-          "closed_by_them_total": 1,
-          "closed_by_them_ind": 1,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 1,
-          "is_bulk_driven": false,
-          "actual_hires": 2
-        },
-        {
           "sourcer": "Nare Avetisyan",
           "responsible_total": 2,
           "responsible_ind": 2,
@@ -18274,6 +17907,373 @@
           "ind_driven_count": 0,
           "is_bulk_driven": false,
           "actual_hires": 0
+        }
+      ],
+      "2026 Q2": [
+        {
+          "sourcer": "Elena Petrovska",
+          "responsible_total": 22,
+          "responsible_ind": 22,
+          "closed_by_them_total": 4,
+          "closed_by_them_ind": 4,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 4,
+          "is_bulk_driven": false,
+          "actual_hires": 4
+        },
+        {
+          "sourcer": "Dolores Palotas",
+          "responsible_total": 3,
+          "responsible_ind": 1,
+          "closed_by_them_total": 4,
+          "closed_by_them_ind": 1,
+          "bulk_driven_count": 3,
+          "ind_driven_count": 1,
+          "is_bulk_driven": true,
+          "actual_hires": 1
+        },
+        {
+          "sourcer": "Valeriia Yurykova",
+          "responsible_total": 19,
+          "responsible_ind": 19,
+          "closed_by_them_total": 3,
+          "closed_by_them_ind": 3,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 3,
+          "is_bulk_driven": false,
+          "actual_hires": 4
+        },
+        {
+          "sourcer": "Nare Avetisyan",
+          "responsible_total": 11,
+          "responsible_ind": 11,
+          "closed_by_them_total": 3,
+          "closed_by_them_ind": 3,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 3,
+          "is_bulk_driven": false,
+          "actual_hires": 7
+        },
+        {
+          "sourcer": "Marina Lazarevic",
+          "responsible_total": 7,
+          "responsible_ind": 7,
+          "closed_by_them_total": 2,
+          "closed_by_them_ind": 2,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 2,
+          "is_bulk_driven": false,
+          "actual_hires": 4
+        },
+        {
+          "sourcer": "Milica Veselinovic",
+          "responsible_total": 12,
+          "responsible_ind": 12,
+          "closed_by_them_total": 2,
+          "closed_by_them_ind": 2,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 2,
+          "is_bulk_driven": false,
+          "actual_hires": 1
+        },
+        {
+          "sourcer": "Gustavo Loureiro Castro",
+          "responsible_total": 4,
+          "responsible_ind": 4,
+          "closed_by_them_total": 1,
+          "closed_by_them_ind": 1,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 1,
+          "is_bulk_driven": false,
+          "actual_hires": 4
+        },
+        {
+          "sourcer": "Zelimir Stajcic",
+          "responsible_total": 3,
+          "responsible_ind": 3,
+          "closed_by_them_total": 1,
+          "closed_by_them_ind": 1,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 1,
+          "is_bulk_driven": false,
+          "actual_hires": 0
+        },
+        {
+          "sourcer": "Aleksandra Markovic",
+          "responsible_total": 1,
+          "responsible_ind": 0,
+          "closed_by_them_total": 1,
+          "closed_by_them_ind": 0,
+          "bulk_driven_count": 1,
+          "ind_driven_count": 0,
+          "is_bulk_driven": true,
+          "actual_hires": 0
+        },
+        {
+          "sourcer": "Alberto Barroca",
+          "responsible_total": 0,
+          "responsible_ind": 0,
+          "closed_by_them_total": 1,
+          "closed_by_them_ind": 0,
+          "bulk_driven_count": 1,
+          "ind_driven_count": 0,
+          "is_bulk_driven": true,
+          "actual_hires": 0
+        },
+        {
+          "sourcer": "Chantal Bozkurt",
+          "responsible_total": 1,
+          "responsible_ind": 1,
+          "closed_by_them_total": 1,
+          "closed_by_them_ind": 1,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 1,
+          "is_bulk_driven": false,
+          "actual_hires": 0
+        },
+        {
+          "sourcer": "Ejla Suljcic",
+          "responsible_total": 5,
+          "responsible_ind": 5,
+          "closed_by_them_total": 1,
+          "closed_by_them_ind": 1,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 1,
+          "is_bulk_driven": false,
+          "actual_hires": 6
+        },
+        {
+          "sourcer": "Rodrigo Gomes",
+          "responsible_total": 47,
+          "responsible_ind": 47,
+          "closed_by_them_total": 0,
+          "closed_by_them_ind": 0,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 0,
+          "is_bulk_driven": false,
+          "actual_hires": 2
+        },
+        {
+          "sourcer": "Naledi Ngwenya",
+          "responsible_total": 9,
+          "responsible_ind": 9,
+          "closed_by_them_total": 0,
+          "closed_by_them_ind": 0,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 0,
+          "is_bulk_driven": false,
+          "actual_hires": 2
+        },
+        {
+          "sourcer": "Mia Gjorgievska",
+          "responsible_total": 1,
+          "responsible_ind": 1,
+          "closed_by_them_total": 0,
+          "closed_by_them_ind": 0,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 0,
+          "is_bulk_driven": false,
+          "actual_hires": 0
+        },
+        {
+          "sourcer": "Andrea Akovic",
+          "responsible_total": 2,
+          "responsible_ind": 2,
+          "closed_by_them_total": 0,
+          "closed_by_them_ind": 0,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 0,
+          "is_bulk_driven": false,
+          "actual_hires": 2
+        }
+      ],
+      "2025 Q2": [
+        {
+          "sourcer": "Valeriia Yurykova",
+          "responsible_total": 21,
+          "responsible_ind": 21,
+          "closed_by_them_total": 3,
+          "closed_by_them_ind": 3,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 3,
+          "is_bulk_driven": false,
+          "actual_hires": 7
+        },
+        {
+          "sourcer": "Dolores Palotas",
+          "responsible_total": 8,
+          "responsible_ind": 7,
+          "closed_by_them_total": 3,
+          "closed_by_them_ind": 3,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 3,
+          "is_bulk_driven": false,
+          "actual_hires": 1
+        },
+        {
+          "sourcer": "Nare Avetisyan",
+          "responsible_total": 5,
+          "responsible_ind": 5,
+          "closed_by_them_total": 2,
+          "closed_by_them_ind": 2,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 2,
+          "is_bulk_driven": false,
+          "actual_hires": 3
+        },
+        {
+          "sourcer": "Rodrigo Gomes",
+          "responsible_total": 9,
+          "responsible_ind": 9,
+          "closed_by_them_total": 2,
+          "closed_by_them_ind": 2,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 2,
+          "is_bulk_driven": false,
+          "actual_hires": 2
+        },
+        {
+          "sourcer": "Milica Veselinovic",
+          "responsible_total": 8,
+          "responsible_ind": 8,
+          "closed_by_them_total": 2,
+          "closed_by_them_ind": 2,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 2,
+          "is_bulk_driven": false,
+          "actual_hires": 4
+        },
+        {
+          "sourcer": "Luis Bravo",
+          "responsible_total": 17,
+          "responsible_ind": 17,
+          "closed_by_them_total": 2,
+          "closed_by_them_ind": 2,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 2,
+          "is_bulk_driven": false,
+          "actual_hires": 2
+        },
+        {
+          "sourcer": "Gustavo Loureiro Castro",
+          "responsible_total": 5,
+          "responsible_ind": 5,
+          "closed_by_them_total": 2,
+          "closed_by_them_ind": 2,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 2,
+          "is_bulk_driven": false,
+          "actual_hires": 1
+        },
+        {
+          "sourcer": "Ejla Suljcic",
+          "responsible_total": 7,
+          "responsible_ind": 7,
+          "closed_by_them_total": 2,
+          "closed_by_them_ind": 2,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 2,
+          "is_bulk_driven": false,
+          "actual_hires": 3
+        },
+        {
+          "sourcer": "Chantal Bozkurt",
+          "responsible_total": 11,
+          "responsible_ind": 11,
+          "closed_by_them_total": 2,
+          "closed_by_them_ind": 2,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 2,
+          "is_bulk_driven": false,
+          "actual_hires": 1
+        },
+        {
+          "sourcer": "Andrea Akovic",
+          "responsible_total": 10,
+          "responsible_ind": 10,
+          "closed_by_them_total": 2,
+          "closed_by_them_ind": 2,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 2,
+          "is_bulk_driven": false,
+          "actual_hires": 8
+        },
+        {
+          "sourcer": "Alberto Barroca",
+          "responsible_total": 12,
+          "responsible_ind": 11,
+          "closed_by_them_total": 1,
+          "closed_by_them_ind": 1,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 1,
+          "is_bulk_driven": false,
+          "actual_hires": 4
+        },
+        {
+          "sourcer": "Aleksandra Markovic",
+          "responsible_total": 12,
+          "responsible_ind": 12,
+          "closed_by_them_total": 1,
+          "closed_by_them_ind": 1,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 1,
+          "is_bulk_driven": false,
+          "actual_hires": 1
+        },
+        {
+          "sourcer": "Elena Petrovska",
+          "responsible_total": 5,
+          "responsible_ind": 5,
+          "closed_by_them_total": 0,
+          "closed_by_them_ind": 0,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 0,
+          "is_bulk_driven": false,
+          "actual_hires": 1
+        },
+        {
+          "sourcer": "Zelimir Stajcic",
+          "responsible_total": 13,
+          "responsible_ind": 13,
+          "closed_by_them_total": 0,
+          "closed_by_them_ind": 0,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 0,
+          "is_bulk_driven": false,
+          "actual_hires": 0
+        },
+        {
+          "sourcer": "Elena Lage",
+          "responsible_total": 8,
+          "responsible_ind": 8,
+          "closed_by_them_total": 0,
+          "closed_by_them_ind": 0,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 0,
+          "is_bulk_driven": false,
+          "actual_hires": 0
+        },
+        {
+          "sourcer": "Aleksandra Karatanovska",
+          "responsible_total": 2,
+          "responsible_ind": 2,
+          "closed_by_them_total": 0,
+          "closed_by_them_ind": 0,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 0,
+          "is_bulk_driven": false,
+          "actual_hires": 0
+        },
+        {
+          "sourcer": "Mia Gjorgievska",
+          "responsible_total": 8,
+          "responsible_ind": 7,
+          "closed_by_them_total": 0,
+          "closed_by_them_ind": 0,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 0,
+          "is_bulk_driven": false,
+          "actual_hires": 1
         }
       ],
       "2026 Q3": [
@@ -18300,17 +18300,6 @@
           "actual_hires": 2
         },
         {
-          "sourcer": "Valeriia Yurykova",
-          "responsible_total": 10,
-          "responsible_ind": 10,
-          "closed_by_them_total": 2,
-          "closed_by_them_ind": 2,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 2,
-          "is_bulk_driven": false,
-          "actual_hires": 4
-        },
-        {
           "sourcer": "Rodrigo Gomes",
           "responsible_total": 32,
           "responsible_ind": 32,
@@ -18320,17 +18309,6 @@
           "ind_driven_count": 2,
           "is_bulk_driven": false,
           "actual_hires": 2
-        },
-        {
-          "sourcer": "Gustavo Loureiro Castro",
-          "responsible_total": 7,
-          "responsible_ind": 7,
-          "closed_by_them_total": 2,
-          "closed_by_them_ind": 2,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 2,
-          "is_bulk_driven": false,
-          "actual_hires": 5
         },
         {
           "sourcer": "Nare Avetisyan",
@@ -18344,15 +18322,26 @@
           "actual_hires": 0
         },
         {
-          "sourcer": "Dolores Palotas",
-          "responsible_total": 3,
-          "responsible_ind": 3,
-          "closed_by_them_total": 1,
-          "closed_by_them_ind": 1,
+          "sourcer": "Gustavo Loureiro Castro",
+          "responsible_total": 7,
+          "responsible_ind": 7,
+          "closed_by_them_total": 2,
+          "closed_by_them_ind": 2,
           "bulk_driven_count": 0,
-          "ind_driven_count": 1,
+          "ind_driven_count": 2,
           "is_bulk_driven": false,
-          "actual_hires": 1
+          "actual_hires": 5
+        },
+        {
+          "sourcer": "Valeriia Yurykova",
+          "responsible_total": 10,
+          "responsible_ind": 10,
+          "closed_by_them_total": 2,
+          "closed_by_them_ind": 2,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 2,
+          "is_bulk_driven": false,
+          "actual_hires": 4
         },
         {
           "sourcer": "Naledi Ngwenya",
@@ -18364,6 +18353,28 @@
           "ind_driven_count": 1,
           "is_bulk_driven": false,
           "actual_hires": 1
+        },
+        {
+          "sourcer": "Dolores Palotas",
+          "responsible_total": 3,
+          "responsible_ind": 3,
+          "closed_by_them_total": 1,
+          "closed_by_them_ind": 1,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 1,
+          "is_bulk_driven": false,
+          "actual_hires": 1
+        },
+        {
+          "sourcer": "Mia Gjorgievska",
+          "responsible_total": 1,
+          "responsible_ind": 1,
+          "closed_by_them_total": 0,
+          "closed_by_them_ind": 0,
+          "bulk_driven_count": 0,
+          "ind_driven_count": 0,
+          "is_bulk_driven": false,
+          "actual_hires": 0
         },
         {
           "sourcer": "Aleksandra Markovic",
@@ -18378,17 +18389,6 @@
         },
         {
           "sourcer": "Elena Lage",
-          "responsible_total": 1,
-          "responsible_ind": 1,
-          "closed_by_them_total": 0,
-          "closed_by_them_ind": 0,
-          "bulk_driven_count": 0,
-          "ind_driven_count": 0,
-          "is_bulk_driven": false,
-          "actual_hires": 0
-        },
-        {
-          "sourcer": "Mia Gjorgievska",
           "responsible_total": 1,
           "responsible_ind": 1,
           "closed_by_them_total": 0,
@@ -18469,94 +18469,16 @@
   "int_vs_ext": [
     {
       "q": "2025 Q3",
-      "bucket": "Internal",
-      "bulk": 1,
-      "contacted": 1559,
-      "jobs": 7,
-      "pr": 343,
-      "rs": 266,
-      "scr": 183,
-      "ats": 92,
-      "off": 5,
-      "hir": 1
-    },
-    {
-      "q": "2025 Q3",
       "bucket": "External",
-      "bulk": 1,
-      "contacted": 1215,
-      "jobs": 15,
-      "pr": 237,
-      "rs": 180,
-      "scr": 73,
-      "ats": 106,
-      "off": 66,
-      "hir": 65
-    },
-    {
-      "q": "2025 Q2",
-      "bucket": "Internal",
       "bulk": 0,
-      "contacted": 17202,
-      "jobs": 180,
-      "pr": 2419,
-      "rs": 1686,
-      "scr": 919,
-      "ats": 482,
-      "off": 20,
-      "hir": 14
-    },
-    {
-      "q": "2025 Q2",
-      "bucket": "External",
-      "bulk": 1,
-      "contacted": 912,
-      "jobs": 6,
-      "pr": 134,
-      "rs": 109,
-      "scr": 90,
-      "ats": 62,
-      "off": 7,
-      "hir": 5
-    },
-    {
-      "q": "2025 Q4",
-      "bucket": "Internal",
-      "bulk": 0,
-      "contacted": 10372,
-      "jobs": 106,
-      "pr": 1262,
-      "rs": 886,
-      "scr": 528,
-      "ats": 275,
-      "off": 14,
+      "contacted": 5650,
+      "jobs": 82,
+      "pr": 858,
+      "rs": 532,
+      "scr": 363,
+      "ats": 210,
+      "off": 19,
       "hir": 12
-    },
-    {
-      "q": "2026 Q2",
-      "bucket": "External",
-      "bulk": 1,
-      "contacted": 411,
-      "jobs": 2,
-      "pr": 77,
-      "rs": 53,
-      "scr": 28,
-      "ats": 15,
-      "off": 1,
-      "hir": 0
-    },
-    {
-      "q": "2026 Q3",
-      "bucket": "External",
-      "bulk": 0,
-      "contacted": 1602,
-      "jobs": 31,
-      "pr": 267,
-      "rs": 212,
-      "scr": 124,
-      "ats": 82,
-      "off": 11,
-      "hir": 6
     },
     {
       "q": "2026 Q1",
@@ -18570,123 +18492,6 @@
       "ats": 7,
       "off": 2,
       "hir": 4
-    },
-    {
-      "q": "2026 Q2",
-      "bucket": "External",
-      "bulk": 0,
-      "contacted": 7730,
-      "jobs": 81,
-      "pr": 942,
-      "rs": 675,
-      "scr": 403,
-      "ats": 255,
-      "off": 17,
-      "hir": 14
-    },
-    {
-      "q": "2026 Q1",
-      "bucket": "External",
-      "bulk": 0,
-      "contacted": 10871,
-      "jobs": 106,
-      "pr": 1280,
-      "rs": 899,
-      "scr": 536,
-      "ats": 307,
-      "off": 13,
-      "hir": 11
-    },
-    {
-      "q": "2026 Q3",
-      "bucket": "External",
-      "bulk": 1,
-      "contacted": 40,
-      "jobs": 1,
-      "pr": 0,
-      "rs": 0,
-      "scr": 0,
-      "ats": 0,
-      "off": 1,
-      "hir": 1
-    },
-    {
-      "q": "2025 Q3",
-      "bucket": "Internal",
-      "bulk": 0,
-      "contacted": 13930,
-      "jobs": 140,
-      "pr": 2193,
-      "rs": 1363,
-      "scr": 887,
-      "ats": 425,
-      "off": 16,
-      "hir": 13
-    },
-    {
-      "q": "2025 Q4",
-      "bucket": "External",
-      "bulk": 0,
-      "contacted": 6135,
-      "jobs": 63,
-      "pr": 663,
-      "rs": 467,
-      "scr": 297,
-      "ats": 180,
-      "off": 14,
-      "hir": 14
-    },
-    {
-      "q": "2025 Q3",
-      "bucket": "External",
-      "bulk": 0,
-      "contacted": 5650,
-      "jobs": 82,
-      "pr": 858,
-      "rs": 532,
-      "scr": 363,
-      "ats": 210,
-      "off": 19,
-      "hir": 12
-    },
-    {
-      "q": "2026 Q3",
-      "bucket": "Internal",
-      "bulk": 0,
-      "contacted": 4151,
-      "jobs": 51,
-      "pr": 554,
-      "rs": 389,
-      "scr": 302,
-      "ats": 162,
-      "off": 13,
-      "hir": 8
-    },
-    {
-      "q": "2025 Q1",
-      "bucket": "External",
-      "bulk": 1,
-      "contacted": 336,
-      "jobs": 5,
-      "pr": 0,
-      "rs": 75,
-      "scr": 18,
-      "ats": 14,
-      "off": 1,
-      "hir": 0
-    },
-    {
-      "q": "2026 Q3",
-      "bucket": "Internal",
-      "bulk": 1,
-      "contacted": 1,
-      "jobs": 1,
-      "pr": 1,
-      "rs": 0,
-      "scr": 1,
-      "ats": 0,
-      "off": 0,
-      "hir": 0
     },
     {
       "q": "2026 Q2",
@@ -18704,15 +18509,15 @@
     {
       "q": "2025 Q2",
       "bucket": "External",
-      "bulk": 0,
-      "contacted": 9221,
-      "jobs": 72,
-      "pr": 1081,
-      "rs": 733,
-      "scr": 295,
-      "ats": 179,
-      "off": 12,
-      "hir": 10
+      "bulk": 1,
+      "contacted": 912,
+      "jobs": 6,
+      "pr": 134,
+      "rs": 109,
+      "scr": 90,
+      "ats": 62,
+      "off": 7,
+      "hir": 5
     },
     {
       "q": "2026 Q1",
@@ -18728,30 +18533,30 @@
       "hir": 234
     },
     {
-      "q": "2025 Q2",
-      "bucket": "Internal",
-      "bulk": 1,
-      "contacted": 2115,
-      "jobs": 9,
-      "pr": 454,
-      "rs": 311,
-      "scr": 204,
-      "ats": 110,
-      "off": 10,
-      "hir": 8
-    },
-    {
-      "q": "2025 Q1",
+      "q": "2025 Q4",
       "bucket": "External",
       "bulk": 0,
-      "contacted": 9014,
-      "jobs": 70,
-      "pr": 0,
-      "rs": 820,
-      "scr": 155,
-      "ats": 128,
-      "off": 20,
-      "hir": 15
+      "contacted": 6135,
+      "jobs": 63,
+      "pr": 663,
+      "rs": 467,
+      "scr": 297,
+      "ats": 180,
+      "off": 14,
+      "hir": 14
+    },
+    {
+      "q": "2025 Q3",
+      "bucket": "Internal",
+      "bulk": 1,
+      "contacted": 1559,
+      "jobs": 7,
+      "pr": 343,
+      "rs": 266,
+      "scr": 183,
+      "ats": 92,
+      "off": 5,
+      "hir": 1
     },
     {
       "q": "2025 Q1",
@@ -18767,32 +18572,6 @@
       "hir": 2
     },
     {
-      "q": "2026 Q1",
-      "bucket": "Internal",
-      "bulk": 0,
-      "contacted": 7265,
-      "jobs": 67,
-      "pr": 1311,
-      "rs": 988,
-      "scr": 633,
-      "ats": 314,
-      "off": 13,
-      "hir": 9
-    },
-    {
-      "q": "2025 Q4",
-      "bucket": "Internal",
-      "bulk": 1,
-      "contacted": 1545,
-      "jobs": 6,
-      "pr": 167,
-      "rs": 125,
-      "scr": 104,
-      "ats": 37,
-      "off": 7,
-      "hir": 5
-    },
-    {
       "q": "2025 Q4",
       "bucket": "External",
       "bulk": 1,
@@ -18804,6 +18583,45 @@
       "ats": 290,
       "off": 290,
       "hir": 290
+    },
+    {
+      "q": "2025 Q3",
+      "bucket": "Internal",
+      "bulk": 0,
+      "contacted": 13930,
+      "jobs": 140,
+      "pr": 2193,
+      "rs": 1363,
+      "scr": 887,
+      "ats": 425,
+      "off": 16,
+      "hir": 13
+    },
+    {
+      "q": "2025 Q4",
+      "bucket": "Internal",
+      "bulk": 0,
+      "contacted": 10372,
+      "jobs": 106,
+      "pr": 1262,
+      "rs": 886,
+      "scr": 528,
+      "ats": 275,
+      "off": 14,
+      "hir": 12
+    },
+    {
+      "q": "2026 Q1",
+      "bucket": "External",
+      "bulk": 0,
+      "contacted": 10871,
+      "jobs": 106,
+      "pr": 1280,
+      "rs": 899,
+      "scr": 536,
+      "ats": 307,
+      "off": 13,
+      "hir": 11
     },
     {
       "q": "2025 Q1",
@@ -18819,6 +18637,58 @@
       "hir": 20
     },
     {
+      "q": "2025 Q2",
+      "bucket": "External",
+      "bulk": 0,
+      "contacted": 9221,
+      "jobs": 72,
+      "pr": 1081,
+      "rs": 733,
+      "scr": 295,
+      "ats": 179,
+      "off": 12,
+      "hir": 10
+    },
+    {
+      "q": "2026 Q3",
+      "bucket": "External",
+      "bulk": 0,
+      "contacted": 1621,
+      "jobs": 31,
+      "pr": 267,
+      "rs": 212,
+      "scr": 124,
+      "ats": 82,
+      "off": 11,
+      "hir": 6
+    },
+    {
+      "q": "2025 Q1",
+      "bucket": "External",
+      "bulk": 1,
+      "contacted": 336,
+      "jobs": 5,
+      "pr": 0,
+      "rs": 75,
+      "scr": 18,
+      "ats": 14,
+      "off": 1,
+      "hir": 0
+    },
+    {
+      "q": "2026 Q1",
+      "bucket": "Internal",
+      "bulk": 0,
+      "contacted": 7265,
+      "jobs": 67,
+      "pr": 1311,
+      "rs": 988,
+      "scr": 633,
+      "ats": 314,
+      "off": 13,
+      "hir": 9
+    },
+    {
       "q": "2026 Q2",
       "bucket": "Internal",
       "bulk": 0,
@@ -18830,6 +18700,136 @@
       "ats": 595,
       "off": 26,
       "hir": 17
+    },
+    {
+      "q": "2026 Q2",
+      "bucket": "External",
+      "bulk": 0,
+      "contacted": 7730,
+      "jobs": 81,
+      "pr": 942,
+      "rs": 675,
+      "scr": 403,
+      "ats": 255,
+      "off": 17,
+      "hir": 14
+    },
+    {
+      "q": "2026 Q3",
+      "bucket": "Internal",
+      "bulk": 1,
+      "contacted": 1,
+      "jobs": 1,
+      "pr": 1,
+      "rs": 0,
+      "scr": 1,
+      "ats": 0,
+      "off": 0,
+      "hir": 0
+    },
+    {
+      "q": "2026 Q3",
+      "bucket": "External",
+      "bulk": 1,
+      "contacted": 40,
+      "jobs": 1,
+      "pr": 0,
+      "rs": 0,
+      "scr": 0,
+      "ats": 0,
+      "off": 1,
+      "hir": 1
+    },
+    {
+      "q": "2025 Q4",
+      "bucket": "Internal",
+      "bulk": 1,
+      "contacted": 1545,
+      "jobs": 6,
+      "pr": 167,
+      "rs": 125,
+      "scr": 104,
+      "ats": 37,
+      "off": 7,
+      "hir": 5
+    },
+    {
+      "q": "2025 Q2",
+      "bucket": "Internal",
+      "bulk": 1,
+      "contacted": 2115,
+      "jobs": 9,
+      "pr": 454,
+      "rs": 311,
+      "scr": 204,
+      "ats": 110,
+      "off": 10,
+      "hir": 8
+    },
+    {
+      "q": "2026 Q2",
+      "bucket": "External",
+      "bulk": 1,
+      "contacted": 411,
+      "jobs": 2,
+      "pr": 77,
+      "rs": 53,
+      "scr": 28,
+      "ats": 15,
+      "off": 1,
+      "hir": 0
+    },
+    {
+      "q": "2025 Q1",
+      "bucket": "External",
+      "bulk": 0,
+      "contacted": 9014,
+      "jobs": 70,
+      "pr": 0,
+      "rs": 820,
+      "scr": 155,
+      "ats": 128,
+      "off": 20,
+      "hir": 15
+    },
+    {
+      "q": "2026 Q3",
+      "bucket": "Internal",
+      "bulk": 0,
+      "contacted": 4235,
+      "jobs": 51,
+      "pr": 596,
+      "rs": 391,
+      "scr": 303,
+      "ats": 163,
+      "off": 13,
+      "hir": 8
+    },
+    {
+      "q": "2025 Q2",
+      "bucket": "Internal",
+      "bulk": 0,
+      "contacted": 17202,
+      "jobs": 180,
+      "pr": 2419,
+      "rs": 1686,
+      "scr": 919,
+      "ats": 482,
+      "off": 20,
+      "hir": 14
+    },
+    {
+      "q": "2025 Q3",
+      "bucket": "External",
+      "bulk": 1,
+      "contacted": 1215,
+      "jobs": 15,
+      "pr": 237,
+      "rs": 180,
+      "scr": 73,
+      "ats": 106,
+      "off": 66,
+      "hir": 65
     }
   ],
   "job_ratio": [
